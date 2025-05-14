@@ -6,6 +6,7 @@ from .forms import UserRegistrationForm
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.views import LoginView, LogoutView
 
 
 # Create your views here.
@@ -45,3 +46,13 @@ class RegisterAdminView(UserPassesTestMixin, CreateView):
 
     def test_func(self):
         return self.request.user.is_superuser
+
+
+class CustomLogInView(LoginView):
+
+    template_name = 'login.html'
+    redirect_authenticated_user = True
+
+
+class CustomLogOutView(LogoutView):
+    pass
