@@ -15,4 +15,4 @@ class CustomUser(AbstractUser):
     )
 
     def __str__(self):
-        return f"{self.username} - ({self.rol})"
+        return f"{self.username} - ({self.role})"

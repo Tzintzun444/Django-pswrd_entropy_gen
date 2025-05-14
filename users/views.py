@@ -18,7 +18,7 @@ class RegisterClientView(CreateView):
 
     model = CustomUser
     form_class = UserRegistrationForm
-    template_name = 'registrate_user.html'
+    template_name = 'registrate_client.html'
     success_url = reverse_lazy('index')
 
     def form_valid(self, form):
@@ -34,11 +34,11 @@ class RegisterAdminView(UserPassesTestMixin, CreateView):
     model = CustomUser
     form_class = UserRegistrationForm
     template_name = 'registrate_admin.html'
-    success_url = reverse_lazy('admin')
+    success_url = reverse_lazy('index')
 
     def form_valid(self, form):
 
-        form.instance.rol = "admin"
+        form.instance.role = "admin"
         form.instance.is_staff = True
         form.instance.is_superuser = True
         return super().form_valid(form)
