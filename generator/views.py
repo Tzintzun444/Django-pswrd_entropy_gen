@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from generator.utils import Generator
 from django.views.generic import FormView
+from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CreatePasswordForm
 from .models import Password
@@ -56,3 +57,14 @@ class CreatePasswordView(LoginRequiredMixin, FormView):
         context['password'] = password
 
         return context
+
+
+class PasswordListView(LoginRequiredMixin, ListView):
+
+    model = Password
+    template_name = 'list-passwords.html'
+    context_object_name = 'passwords'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Password.objects.filter(user=self.request.user).order_by('id')

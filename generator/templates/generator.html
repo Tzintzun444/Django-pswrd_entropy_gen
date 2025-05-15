@@ -18,4 +18,6 @@
     {% if password %}
         <p><strong>La contraseña generada fue:</strong> {{password}}</p>
     {% endif %}
+
+    <a href="{% url 'my_passwords' %}">See my passwords</a>
 {% endblock body %}
