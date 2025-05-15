@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>
+        Generate passwords
+    </title>
+{% endblock head%}
+
+{% block body %}
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">
+            Generate_password
+        </button>
+    </form>
+
+    {% if password %}
+        <p><strong>La contraseña generada fue:</strong> {{password}}</p>
+    {% endif %}
+{% endblock body %}
