@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from .models import CustomUser
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, CustomLoginForm
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.models import BaseUserManager
@@ -29,8 +29,15 @@ class RegisterClientView(CreateView):
         form.instance.is_superuser = False
         return super().form_valid(form)
 
+    def dispatch(self, request, *args, **kwargs):
+        
+        if request.user.is_authenticated and not (request.user.is_superuser or request.user.is_staff):
+            return redirect('index')
+        
+        return super().dispatch(request, *args, **kwargs)
 
-class RegisterAdminView(UserPassesTestMixin, CreateView):
+
+class RegisterAdminView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     model = CustomUser
     form_class = UserRegistrationForm
@@ -51,6 +58,7 @@ class RegisterAdminView(UserPassesTestMixin, CreateView):
 class CustomLogInView(LoginView):
 
     template_name = 'login.html'
+    form_class = CustomLoginForm
     redirect_authenticated_user = True
 
 

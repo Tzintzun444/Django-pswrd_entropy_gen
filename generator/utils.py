@@ -59,9 +59,15 @@ class Generator:
         self._decryption_password_time = decryption_password_time
 
     # This method generates a password based on the characters allowed and the provided length.
-    @staticmethod
-    def generate_password(length: int, use_uppercase=True,
-                          use_numbers=True, use_punctuations=True) -> str:
+    @classmethod
+    def generate_password(cls, length: int, use_uppercase=True,
+                          use_numbers=True, use_punctuations=True,
+                          not_allowed=None, customized=None) -> str:
+
+        if not_allowed:
+
+            not_allowed = {not_allowed}
+            print(not_allowed)
 
         # Ensure that length is a positive integer.
         if length <= 0:
@@ -69,18 +75,33 @@ class Generator:
             # Message error.
             raise ValueError('The number must be a positive integer')
 
-        # Select the default lowercase characters in the 'characters' variable that contains all the possible characters
-        characters = string.ascii_lowercase  # abcdefghijklmnopqrstuvwxyz
+        cls.type_of_characters = {
+            'default': string.ascii_lowercase,
+            'uppercase': string.ascii_uppercase,
+            'numbers': string.digits,
+            'punctuations': string.punctuation
+        }
+        if not_allowed:
+
+            for situation, characters in cls.type_of_characters.items():
+
+                for letter in not_allowed:
+
+                    if letter in characters:
+
+                        cls.type_of_characters[situation] = characters.replace(letter, '')
 
         # Stores the situations in a dictionary as the key, amd their boolean values and the characters related
         # as the values.
-        situations = {'uppercase': (use_uppercase, string.ascii_uppercase),  # True, ABCDEFGHIJKLMNOPQRSTUVWXYZ
-                      'numbers': (use_numbers, string.digits),  # True, 0123456789
-                      'punctuations': (use_punctuations, string.punctuation),  # True, !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+        situations = {'uppercase': (use_uppercase, cls.type_of_characters['uppercase']),  # True, ABCDEFGHIJKLMNOPQRSTUVWXYZ
+                      'numbers': (use_numbers, cls.type_of_characters['numbers']),  # True, 0123456789
+                      'punctuations': (use_punctuations, cls.type_of_characters['punctuations']),
+                      # True, !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
                       }
 
         # This is the list that stores the characters of the password.
         password = []
+        characters = cls.type_of_characters['default']
 
         # The for loop checks if the situations are True or false.
         for character_type in situations.values():
@@ -93,6 +114,10 @@ class Generator:
 
                 # Also adds 1 character of each type allowed to ensure that there is at least 1.
                 password.append(secrets.choice(character_type[1]))
+
+        if customized:
+
+            characters = characters + str(customized)
 
         # This is the necessary length to complete the password.
         remaining = length - len(password)
@@ -113,8 +138,8 @@ class Generator:
         return final_password
 
     # This method calculates the entropy of the provided password.
-    @staticmethod
-    def calculate_entropy(password: str, decimals: int = 1) -> Union[int, float]:
+    @classmethod
+    def calculate_entropy(cls, password: str, decimals: int = 1) -> Union[int, float]:
 
         # The set ensures that we don't take repetitive characters.
         unique_characters = set(password)
@@ -126,10 +151,10 @@ class Generator:
         argument_log = 0
 
         # The dictionary stores the possible characters and the number of them.
-        situations = {'uppercase': (string.ascii_uppercase, 26),  # ABCDEFGHIJKLMNOPQRSTUVWXYZ, 26
-                      'lowercase': (string.ascii_lowercase, 26),  # abcdefghijklmnopqrstuvwxyz, 26
-                      'numbers': (string.digits, 10),  # 0123456789, 10
-                      'punctuations': (string.punctuation, 32),  # !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~, 32
+        situations = {'uppercase': (cls.type_of_characters['uppercase'], len(cls.type_of_characters['uppercase'])),  # ABCDEFGHIJKLMNOPQRSTUVWXYZ, 26
+                      'lowercase': (cls.type_of_characters['default'], len(cls.type_of_characters['default'])),  # abcdefghijklmnopqrstuvwxyz, 26
+                      'numbers': (cls.type_of_characters['numbers'], len(cls.type_of_characters['numbers'])),  # 0123456789, 10
+                      'punctuations': (cls.type_of_characters['punctuations'], len(cls.type_of_characters['punctuations'])),  # !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~, 32
                       }
 
         # Separates the characters from the number of possible characters.
@@ -185,9 +210,9 @@ class Generator:
 
         # If an error happens, this will handle it.
         except Exception as exception:
-
+            print(f'There was an error: {exception}')
             # This is the message error.
-            return f'There was an error: {exception}'
+            return None, None, None
 
     # For printing the object.
     def __str__(self):

@@ -7,9 +7,10 @@
 {% endblock head%}
 
 {% block body %}
+    <h3 class="content">Create an account</h3>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Register</button>
+        <button type="submit">Create</button>
     </form>
 {% endblock body %}

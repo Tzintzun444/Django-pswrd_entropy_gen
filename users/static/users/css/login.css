@@ -1,0 +1,64 @@
+/* 🔹 Contenedor del Login */
+.login-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 350px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 30px !important;
+}
+
+/* 🔹 Título Log In */
+.login-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* 🔹 Inputs estilizados */
+.login-input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* 🔹 Botón de Log In */
+button {
+    background-color: red;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: darkred;
+}
+
+/* 🔹 Link de registro */
+.register-link {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.register-link a {
+    color: red;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}

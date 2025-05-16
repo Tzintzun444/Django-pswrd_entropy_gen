@@ -7,6 +7,7 @@
 {% endblock head%}
 
 {% block body %}
+    <h3 class="content">Create administrator account</h3>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

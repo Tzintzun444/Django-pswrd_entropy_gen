@@ -1,0 +1,85 @@
+h1 {
+    font-weight: bold;
+    text-align: center;
+    border-radius: 20px;
+    margin: 30px auto !important;
+    padding: 20px;
+    color: black;
+    width: 60%;
+    background-color: white !important;
+    transition: transform 0.3s ease-in-out;
+    border: 5px solid #CCC;
+}
+
+h1:hover{
+    transform: scale(1.05);
+}
+
+.content {
+    font-weight: bold;
+    text-align: center;
+    border-radius: 20px;
+    margin: 30px auto !important;
+    padding: 20px;
+    color: black;
+    width: 60%;
+    background-color: white !important;
+    transition: transform 0.3s ease-in-out;
+    border: 5px solid #CCC;
+}
+
+.content:hover {
+    transform: scale(1.05); /* 🔹 Agranda el bloque ligeramente */
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    padding: 15px;
+    width: 100%;
+}
+
+.btn-header {
+    background-color: blue !important;
+    color: white !important;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.btn-header:hover{
+    transform: scale(1.05);
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-grow: 1;
+}
+
+.login, .user-box {
+    margin-left: auto;
+}
+
+.logout {
+    margin-right: auto;
+}
+
+.user-box {
+    background-color: blue;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+body {
+    background-color: #B0D9FF !important;
+}
