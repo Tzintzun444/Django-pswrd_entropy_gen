@@ -50,10 +50,11 @@ h1:hover{
     font-weight: bold;
     border: none;
     cursor: pointer;
-    transition: transform 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
 .btn-header:hover{
+    background-color: #5bc5f7 !important;
     transform: scale(1.05);
 }
 

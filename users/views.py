@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from .models import CustomUser
 from .forms import UserRegistrationForm, CustomLoginForm
 from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
-from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.views import LoginView, LogoutView
 
 
@@ -24,10 +24,22 @@ class RegisterClientView(CreateView):
 
     def form_valid(self, form):
 
-        form.instance.role = 'customer'
-        form.instance.is_staff = False
-        form.instance.is_superuser = False
-        return super().form_valid(form)
+        user = form.save(commit=False)
+        user.role = 'customer'
+        user.is_staff = False
+        user.is_superuser = False
+        user.save()
+
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        authenticated_user = authenticate(
+            request=self.request,
+            username=username,
+            password=password
+        )
+        login(self.request, authenticated_user, backend='django.contrib.auth.backends.ModelBackend')
+
+        return redirect('index')
 
     def dispatch(self, request, *args, **kwargs):
         
@@ -46,10 +58,21 @@ class RegisterAdminView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     def form_valid(self, form):
 
-        form.instance.role = "admin"
-        form.instance.is_staff = True
-        form.instance.is_superuser = True
-        return super().form_valid(form)
+        user = form.save(commit=False)
+        user.role = 'admin'
+        user.is_staff = True
+        user.is_superuser = False
+        user.save()
+
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        authenticated_user = authenticate(
+            username=username,
+            password=password
+        )
+        login(self.request, authenticated_user)
+
+        return redirect('index')
 
     def test_func(self):
         return self.request.user.is_superuser

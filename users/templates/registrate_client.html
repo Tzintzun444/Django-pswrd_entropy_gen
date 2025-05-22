@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'users/css/register_user.css' %}?v=1">
     <title>
         Registrate client
     </title>
@@ -11,6 +13,6 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Create</button>
+        <button class="btn" type="submit">Register</button>
     </form>
 {% endblock body %}

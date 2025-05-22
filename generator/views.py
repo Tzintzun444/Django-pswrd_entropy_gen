@@ -21,16 +21,16 @@ class CreatePasswordView(LoginRequiredMixin, FormView):
         use_uppercase_letters = form.cleaned_data['use_uppercase_letters']
         use_digits = form.cleaned_data['use_digits']
         use_punctuation_characters = form.cleaned_data['use_punctuation_characters']
-        customized = form.cleaned_data['customized']
-        not_allowed = form.cleaned_data['not_allowed']
+        custom_characters_allowed = form.cleaned_data['custom_characters_allowed']
+        characters_not_allowed = form.cleaned_data['characters_not_allowed']
 
         password = Generator.generate_password(
             length=length_password,
             use_uppercase=use_uppercase_letters,
             use_numbers=use_digits,
             use_punctuations=use_punctuation_characters,
-            customized=customized,
-            not_allowed=not_allowed
+            customized=custom_characters_allowed,
+            not_allowed=characters_not_allowed
 
         )
 
@@ -69,7 +69,7 @@ class PasswordListView(LoginRequiredMixin, ListView):
     model = Password
     template_name = 'list-passwords.html'
     context_object_name = 'passwords'
-    paginate_by = 3
+    paginate_by = 5
 
     def get_queryset(self):
         return Password.objects.filter(user=self.request.user).order_by('id')

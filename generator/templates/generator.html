@@ -1,12 +1,66 @@
 {% extends 'base.html' %}
 
 {% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'generator/css/generator.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'generator/css/generate_passwords.css' %}?v=1">
     <title>
         Generate passwords
     </title>
 {% endblock head%}
 
 {% block body %}
+
+    <div class="form-container">
+    <h2 class="content">Generate a password</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="input-group">
+                <label for="id_length">Length</label>
+                {{ form.length_password }}
+            </div>
+
+            <div class="input-group">
+                <div class="checkbox-wrapper">
+                    <div class="checkbox-item">
+                        <label for="id_option1">Uppercase</label>
+                        {{ form.use_uppercase_letters }} <span class="check-icon"></span>
+                    </div>
+                    <div class="checkbox-item">
+                        <label for="id_option2">Numbers</label>
+                        {{ form.use_digits }} <span class="check-icon"></span>
+                    </div>
+                    <div class="checkbox-item">
+                        <label for="id_option3">Punctuation</label>
+                        {{ form.use_punctuation_characters }} <span class="check-icon"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="full-width">
+            <label for="id_field1">Custom characters allowed</label>
+            {{ form.custom_characters_allowed }}
+        </div>
+
+        <div class="full-width">
+            <label for="id_field2">Characters not allowed</label>
+            {{ form.characters_not_allowed }}
+        </div>
+
+        <div class="button-row">
+            <button type="submit" class="btn-submit">Generate password</button>
+            <a href="{% url 'my_passwords' %}" class="btn-cancel">See my passwords</a>
+        </div>
+    </form>
+    {% if password %}
+        <p><strong>La contraseña generada fue:</strong> {{password}}</p>
+    {% endif %}
+</div>
+
     <h3 class="content">Generate a password</h3>
     <form method="post">
         {% csrf_token %}
@@ -16,9 +70,7 @@
         </button>
     </form>
 
-    {% if password %}
-        <p><strong>La contraseña generada fue:</strong> {{password}}</p>
-    {% endif %}
 
-    <a href="{% url 'my_passwords' %}">See my passwords</a>
+
+    <a href="{% url 'my_passwords' %}" class="btn-center">See my passwords</a>
 {% endblock body %}
