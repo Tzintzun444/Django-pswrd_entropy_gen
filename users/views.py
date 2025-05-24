@@ -1,7 +1,11 @@
+import datetime
+
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from django.utils.timezone import now
+
 from .models import CustomUser
 from .forms import UserRegistrationForm, CustomLoginForm
 from django.views.generic import TemplateView
@@ -84,6 +88,22 @@ class CustomLogInView(LoginView):
     form_class = CustomLoginForm
     redirect_authenticated_user = True
 
+    def form_valid(self, form):
+
+        user = form.get_user()
+        user.user_status = True
+        user.last_login = now()
+        user.save()
+
+        return super().form_valid(form)
+
 
 class CustomLogOutView(LogoutView):
-    pass
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if request.user.is_authenticated:
+            request.user.user_status = False
+            request.user.save()
+
+        return super().dispatch(request, *args, **kwargs)

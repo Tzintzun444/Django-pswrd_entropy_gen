@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.views import View
+
 from generator.utils import Generator
 from django.views.generic import FormView, ListView
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import CreatePasswordForm
+from .forms import CreatePasswordForm, SavePasswordForm
 from .models import Password
 
 
@@ -23,7 +25,6 @@ class CreatePasswordView(LoginRequiredMixin, FormView):
         use_punctuation_characters = form.cleaned_data['use_punctuation_characters']
         custom_characters_allowed = form.cleaned_data['custom_characters_allowed']
         characters_not_allowed = form.cleaned_data['characters_not_allowed']
-
         password = Generator.generate_password(
             length=length_password,
             use_uppercase=use_uppercase_letters,
@@ -34,32 +35,22 @@ class CreatePasswordView(LoginRequiredMixin, FormView):
 
         )
 
-        entropy = Generator.calculate_entropy(
-            password=password,
-            decimals=2
-        )
-
-        decryption_years_needed = Generator.calculate_decryption_time(
-            entropy=entropy,
-            decimals=3
-        )
-
-        Password.objects.create(
-            user=user,
-            password=password,
-            entropy=entropy,
-            decryption_years_needed=decryption_years_needed
-        )
-
         self.request.session['password'] = password
+        self.request.session['password_is_new'] = True
 
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
 
         context = super().get_context_data(**kwargs)
-        password = self.request.session.pop('password', None)
-        context['password'] = password
+
+        if self.request.session.get('password_is_new'):
+            context['password'] = self.request.session.get('password')
+            self.request.session['password_is_new'] = False
+        else:
+            # Elimina la contraseña si no es nueva
+            if 'generated_password' in self.request.session:
+                del self.request.session['generated_password']
 
         return context
 
@@ -85,3 +76,31 @@ class PasswordDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
         password = self.get_object()
         return password.user == self.request.user
+
+
+class SavePasswordView(LoginRequiredMixin, View):
+
+    def post(self, request, *args, **kwargs):
+        password = request.POST.get('password')
+
+        if password:
+            # Calcula métricas
+            entropy = Generator.calculate_entropy(password, decimals=2)
+            decryption_time = Generator.calculate_decryption_time(entropy, decimals=3)
+
+            # Crea el registro
+            Password.objects.create(
+                user=request.user,
+                password=password,
+                entropy=entropy,
+                decryption_years_needed=decryption_time
+            )
+
+            # Elimina la contraseña de la sesión
+            if 'password' in request.session:
+                del request.session['password']
+
+            if 'password_is_new' in request.session:
+                del request.session['password_is_new']
+
+        return redirect('my_passwords')

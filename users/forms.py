@@ -8,12 +8,19 @@ user = get_user_model()
 
 class UserRegistrationForm(forms.ModelForm):
 
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={"placeholder": "Letters, digits and @/./+/-/_ only."}),
+        max_length=100
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={"placeholder": "Enter an email address"})
+    )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"class": "login-input", "placeholder": "Password"}),
-        help_text='At least 8 characters', min_length=8
+        widget=forms.PasswordInput(attrs={"placeholder": "At least 8 characters"}),
+        min_length=8
     )
     confirm_password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"class": "login-input", "placeholder": "Repeat your password"})
+        widget=forms.PasswordInput(attrs={"placeholder": "Repeat your password"})
     )
 
     class Meta:

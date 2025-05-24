@@ -1,69 +1,53 @@
-/* 🔹 Contenedor del Login */
-.login-container {
+.register-container {
     background-color: white;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: black;
+    width: 68%; /* 🔥 Ocupa entre 60-80% de la pantalla */
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 12px; /* 🔥 Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 🔥 Sombreado ligero */
     text-align: center;
-    width: 350px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    margin-top: 30px !important;
 }
 
-/* 🔹 Título Log In */
-.login-title {
-    font-size: 28px;
-    margin-bottom: 20px;
+/* 🔹 Contenedor de los campos de entrada */
+.form-content p {
+    display: flex;
+    justify-content: space-between; /* 🔥 Asegura que los labels e inputs estén en línea */
+    gap: 10px;
+    align-items: center;
+    width: 80%;
+    margin: 10px auto;
+    text-align: left;
 }
 
-/* 🔹 Inputs estilizados */
-.login-input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
+/* 🔹 Estilos de los labels */
+.form-content label {
+    width: 25%;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1; /* 🔥 Ajusta la altura del texto para alinearlo mejor */
+    display: flex;
+    align-items: center;
+}
+
+label {
+    transition: transform 0.3s ease-in-out;
+}
+
+label:hover {
+    transform: scale(1.05);
+}
+
+/* 🔹 Estilos de los inputs */
+.form-content input {
+    width: 80%;
+    padding: 10px;
     border: 2px solid #ccc;
     border-radius: 8px;
     font-size: 16px;
 }
 
-/* 🔹 Botón de Log In */
-.login-btn {
-    background-color: red;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 12px;
-    width: 100%;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.login-btn:hover {
-    background-color: darkred;
-}
-
-/* 🔹 Link de registro */
-.register-link {
-    margin-top: 15px;
-    font-size: 14px;
-}
-
-.register-link a {
-    color: red;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.register-link a:hover {
-    text-decoration: underline;
-}
-
-.btn {
+.btn-register {
     display: block;
     width: fit-content;
     margin: 20px auto;
@@ -78,7 +62,7 @@
     transition: 0.3s ease-in-out;
 }
 
-.btn:hover {
+.btn-register:hover {
     background-color: darkred;
     transform: scale(1.05);
     color: white;

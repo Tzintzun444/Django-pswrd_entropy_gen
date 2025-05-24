@@ -4,15 +4,22 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'users/css/register_user.css' %}?v=1">
     <title>
-        Registrate client
+        Registration Form
     </title>
 {% endblock head%}
 
 {% block body %}
-    <h3 class="content">Create an account</h3>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn" type="submit">Register</button>
-    </form>
+    <div class="register-container">
+        <h3 class="content">Registration form</h3>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-content">
+                {{ form.as_p }}
+            </div>
+
+            <button type="submit" class="btn-register">Register</button>
+        </form>
+    </div>
 {% endblock body %}

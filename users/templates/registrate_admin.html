@@ -9,12 +9,17 @@
 {% endblock head%}
 
 {% block body %}
-    <div class="login-container">
-        <h3 class="login-title">Create administrator account</h3>
+    <div class="register-container">
+        <h3 class="content">Registrate an admin</h3>
+
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button class="btn" type="submit">Register</button>
+
+            <div class="form-content"> <!-- 🔹 Envuelve los inputs para aplicar estilos personalizados -->
+                {{ form.as_p }}
+            </div>
+
+            <button type="submit" class="btn-register">Register admin</button>
         </form>
     </div>
 {% endblock body %}

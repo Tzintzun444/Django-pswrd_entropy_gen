@@ -5,7 +5,7 @@
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
-    width: 350px;
+    width: 30% ;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -36,7 +36,7 @@ button {
     font-size: 18px;
     font-weight: bold;
     padding: 12px;
-    width: 100%;
+    width: 70%;
     border: none;
     border-radius: 8px;
     cursor: pointer;

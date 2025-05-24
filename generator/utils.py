@@ -67,7 +67,6 @@ class Generator:
         if not_allowed:
 
             not_allowed = {not_allowed}
-            print(not_allowed)
 
         # Ensure that length is a positive integer.
         if length <= 0:
@@ -75,11 +74,13 @@ class Generator:
             # Message error.
             raise ValueError('The number must be a positive integer')
 
+        punctuation_characters = '!#$%&*+_-/'
+
         cls.type_of_characters = {
             'default': string.ascii_lowercase,
             'uppercase': string.ascii_uppercase,
             'numbers': string.digits,
-            'punctuations': string.punctuation
+            'punctuations': punctuation_characters
         }
         if not_allowed:
 
@@ -117,7 +118,7 @@ class Generator:
 
         if customized:
 
-            characters = characters + str(customized)
+            password.extend(list(customized))
 
         # This is the necessary length to complete the password.
         remaining = length - len(password)
