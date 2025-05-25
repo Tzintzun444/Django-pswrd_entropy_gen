@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import View
-
+from django.http import Http404
 from generator.utils import Generator
 from django.views.generic import FormView, ListView
 from django.views.generic.edit import DeleteView
@@ -76,6 +76,9 @@ class PasswordDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
         password = self.get_object()
         return password.user == self.request.user
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     raise Http404('This page does not exist')
 
 
 class SavePasswordView(LoginRequiredMixin, View):

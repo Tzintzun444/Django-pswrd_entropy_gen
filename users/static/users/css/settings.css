@@ -1,0 +1,33 @@
+.btn-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn-update {
+    display: block;
+    width: 35%;
+    margin: 20px auto;
+    background-color: red;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.btn-update:hover {
+    background-color: darkred;
+    transform: scale(1.05);
+}
+
+.green {
+    background-color: green;
+}
+
+.green:hover {
+    background-color: darkgreen;
+}

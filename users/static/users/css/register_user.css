@@ -67,3 +67,11 @@ label:hover {
     transform: scale(1.05);
     color: white;
 }
+
+.green {
+    background-color: green;
+}
+
+.green:hover {
+    background-color: darkgreen;
+}

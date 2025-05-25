@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'users/css/register_user.css'%}?v=1">
+    <link rel="stylesheet" href="{% static 'users/css/settings.css' %}">
+    <title>Settings</title>
+{% endblock head %}
+
+{% block body %}
+    <div class="register-container">
+        <h3 class="content">Update profile</h3>
+
+        <form method="post" autocomplete="off">
+            {% csrf_token %}
+
+            <div class="form-content">
+                <p>{{ form.username.label_tag }} {{ form.username }}</p>
+                <p>{{ form.first_name.label_tag }} {{ form.first_name }}</p>
+                <p>{{ form.last_name.label_tag }} {{ form.last_name }}</p>
+                <p>{{ form.email.label_tag }} {{ form.email }}</p>
+                <p>{{ form.new_password.label_tag }} {{ form.new_password }}</p>
+                <p>{{ form.confirm_password.label_tag }} {{ form.confirm_password }}</p>
+                {% if form.errors.confirm_password%}
+                    <p>{{ form.errors.confirm_password }}</p>
+                {% endif %}
+            </div>
+        </form>
+        <div class="btn-row">
+            <button type="submit" class="btn-update green">Update</button>
+            <button class="btn-update logout" type="button" data-bs-toggle="modal" data-bs-target="#confirmDelete{{ request.user.id }}">
+                                    Delete profile
+            </button>
+                <!-- Modal de Confirmación -->
+                <div class="modal fade" id="confirmDelete{{ request.user.id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Confirm deletion</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete your profile?
+                                </div>
+                            <div class="modal-footer">
+                                <form method="post" action="{% url 'delete_user' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Delete profile</button>
+                                </form>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+{% endblock body %}

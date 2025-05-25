@@ -41,19 +41,63 @@
             </div>
         {% endif %}
         <nav class="nav">
-            <a href="{% url 'my_passwords' %}" class="btn-header">See my passwords</a>
+            <a href="{% url 'my_passwords' %}" class="btn-header green ">See my passwords</a>
             <a href="{% url 'index' %}" class="btn-header">Home</a>
-            <a href="{% url 'generator' %}" class="btn-header">Generate Password</a>
+            <a href="{% url 'generator' %}" class="btn-header green">Generate Password</a>
         </nav>
         {% if user.is_authenticated %}
-            <div class="user-box">{{ user.username }}</div>
+            <div class="user-box">
+                <button class="btn-header" id="userButton">{{ user.username }}</button>
+                    <div id="menuDropdown" class="dropdown-menu">
+                        <a class="menu-btn-link" href="{% url 'settings' %}">Settings</a>
+                        <button class="btn-logout-menu btn-header logout " type="button" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                        Log Out
+                        </button>
+
+                    <!-- Modal de Confirmación de Logout -->
+                        <div class="modal fade" id="menulogoutModal" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Confirm Log out</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to log out?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form method="post" action="{% url 'logout' %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">Log Out</button>
+                                        </form>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
         {% else %}
-        <a href="{% url 'login' %}" class="btn-header login">Login</a>
+        <a href="{% url 'login' %}" class="btn-header login green">Login</a>
         {% endif %}
 
     </header>
     {% block body %}
 
     {% endblock body %}
+    <script>
+        document.getElementById("userButton").addEventListener("click", function() {
+            var menu = document.getElementById("menuDropdown");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        });
+        document.addEventListener("click", function(event) {
+            var menu = document.getElementById("menuDropdown");
+            var button = document.getElementById("userButton");
+
+            if (!menu.contains(event.target) && !button.contains(event.target)) {
+                menu.style.display = "none";
+            }
+        });
+    </script>
 </body>
 </html>

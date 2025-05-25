@@ -12,14 +12,19 @@
     <div class="register-container">
         <h3 class="content">Registration form</h3>
 
-        <form method="post">
+        <form method="post" autocomplete="off">
             {% csrf_token %}
 
             <div class="form-content">
-                {{ form.as_p }}
+                <p>{{ form.username.label_tag }} {{ form.username }}</p>
+                <p>{{ form.first_name.label_tag }} {{ form.first_name }}</p>
+                <p>{{ form.last_name.label_tag }} {{ form.last_name }}</p>
+                <p>{{ form.email.label_tag }} {{ form.email }}</p>
+                <p>{{ form.password.label_tag }} {{ form.password }}</p>
+                <p>{{ form.confirm_password.label_tag }} {{ form.confirm_password }}</p>
             </div>
 
-            <button type="submit" class="btn-register">Register</button>
+            <button type="submit" class="btn-register green">Register</button>
         </form>
     </div>
 {% endblock body %}

@@ -42,11 +42,12 @@ h1:hover{
 }
 
 .btn-header {
-    background-color: blue !important;
+    background-color: blue;
     color: white !important;
     text-decoration: none;
-    padding: 10px 15px;
+    padding: 10px 20px;
     border-radius: 5px;
+    font-size: 20px;
     font-weight: bold;
     border: none;
     cursor: pointer;
@@ -54,7 +55,7 @@ h1:hover{
 }
 
 .btn-header:hover{
-    background-color: #5bc5f7 !important;
+    background-color: #5bc5f7 ;
     transform: scale(1.05);
 }
 
@@ -71,16 +72,64 @@ h1:hover{
 
 .logout {
     margin-right: auto;
+    background-color: red;
+}
+
+.logout:hover {
+    background-color: darkred;
+}
+
+.green {
+    background-color: green;
+}
+
+.green:hover {
+    background-color: darkgreen;
 }
 
 .user-box {
+    position: relative;
+    display: inline-block;
     background-color: blue;
     color: white;
-    padding: 10px 15px;
     border-radius: 5px;
     font-weight: bold;
 }
 
 body {
     background-color: #B0D9FF !important;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+    padding: 10px;
+    border-radius: 5px;
+    min-width: 50px;
+    z-index: 1000;
+}
+
+.dropdown-menu .menu-btn-link {
+    display: block;
+    text-align: center;
+    padding: 8px;
+    color: black;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+}
+
+.dropdown-menu .menu-btn-link:hover {
+    background: #f0f0f0;
+    transform: scale(1.05)
+
+}
+
+.btn-logout-menu{
+    width: 100%;
+    padding: 8px;
+    font-size: 15px;
 }
