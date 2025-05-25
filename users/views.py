@@ -1,14 +1,13 @@
-import datetime
-
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
-from django.utils.timezone import now
+from django.utils import timezone
 
-from .models import CustomUser
-from .forms import UserRegistrationForm, CustomLoginForm
-from django.views.generic import TemplateView
+from .models import CustomUser, UserNotVerified
+from .forms import UserRegistrationForm, CustomLoginForm, VerificationEmailForm
+from django.views.generic import TemplateView, FormView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.views import LoginView, LogoutView
 
@@ -21,62 +20,142 @@ class IndexView(TemplateView):
 
 class RegisterClientView(CreateView):
 
-    model = CustomUser
+    model = UserNotVerified
     form_class = UserRegistrationForm
     template_name = 'registrate_client.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('verify_email_customer')
 
     def form_valid(self, form):
 
-        user = form.save(commit=False)
-        user.role = 'customer'
-        user.is_staff = False
-        user.is_superuser = False
-        user.save()
-
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password')
-        authenticated_user = authenticate(
-            request=self.request,
-            username=username,
-            password=password
+        verification = form.save()
+        self.request.session['verification_email'] = form.instance.email
+        send_mail(
+            'Email verification',
+            f'Your verification code is {verification.code}',
+            'alfredotzintzun444@gmail.com',
+            [verification.email],
+            fail_silently=False
         )
-        login(self.request, authenticated_user, backend='django.contrib.auth.backends.ModelBackend')
 
-        return redirect('index')
+        return super().form_valid(form)
 
     def dispatch(self, request, *args, **kwargs):
-        
+
         if request.user.is_authenticated and not (request.user.is_superuser or request.user.is_staff):
             return redirect('index')
-        
+
         return super().dispatch(request, *args, **kwargs)
 
 
 class RegisterAdminView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
-    model = CustomUser
+    model = UserNotVerified
     form_class = UserRegistrationForm
     template_name = 'registrate_admin.html'
+    success_url = reverse_lazy('verify_email_admin')
+
+    def form_valid(self, form):
+        verification = form.save()
+        self.request.session['verification_email'] = form.instance.email
+        send_mail(
+            'Email verification',
+            f'Your verification code is {verification.code}',
+            'alfredotzintzun444@gmail.com',
+            [verification.email],
+            fail_silently=False
+        )
+
+        return super().form_valid(form)
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+
+class VerifyEmailCustomerView(FormView):
+
+    template_name = 'verify_email.html'
+    form_class = VerificationEmailForm
     success_url = reverse_lazy('index')
 
     def form_valid(self, form):
 
-        user = form.save(commit=False)
-        user.role = 'admin'
-        user.is_staff = True
+        user_code = form.cleaned_data['code']
+        user_email = self.request.session.get('verification_email')
+
+        try:
+
+            verification = UserNotVerified.objects.get(
+                email=user_email,
+                code=user_code,
+                expires_at__gte=timezone.now()
+            )
+
+        except UserNotVerified.DoesNotExist:
+
+            form.add_error('code', 'Invalide code or expired')
+            return self.form_invalid(form)
+        user = CustomUser(
+            username=verification.data['username'],
+            email=verification.email,
+            password=verification.data['password'],
+            is_verified=True,
+            role='customer'
+        )
+        user.is_staff = False
         user.is_superuser = False
         user.save()
+        verification.delete()
+        del self.request.session['verification_email']
 
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password')
-        authenticated_user = authenticate(
-            username=username,
-            password=password
+        login(self.request, user)
+        return redirect(self.get_success_url())
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if request.user.is_authenticated and not (request.user.is_superuser or request.user.is_staff):
+            return redirect('index')
+
+        return super().dispatch(request, *args, **kwargs)
+
+
+class VerifyEmailAdminView(LoginRequiredMixin, UserPassesTestMixin, FormView):
+
+    template_name = 'verify_email_admin.html'
+    form_class = VerificationEmailForm
+    success_url = reverse_lazy('index')
+
+    def form_valid(self, form):
+
+        user_code = form.cleaned_data['code']
+        user_email = self.request.session.get('verification_email')
+
+        try:
+
+            verification = UserNotVerified.objects.get(
+                email=user_email,
+                code=user_code,
+                expires_at__gte=timezone.now()
+            )
+
+        except UserNotVerified.DoesNotExist:
+
+            form.add_error('code', 'Invalide code or expired')
+            return self.form_invalid(form)
+        user = CustomUser(
+            username=verification.data['username'],
+            email=verification.email,
+            password=verification.data['password'],
+            is_verified=True,
+            role='customer'
         )
-        login(self.request, authenticated_user)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
+        verification.delete()
+        del self.request.session['verification_email']
 
-        return redirect('index')
+        login(self.request, user)
+        return redirect(self.get_success_url())
 
     def test_func(self):
         return self.request.user.is_superuser
@@ -92,8 +171,8 @@ class CustomLogInView(LoginView):
 
         user = form.get_user()
         user.user_status = True
-        user.last_login = now()
-        user.save()
+        user.last_login = timezone.now()
+        user.save(update_fields=['user_status', 'last_login'])
 
         return super().form_valid(form)
 
@@ -104,6 +183,6 @@ class CustomLogOutView(LogoutView):
 
         if request.user.is_authenticated:
             request.user.user_status = False
-            request.user.save()
+            request.user.save(update_fields=['user_status'])
 
         return super().dispatch(request, *args, **kwargs)

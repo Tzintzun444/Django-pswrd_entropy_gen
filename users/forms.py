@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from .models import CustomUser
+from django.core.validators import MinLengthValidator
+from .models import UserNotVerified
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.hashers import make_password
 
 user = get_user_model()
 
@@ -10,7 +12,7 @@ class UserRegistrationForm(forms.ModelForm):
 
     username = forms.CharField(
         widget=forms.TextInput(attrs={"placeholder": "Letters, digits and @/./+/-/_ only."}),
-        max_length=100
+        max_length=150
     )
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={"placeholder": "Enter an email address"})
@@ -25,8 +27,8 @@ class UserRegistrationForm(forms.ModelForm):
 
     class Meta:
 
-        model = CustomUser
-        fields = ['username', 'email', 'password',]
+        model = UserNotVerified
+        fields = ['email']
 
     def clean(self):
         cleaned_data = super().clean()
@@ -34,19 +36,31 @@ class UserRegistrationForm(forms.ModelForm):
         password2 = cleaned_data.get("confirm_password")
 
         if password1 != password2:
-            raise forms.ValidationError("Passwords don't match")
+            self.add_error('confirm_password',"Passwords don't match")
 
         return cleaned_data
 
     def save(self, commit=True):
 
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password'])
+        user.data = {
+            'username': self.cleaned_data['username'],
+            'password': make_password(self.cleaned_data['password'])
+        }
 
         if commit:
             user.save()
 
         return user
+
+
+class VerificationEmailForm(forms.Form):
+
+    code = forms.CharField(
+        max_length=6,
+        validators=[MinLengthValidator(6)],
+        widget=forms.TextInput(attrs={'autocomplete': 'off'})
+    )
 
 
 class CustomLoginForm(AuthenticationForm):

@@ -60,10 +60,3 @@ class CreatePasswordForm(forms.Form):
                 )
 
             return cleaned_data
-
-
-class SavePasswordForm(forms.Form):
-
-    password = forms.CharField(
-        widget=forms.TextInput(attrs={"placeholder": "Enter the password to save", "name": "password"})
-    )

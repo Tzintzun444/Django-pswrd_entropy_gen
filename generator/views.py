@@ -1,12 +1,12 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy, reverse
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.views import View
 
 from generator.utils import Generator
 from django.views.generic import FormView, ListView
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import CreatePasswordForm, SavePasswordForm
+from .forms import CreatePasswordForm
 from .models import Password
 
 

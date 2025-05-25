@@ -26,7 +26,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -44,11 +44,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'drf_spectacular',
+    'django_extensions',
     'users',
     'generator',
+    'api_docs',
 ]
 
 MIDDLEWARE = [
+    "django_ratelimit.middleware.RatelimitMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -138,3 +143,41 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
 
 LOGOUT_REDIRECT_URL = 'index'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_AUTENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication'
+    ),
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '5/minute', 'user': '10/minute'
+    }
+}
+
+RATELIMIT_ENABLE = True
+
+RATELIMIT_KEY = "ip"
+
+RATELIMIT_RATE = "5/m"
+
+RATELIMIT_METHOD = ["GET", "POST", "PUT", "PATCH"]
+
+RATELIMIT_BLOCK = True
+
+EMAIL_BACKEND = env('EMAIL_BACKEND')
+
+EMAIL_HOST = env('EMAIL_HOST')
+
+EMAIL_PORT = env('EMAIL_PORT')
+
+EMAIL_USE_TLS = env('EMAIL_PORT')
+
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
