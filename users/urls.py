@@ -7,7 +7,7 @@ from .views import *
 
 router = DefaultRouter()
 router.register('customers', CustomClientViewSet, basename='customer')
-router.register('admins', CustomAdminViewSet)
+router.register('admins', CustomAdminViewSet, basename='admin')
 
 urlpatterns = [
     path('settings/', UserSettingsView.as_view(), name='settings'),
