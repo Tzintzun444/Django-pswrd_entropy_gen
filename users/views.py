@@ -234,5 +234,6 @@ class DeleteUser(LoginRequiredMixin, DeleteView):
     def get_object(self, queryset=None):
         return self.request.user
 
-    # def dispatch(self, request, *args, **kwargs):
-    #     raise Http404('This page does not exist')
+    def get(self, request, *args, **kargs):
+
+        raise Http404('Page not found')

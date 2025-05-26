@@ -77,8 +77,9 @@ class PasswordDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         password = self.get_object()
         return password.user == self.request.user
 
-    # def dispatch(self, request, *args, **kwargs):
-    #     raise Http404('This page does not exist')
+    def get(self, request, *args, **kargs):
+
+        raise Http404('Page not found')
 
 
 class SavePasswordView(LoginRequiredMixin, View):
