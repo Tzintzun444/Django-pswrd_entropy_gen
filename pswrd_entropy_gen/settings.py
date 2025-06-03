@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+from django.utils.translation import gettext_lazy as _
 from pathlib import Path
 import environ
 import os
@@ -59,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -117,11 +118,24 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
+LANGUAGES = [
+    ('en', _('English')),
+    ('es', _('Spanish')),
+    ('fr', _('French')),
+    ('de', _('German')),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale/'
+]
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'America/Mexico_City'
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 

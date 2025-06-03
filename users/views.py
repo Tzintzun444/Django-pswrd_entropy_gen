@@ -4,12 +4,14 @@ from django.urls import reverse_lazy
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.utils import timezone
-from django.http import Http404
+from django.utils.translation import activate
+from django.http import Http404, JsonResponse
 from .models import CustomUser, UserNotVerified
 from .forms import UserRegistrationForm, CustomLoginForm, VerificationEmailForm, UserSettingsForm
 from django.views.generic import TemplateView, FormView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
+import json
 
 
 # Create your views here.
@@ -125,7 +127,7 @@ class VerifyEmailCustomerView(FormView):
 
         except UserNotVerified.DoesNotExist:
 
-            form.add_error('code', 'Invalide code or expired')
+            form.add_error('code', 'Invalid code or expired')
             return self.form_invalid(form)
         user = CustomUser(
             username=verification.data['username'],
@@ -174,7 +176,7 @@ class VerifyEmailAdminView(LoginRequiredMixin, UserPassesTestMixin, FormView):
 
         except UserNotVerified.DoesNotExist:
 
-            form.add_error('code', 'Invalide code or expired')
+            form.add_error('code', 'Invalid code or expired')
             return self.form_invalid(form)
         user = CustomUser(
             username=verification.data['username'],
@@ -234,6 +236,16 @@ class DeleteUser(LoginRequiredMixin, DeleteView):
     def get_object(self, queryset=None):
         return self.request.user
 
-    def get(self, request, *args, **kargs):
+    def get(self, request, *args, **kwargs):
 
         raise Http404('Page not found')
+
+
+def set_language(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        lang_code = data.get("language", "en")
+        activate(lang_code)
+        request.session['django_language'] = lang_code
+        return JsonResponse({"success": True})
+    return JsonResponse({"error": "Invalid request"}, status=400)

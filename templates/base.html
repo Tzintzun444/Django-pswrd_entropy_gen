@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load i18n %}
 <html lang="es">
 <head>
     {% load static %}
@@ -15,7 +16,7 @@
     <header class="header">
         {% if user.is_authenticated %}
             <button class="btn-header logout" type="button" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                Log Out
+                {% trans "Log Out" %}
             </button>
 
             <!-- Modal de Confirmación de Logout -->
@@ -27,23 +28,23 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            Are you sure you want to log out?
+                            {% trans "Are you sure you want to log out?" %}
                         </div>
                         <div class="modal-footer">
                             <form method="post" action="{% url 'logout' %}">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-danger">Log Out</button>
+                                <button type="submit" class="btn btn-danger">{% trans "Log Out" %}</button>
                             </form>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
                         </div>
                     </div>
                 </div>
             </div>
         {% endif %}
         <nav class="nav">
-            <a href="{% url 'my_passwords' %}" class="btn-header green ">See my passwords</a>
+            <a href="{% url 'my_passwords' %}" class="btn-header green ">{% trans "See my passwords" %}</a>
             <a href="{% url 'index' %}" class="btn-header">Home</a>
-            <a href="{% url 'generator' %}" class="btn-header green">Generate Password</a>
+            <a href="{% url 'generator' %}" class="btn-header green">{% trans "Generate a Password" %}</a>
         </nav>
         {% if user.is_authenticated %}
             <div class="user-box">
@@ -51,7 +52,7 @@
                     <div id="menuDropdown" class="dropdown-menu">
                         <a class="menu-btn-link" href="{% url 'settings' %}">Settings</a>
                         <button class="btn-logout-menu btn-header logout " type="button" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                        Log Out
+                        {% trans "Log Out" %}
                         </button>
 
                     <!-- Modal de Confirmación de Logout -->
@@ -63,22 +64,34 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Are you sure you want to log out?
+                                        {% trans "Are you sure you want to log out?" %}
                                     </div>
                                     <div class="modal-footer">
                                         <form method="post" action="{% url 'logout' %}">
                                             {% csrf_token %}
-                                            <button type="submit" class="btn btn-danger">Log Out</button>
+                                            <button type="submit" class="btn btn-danger">{% trans "Log Out" %}</button>
                                         </form>
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <form action="{% url 'set_language' %}" method="post" id="language-form">
+                            {% csrf_token %}
+                            <select name="language" class="language-switcher">
+                                {% get_current_language as CURRENT_LANGUAGE %}
+                                {% get_available_languages as LANGUAGES %}
+                                {% for code, name in LANGUAGES %}
+                                    <option value="{{ code }}" {% if code == CURRENT_LANGUAGE %}selected{% endif %} >
+                                        {{ name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </form>
                     </div>
             </div>
         {% else %}
-        <a href="{% url 'login' %}" class="btn-header login green">Login</a>
+        <a href="{% url 'login' %}" class="btn-header login green">{% trans "Log In" %}</a>
         {% endif %}
 
     </header>
@@ -97,6 +110,23 @@
             if (!menu.contains(event.target) && !button.contains(event.target)) {
                 menu.style.display = "none";
             }
+        });
+    </script>
+    <script>
+        document.querySelector('.language-switcher').addEventListener('change', function() {
+            let langCode = this.value;
+            fetch("{% url 'set_language' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": document.querySelector('input[name="csrfmiddlewaretoken"]').value
+                },
+                body: JSON.stringify({language: langCode})
+            }).then(response => {
+                if (response.ok) {
+                    location.reload(); // Recargar la página solo si el cambio de idioma fue exitoso
+                }
+            });
         });
     </script>
 </body>
