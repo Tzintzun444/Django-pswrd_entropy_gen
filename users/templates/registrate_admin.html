@@ -4,13 +4,13 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'users/css/register_user.css' %}?v=1">
     <title>
-        Registrate admin
+        Sign Up Admin
     </title>
 {% endblock head%}
 
 {% block body %}
     <div class="register-container">
-        <h3 class="content">Registrate an admin</h3>
+        <h3 class="content">Sign Up an Admin</h3>
 
         <form method="post" autocomplete="off">
             {% csrf_token %}
@@ -24,7 +24,7 @@
                 <p>{{ form.confirm_password.label_tag }} {{ form.confirm_password }}</p>
             </div>
 
-            <button type="submit" class="btn-register green">Register admin</button>
+            <button type="submit" class="btn-register green">Sign Up Admin</button>
         </form>
     </div>
 {% endblock body %}

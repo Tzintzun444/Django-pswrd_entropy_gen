@@ -59,10 +59,10 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'pswrd_entropy_gen.urls'
@@ -121,13 +121,13 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGES = [
     ('en', _('English')),
     ('es', _('Spanish')),
-    ('fr', _('French')),
-    ('de', _('German')),
 ]
 
 LOCALE_PATHS = [
-    BASE_DIR / 'locale/'
+    os.path.join(BASE_DIR, 'locale')
 ]
+
+FILE_CHARSET = 'utf-8'
 
 LANGUAGE_CODE = 'en-us'
 

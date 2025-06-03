@@ -1,0 +1,133 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-03 00:15-0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
+"1 : 2;\n"
+
+#: .\templates\generator.html:10
+msgid "Generate Passwords"
+msgstr "Generar Contraseñas"
+
+#: .\templates\generator.html:17 .\templates\generator.html:67
+#: .\templates\list-passwords.html:86
+msgid "Generate a Password"
+msgstr "Generar contraseña"
+
+#: .\templates\generator.html:24
+msgid "Length"
+msgstr "Longitud"
+
+#: .\templates\generator.html:31
+msgid "Uppercase"
+msgstr "Mayúsculas"
+
+#: .\templates\generator.html:35
+msgid "Numbers"
+msgstr "Números"
+
+#: .\templates\generator.html:39
+msgid "Punctuation"
+msgstr "Puntuaciones"
+
+#: .\templates\generator.html:47
+msgid "Custom characters allowed"
+msgstr "Caracteres personalizados"
+
+#: .\templates\generator.html:57
+msgid "Characters not allowed"
+msgstr "Caracteres bloqueados"
+
+#: .\templates\generator.html:68
+msgid "See my passwords"
+msgstr "Ver contraseñas"
+
+#: .\templates\generator.html:73
+msgid "The generated password was"
+msgstr "La contraseña generada fue"
+
+#: .\templates\generator.html:80
+msgid "Save password"
+msgstr "Guardar contraseña"
+
+#: .\templates\generator.html:81
+msgid "Don't save"
+msgstr "No guardar"
+
+#: .\templates\list-passwords.html:8 .\templates\list-passwords.html:15
+msgid "Generated Passwords"
+msgstr "Contraseñas Generadas"
+
+#: .\templates\list-passwords.html:20
+msgid "Password"
+msgstr "Contraseña"
+
+#: .\templates\list-passwords.html:21
+msgid "Entropy"
+msgstr "Entropía"
+
+#: .\templates\list-passwords.html:22
+msgid "Time to decrypt it"
+msgstr "Tiempo para descifrar"
+
+#: .\templates\list-passwords.html:23
+msgid "Generation Date"
+msgstr "Fecha de creación"
+
+#: .\templates\list-passwords.html:24
+msgid "Delete Password"
+msgstr "Borrar Contraseña"
+
+#: .\templates\list-passwords.html:32
+msgid "years"
+msgstr "años"
+
+#: .\templates\list-passwords.html:36 .\templates\list-passwords.html:53
+msgid "Delete"
+msgstr "Eliminar"
+
+#: .\templates\list-passwords.html:44
+msgid "Confirm deletion"
+msgstr "Confirmar eliminación"
+
+#: .\templates\list-passwords.html:48
+msgid "Are you sure you want to delete the password?"
+msgstr "¿Estás seguro de que quieres eliminar la contraseña?"
+
+#: .\templates\list-passwords.html:55
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: .\templates\list-passwords.html:66
+msgid "You have not generated passwords yet"
+msgstr "No has generado contraseñas aún"
+
+#: .\templates\list-passwords.html:72 .\templates\list-passwords.html:74
+msgid "Previous"
+msgstr "Previa"
+
+#: .\templates\list-passwords.html:77
+msgid "Page"
+msgstr "Página"
+
+#: .\templates\list-passwords.html:77
+msgid "of"
+msgstr "de"
+
+#: .\templates\list-passwords.html:80 .\templates\list-passwords.html:82
+msgid "Next"
+msgstr "Siguiente"

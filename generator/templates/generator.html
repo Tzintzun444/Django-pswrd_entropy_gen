@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block head %}
     {% load static %}
@@ -6,36 +7,36 @@
     <link rel="stylesheet" href="{% static 'generator/css/generator.css' %}?v=1">
     <link rel="stylesheet" href="{% static 'generator/css/generate_passwords.css' %}?v=1">
     <title>
-        Generate passwords
+        {% trans "Generate Passwords" %}
     </title>
 {% endblock head%}
 
 {% block body %}
 
     <div class="form-container">
-        <h2 class="content">Generate a password</h2>
+        <h2 class="content">{% trans "Generate a Password" %}</h2>
 
         <form method="post">
             {% csrf_token %}
 
             <div class="row">
                 <div class="input-group">
-                    <label for="id_length_password">Length</label>
+                    <label for="id_length_password">{% trans "Length" %}</label>
                     {{ form.length_password }}
                 </div>
 
                 <div class="input-group">
                     <div class="checkbox-wrapper">
                         <div class="checkbox-item">
-                            <label for="id_use_uppercase_letters">Uppercase</label>
+                            <label for="id_use_uppercase_letters">{% trans "Uppercase" %}</label>
                             {{ form.use_uppercase_letters }} <span class="check-icon"></span>
                         </div>
                         <div class="checkbox-item">
-                            <label for="id_use_digits">Numbers</label>
+                            <label for="id_use_digits">{% trans "Numbers" %}</label>
                             {{ form.use_digits }} <span class="check-icon"></span>
                         </div>
                         <div class="checkbox-item">
-                            <label for="id_use_punctuation_characters">Punctuation</label>
+                            <label for="id_use_punctuation_characters">{% trans "Punctuation" %}</label>
                             {{ form.use_punctuation_characters }} <span class="check-icon"></span>
                         </div>
                     </div>
@@ -43,7 +44,7 @@
             </div>
 
             <div class="full-width">
-                <label for="id_custom_characters_allowed">Custom characters allowed</label>
+                <label for="id_custom_characters_allowed">{% trans "Custom characters allowed" %}</label>
                 {{ form.custom_characters_allowed }}
                 {% if form.errors.custom_characters_allowed %}
                     <div>
@@ -53,7 +54,7 @@
             </div>
 
             <div class="full-width">
-                <label for="id_characters_not_allowed">Characters not allowed</label>
+                <label for="id_characters_not_allowed">{% trans "Characters not allowed" %}</label>
                 {{ form.characters_not_allowed }}
                 {% if form.errors.characters_not_allowed %}
                     <div>
@@ -63,21 +64,21 @@
             </div>
 
             <div class="button-row">
-                <button type="submit" class="btn-submit">Generate password</button>
-                <a href="{% url 'my_passwords' %}" class="btn-cancel">See my passwords</a>
+                <button type="submit" class="btn-submit">{% trans "Generate a Password" %}</button>
+                <a href="{% url 'my_passwords' %}" class="btn-cancel">{% trans "See my passwords" %}</a>
             </div>
         </form>
         {% if password %}
         <br/>
-            <h3>The generated password was: {{ password }}</h3>
+            <h3>{% trans "The generated password was" %}: {{ password }}</h3>
         <br/>
 
             <form action="{% url 'save_password' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="password" value="{{ password }}">
                 <div class="button-row">
-                    <button class="btn-submit" type="submit">Save password</button>
-                    <a href="{% url 'generator' %}" class="btn-cancel">Don't save</a>
+                    <button class="btn-submit" type="submit">{% trans "Save password" %}</button>
+                    <a href="{% url 'generator' %}" class="btn-cancel">{% trans "Don't save" %}</a>
                 </div>
 
             </form>

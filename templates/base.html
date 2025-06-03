@@ -43,14 +43,14 @@
         {% endif %}
         <nav class="nav">
             <a href="{% url 'my_passwords' %}" class="btn-header green ">{% trans "See my passwords" %}</a>
-            <a href="{% url 'index' %}" class="btn-header">Home</a>
+            <a href="{% url 'index' %}" class="btn-header">{% trans "Home" %}</a>
             <a href="{% url 'generator' %}" class="btn-header green">{% trans "Generate a Password" %}</a>
         </nav>
         {% if user.is_authenticated %}
             <div class="user-box">
                 <button class="btn-header" id="userButton">{{ user.username }}</button>
                     <div id="menuDropdown" class="dropdown-menu">
-                        <a class="menu-btn-link" href="{% url 'settings' %}">Settings</a>
+                        <a class="menu-btn-link" href="{% url 'settings' %}">{% trans "Settings" %}</a>
                         <button class="btn-logout-menu btn-header logout " type="button" data-bs-toggle="modal" data-bs-target="#logoutModal">
                         {% trans "Log Out" %}
                         </button>
@@ -78,7 +78,7 @@
                         </div>
                         <form action="{% url 'set_language' %}" method="post" id="language-form">
                             {% csrf_token %}
-                            <select name="language" class="language-switcher">
+                            <select name="language" class="language-switcher" onchange="document.getElementById('language-form').submit();">
                                 {% get_current_language as CURRENT_LANGUAGE %}
                                 {% get_available_languages as LANGUAGES %}
                                 {% for code, name in LANGUAGES %}
