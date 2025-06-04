@@ -239,13 +239,3 @@ class DeleteUser(LoginRequiredMixin, DeleteView):
     def get(self, request, *args, **kwargs):
 
         raise Http404('Page not found')
-
-
-# def set_language(request):
-#     if request.method == "POST":
-#         data = json.loads(request.body)
-#         lang_code = data.get("language", "en")
-#         activate(lang_code)
-#         request.session['django_language'] = lang_code
-#         return JsonResponse({"success": True})
-#     return JsonResponse({"error": "Invalid request"}, status=400)

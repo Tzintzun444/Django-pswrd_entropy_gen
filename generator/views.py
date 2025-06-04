@@ -108,3 +108,7 @@ class SavePasswordView(LoginRequiredMixin, View):
                 del request.session['password_is_new']
 
         return redirect('my_passwords')
+
+    def get(self, request, *args, **kwargs):
+
+        raise Http404
