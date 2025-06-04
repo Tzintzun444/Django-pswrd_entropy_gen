@@ -1,3 +1,4 @@
+from django.utils.translation import gettext_lazy as _
 from django import forms
 
 
@@ -5,7 +6,7 @@ class CreatePasswordForm(forms.Form):
 
     length_password = forms.IntegerField(
         min_value=1, max_value=30,
-        widget=forms.TextInput(attrs={'placeholder': 'Length of the password'})
+        widget=forms.TextInput(attrs={'placeholder': _('Length of the password')})
     )
     use_uppercase_letters = forms.BooleanField(
         required=False
@@ -18,11 +19,11 @@ class CreatePasswordForm(forms.Form):
     )
     custom_characters_allowed = forms.CharField(
         max_length=50, required=False,
-        widget=forms.TextInput(attrs={'placeholder': 'These characters will appear in the password'})
+        widget=forms.TextInput(attrs={'placeholder': _('These characters will appear in the password')})
     )
     characters_not_allowed = forms.CharField(
         max_length=50, required=False,
-        widget=forms.TextInput(attrs={'placeholder': 'These characters won\'t appear in the password'})
+        widget=forms.TextInput(attrs={'placeholder': _('These characters won\'t appear in the password')})
     )
 
     def clean(self):
@@ -36,7 +37,7 @@ class CreatePasswordForm(forms.Form):
                 print('error')
                 self.add_error(
                     'characters_not_allowed',
-                    'A character is crashing in custom and not allowed characters'
+                    _('A character is crashing in custom and not allowed characters')
                 )
 
         if custom_characters_allowed:
@@ -56,7 +57,7 @@ class CreatePasswordForm(forms.Form):
                 print('error')
                 self.add_error(
                     'custom_characters_allowed',
-                    'There are more custom characters than available characters in the length of the password.'
+                    _('There are more custom characters than available characters in the length of the password.')
                 )
 
             return cleaned_data

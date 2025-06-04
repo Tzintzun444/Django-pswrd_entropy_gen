@@ -24,7 +24,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Confirm Log out</h5>
+                            <h5 class="modal-title">{% trans "Confirm Log Out" %}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -60,7 +60,7 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Confirm Log out</h5>
+                                        <h5 class="modal-title">{% trans "Confirm Log Out" %}</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -78,7 +78,7 @@
                         </div>
                         <form action="{% url 'set_language' %}" method="post" id="language-form">
                             {% csrf_token %}
-                            <select name="language" class="language-switcher" onchange="document.getElementById('language-form').submit();">
+                            <select name="language" class="" onchange="document.getElementById('language-form').submit();">
                                 {% get_current_language as CURRENT_LANGUAGE %}
                                 {% get_available_languages as LANGUAGES %}
                                 {% for code, name in LANGUAGES %}
@@ -110,23 +110,6 @@
             if (!menu.contains(event.target) && !button.contains(event.target)) {
                 menu.style.display = "none";
             }
-        });
-    </script>
-    <script>
-        document.querySelector('.language-switcher').addEventListener('change', function() {
-            let langCode = this.value;
-            fetch("{% url 'set_language' %}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": document.querySelector('input[name="csrfmiddlewaretoken"]').value
-                },
-                body: JSON.stringify({language: langCode})
-            }).then(response => {
-                if (response.ok) {
-                    location.reload(); // Recargar la página solo si el cambio de idioma fue exitoso
-                }
-            });
         });
     </script>
 </body>

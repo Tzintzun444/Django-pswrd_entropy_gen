@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from .models import UserNotVerified, CustomUser
@@ -12,43 +13,48 @@ class UserRegistrationForm(forms.ModelForm):
 
     username = forms.CharField(
         widget=forms.TextInput(
-            attrs={"placeholder": "Letters, digits and @/./+/-/_ only.",
+            attrs={"placeholder": _("Letters, digits and @.+-_ only"),
                    "autocomplete": "off"
                    }),
-        max_length=150
+        max_length=150,
+        label=_('Username:')
     )
     first_name = forms.CharField(
         widget=forms.TextInput(
-            attrs={"placeholder": "First name",
+            attrs={"placeholder": _("First name"),
                    "autocomplete": "off"
                    }),
-        max_length=50
+        max_length=50,
+        label=_('First name:')
     )
     last_name = forms.CharField(
         widget=forms.TextInput(
-            attrs={"placeholder": "Last name",
+            attrs={"placeholder": _("Last name"),
                    "autocomplete": "off"
                    }),
-        max_length=50
+        max_length=50,
+        label=_('Last name:')
     )
     email = forms.EmailField(
         widget=forms.EmailInput(
-            attrs={"placeholder": "Enter an email address",
+            attrs={"placeholder": _("Enter an email address"),
                    "autocomplete": "off"
-                   })
+                   }),
     )
     password = forms.CharField(
         widget=forms.PasswordInput(
-            attrs={"placeholder": "At least 8 characters",
+            attrs={"placeholder": _("At least 8 characters"),
                    "autocomplete": "off"
                    }),
-        min_length=8
+        min_length=8,
+        label=_('Password:')
     )
     confirm_password = forms.CharField(
         widget=forms.PasswordInput(
-            attrs={"placeholder": "Repeat your password",
+            attrs={"placeholder": _("Repeat your password"),
                    "autocomplete": "off"
-                   })
+                   }),
+        label=_('Confirm password:')
     )
 
     class Meta:
@@ -86,6 +92,7 @@ class VerificationEmailForm(forms.Form):
 
     code = forms.CharField(
         max_length=6,
+        label=_('Code:'),
         validators=[MinLengthValidator(6)],
         widget=forms.TextInput(attrs={'autocomplete': 'off'})
     )
@@ -94,10 +101,12 @@ class VerificationEmailForm(forms.Form):
 class CustomLoginForm(AuthenticationForm):
 
     username = forms.CharField(
-        widget=forms.TextInput(attrs={"class": "login-input", "placeholder": "Username"})
+        widget=forms.TextInput(attrs={"class": "login-input", "placeholder": _("Username")}),
+        label=_('Username:')
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"class": "login-input", "placeholder": "Password"})
+        widget=forms.PasswordInput(attrs={"class": "login-input", "placeholder": _("Password")}),
+        label=_('Password:')
     )
 
 
@@ -105,15 +114,18 @@ class UserSettingsForm(forms.ModelForm):
 
     new_password = forms.CharField(
         widget=forms.PasswordInput(
-            attrs={'placeholder': 'At least 8 characters'}
+            attrs={'placeholder': _('At least 8 characters'),
+                   }
         ),
+        label=_('New password:'),
         required=False,
         min_length=8
     )
     confirm_password = forms.CharField(
         widget=forms.PasswordInput(
-            attrs={'placeholder': 'Repeat your password'}
+            attrs={'placeholder': _('Repeat your password')}
         ),
+        label=_('Confirm password:'),
         required=False
     )
 
@@ -126,13 +138,13 @@ class UserSettingsForm(forms.ModelForm):
                 'readonly': 'readonly',
             }),
             'username': forms.TextInput(
-                attrs={'placeholder': 'Username'}
+                attrs={'placeholder': _('Username:')}
             ),
             'first_name': forms.TextInput(
-                attrs={'placeholder': 'First name'}
+                attrs={'placeholder': _('First name:')}
             ),
             'last_name': forms.TextInput(
-                attrs={'placeholder': 'Last name'}
+                attrs={'placeholder': _('Last name:')}
             ),
         }
 

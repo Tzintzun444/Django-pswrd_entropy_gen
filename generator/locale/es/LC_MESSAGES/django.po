@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-03 00:15-0600\n"
+"POT-Creation-Date: 2025-06-03 21:32-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,28 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
+
+#: .\forms.py:9
+msgid "Length of the password"
+msgstr "Longitud de la contraseña"
+
+#: .\forms.py:22
+msgid "These characters will appear in the password"
+msgstr "Estos caracteres aparecerán en la contraseña"
+
+#: .\forms.py:26
+msgid "These characters won't appear in the password"
+msgstr "Estos caracteres no aparecerán en la contraseña"
+
+#: .\forms.py:40
+msgid "A character is crashing in custom and not allowed characters"
+msgstr "Un caracter colisiona entre los caracteres personalizados y bloqueados"
+
+#: .\forms.py:60
+msgid ""
+"There are more custom characters than available characters in the length of "
+"the password."
+msgstr "Hay más caracteres personalizados que caracteres disponibles en la longitud de la contraseña"
 
 #: .\templates\generator.html:10
 msgid "Generate Passwords"
@@ -117,8 +139,8 @@ msgid "You have not generated passwords yet"
 msgstr "No has generado contraseñas aún"
 
 #: .\templates\list-passwords.html:72 .\templates\list-passwords.html:74
-msgid "Previous"
-msgstr "Previa"
+msgid "Previous page"
+msgstr "Página previa"
 
 #: .\templates\list-passwords.html:77
 msgid "Page"
@@ -129,5 +151,5 @@ msgid "of"
 msgstr "de"
 
 #: .\templates\list-passwords.html:80 .\templates\list-passwords.html:82
-msgid "Next"
-msgstr "Siguiente"
+msgid "Next page"
+msgstr "Siguiente página"

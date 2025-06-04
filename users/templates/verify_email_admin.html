@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block head %}
-    <title>Verify email admin</title>
+    <title>{% trans "Verify email" %}</title>
 {% endblock head %}
 
 {% block body %}
     <form method="post">
         {% csrf_token %}
         {{form.as_p}}
-        <button type="submit">Verify email</button>
+        <button type="submit">{% trans "Verify email" %}</button>
     </form>
 {% endblock body %}

@@ -21,7 +21,7 @@
 
             <div class="row">
                 <div class="input-group">
-                    <label for="id_length_password">{% trans "Length" %}</label>
+                    <label for="id_length_password">{% trans "Length" %}:</label>
                     {{ form.length_password }}
                 </div>
 
@@ -44,7 +44,7 @@
             </div>
 
             <div class="full-width">
-                <label for="id_custom_characters_allowed">{% trans "Custom characters allowed" %}</label>
+                <label for="id_custom_characters_allowed">{% trans "Custom characters allowed" %}:</label>
                 {{ form.custom_characters_allowed }}
                 {% if form.errors.custom_characters_allowed %}
                     <div>
@@ -54,7 +54,7 @@
             </div>
 
             <div class="full-width">
-                <label for="id_characters_not_allowed">{% trans "Characters not allowed" %}</label>
+                <label for="id_characters_not_allowed">{% trans "Characters not allowed" %}:</label>
                 {{ form.characters_not_allowed }}
                 {% if form.errors.characters_not_allowed %}
                     <div>

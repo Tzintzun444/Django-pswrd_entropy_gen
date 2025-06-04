@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-02 23:07-0600\n"
+"POT-Creation-Date: 2025-06-03 19:36-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,18 +19,14 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
 
-#: .\pswrd_entropy_gen\settings.py:122
-msgid "English"
-msgstr "Inglés"
-
-#: .\pswrd_entropy_gen\settings.py:123
-msgid "Spanish"
-msgstr "Español"
-
 #: .\templates\base.html:19 .\templates\base.html:36 .\templates\base.html:55
 #: .\templates\base.html:72
 msgid "Log Out"
 msgstr "Cerrar sesión"
+
+#: .\templates\base.html:27 .\templates\base.html:63
+msgid "Confirm Log Out"
+msgstr "Confirmar cierre de sesión"
 
 #: .\templates\base.html:31 .\templates\base.html:67
 msgid "Are you sure you want to log out?"
@@ -60,6 +56,6 @@ msgstr "Configuraciones"
 msgid "Log In"
 msgstr "Iniciar sesión"
 
-#: .\templates\index.html:8
+#: .\templates\index.html:9
 msgid "Password Entropy Generator"
 msgstr "Generador de contraseñas por entropía"

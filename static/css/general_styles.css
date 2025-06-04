@@ -133,3 +133,24 @@ body {
     padding: 8px;
     font-size: 15px;
 }
+
+select[name="language"] {
+    border: 2px solid #ccc; /* Borde similar al botón de Settings */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 8px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #ffffff; /* Fondo blanco */
+    cursor: pointer; /* Indica que es interactivo */
+    transition: all 0.3s ease; /* Transición suave */
+    font-size: 16px;
+}
+
+/* Efectos dinámicos */
+select[name="language"]:hover {
+    background-color: #f0f0f0; /* Cambio de color en hover */
+}
+
+select[name="language"]:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 152, 0, 0.5);
+}

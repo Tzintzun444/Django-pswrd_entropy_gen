@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
+{% load i18n %}
+
 
 {% block head %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'users/css/register_user.css' %}?v=1">
     <title>
-        Sign Up Form
+        {% trans "Sign Up Form" %}
     </title>
 {% endblock head%}
 
 {% block body %}
     <div class="register-container">
-        <h3 class="content">Sign Up Form</h3>
+        <h3 class="content">{% trans "Sign Up Form" %}</h3>
 
         <form method="post" autocomplete="off">
             {% csrf_token %}
@@ -24,7 +26,7 @@
                 <p>{{ form.confirm_password.label_tag }} {{ form.confirm_password }}</p>
             </div>
 
-            <button type="submit" class="btn-register green">Sign Up</button>
+            <button type="submit" class="btn-register green">{% trans "Sign Up" %}</button>
         </form>
     </div>
 {% endblock body %}

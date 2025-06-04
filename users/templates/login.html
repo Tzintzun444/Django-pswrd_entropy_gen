@@ -1,23 +1,24 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block head %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'users/css/login.css' %}">
     <title>
-        Log In
+        {% trans "Log In" %}
     </title>
 {% endblock head %}
 
 {% block body %}
     <div class="login-container">
-        <h3 class="login-title">Log In</h3>
+        <h3 class="login-title">{% trans "Log In" %}</h3>
         <form method="post">
             {% csrf_token %}
             {{form.as_p}}
-            <button type="submit">Log In</button>
+            <button type="submit">{% trans "Log In" %}</button>
         </form>
         <p class="register-link">
-            Don't have an account? <a href="{% url 'register_customer' %}">Sign Up here</a>
+            {% trans "Don't have an account?" %} <a href="{% url 'register_customer' %}">{% trans "Sign Up here" %}</a>
         </p>
     </div>
 {% endblock body %}

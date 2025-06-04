@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load i18n %}
 
 {% block head %}
+    {% load static %}
     <link rel="stylesheet" href="{% static 'users/css/register_user.css'%}?v=1">
     <link rel="stylesheet" href="{% static 'users/css/settings.css' %}">
-    <title>Settings</title>
+    <title>{% trans "Settings" %}</title>
 {% endblock head %}
 
 {% block body %}
     <div class="register-container">
-        <h3 class="content">Update profile</h3>
+        <h3 class="content">{% trans "Update profile" %}</h3>
 
         <form method="post" autocomplete="off">
             {% csrf_token %}
@@ -27,27 +28,27 @@
             </div>
         </form>
         <div class="btn-row">
-            <button type="submit" class="btn-update green">Update</button>
+            <button type="submit" class="btn-update green">{% trans "Update" %}</button>
             <button class="btn-update logout" type="button" data-bs-toggle="modal" data-bs-target="#confirmDelete{{ request.user.id }}">
-                                    Delete profile
+                                    {% trans "Delete profile" %}
             </button>
                 <!-- Modal de Confirmación -->
                 <div class="modal fade" id="confirmDelete{{ request.user.id }}" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Confirm deletion</h5>
+                                <h5 class="modal-title">{% trans "Confirm deletion" %}</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                                 <div class="modal-body">
-                                    Are you sure you want to delete your profile?
+                                    {% trans "Are you sure you want to delete your profile?" %}
                                 </div>
                             <div class="modal-footer">
                                 <form method="post" action="{% url 'delete_user' %}">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger">Delete profile</button>
+                                    <button type="submit" class="btn btn-danger">{% trans "Delete profile" %}</button>
                                 </form>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
                             </div>
                         </div>
                     </div>
