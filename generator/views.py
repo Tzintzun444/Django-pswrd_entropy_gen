@@ -111,4 +111,4 @@ class SavePasswordView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
 
-        raise Http404
+        raise Http404('Page not found')
