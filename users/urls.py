@@ -3,12 +3,13 @@ from xml.etree.ElementInclude import include
 from django.urls import path, include
 from django.views.i18n import set_language
 from rest_framework.routers import DefaultRouter
-from .viewsets import CustomClientViewSet, CustomAdminViewSet
+from .viewsets import CustomClientViewSet, CustomAdminViewSet, AllUsersViewSet
 from .views import *
 
 router = DefaultRouter()
 router.register('customers', CustomClientViewSet, basename='customer')
 router.register('admins', CustomAdminViewSet, basename='admin')
+router.register('all-users', AllUsersViewSet, basename='all-users')
 
 urlpatterns = [
     path('settings/', UserSettingsView.as_view(), name='settings'),

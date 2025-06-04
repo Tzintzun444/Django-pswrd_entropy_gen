@@ -98,33 +98,3 @@ class CustomAdminSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('Password must have at least 8 characters')
 
         return super().validate(data)
-
-# class PatientSerializer(serializers.ModelSerializer):
-#     appointments = AppointmentSerializer(many=True, read_only=True)
-#     age = serializers.SerializerMethodField()
-#
-#     class Meta:
-#         model = Patient
-#         fields = [
-#             'id',
-#             'first_name',
-#             'last_name',
-#             'age',
-#             'date_of_birth',
-#             'contact_number',
-#             'email',
-#             'address',
-#             'medical_history',
-#             'appointments'
-#         ]
-#
-#     def validate(self, attrs):
-#         if not attrs['email'].endswith('@patient.com'):
-#             raise serializers.ValidationError('Email must have the domain: @patient.com')
-#
-#         return super().validate(attrs)
-#
-#     def get_age(self, obj):
-#         age_td = date.today() - obj.date_of_birth
-#         age = age_td.days // 365
-#         return f'{age} years old'

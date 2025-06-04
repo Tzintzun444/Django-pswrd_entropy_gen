@@ -1,22 +1,23 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from users.permissions import IsStaffOrAdmin
 from .serializers import PasswordGenerationSerializer, PasswordModelSerializer
 from .models import Password
+from .permissions import PasswordPermission
 
 
 class PasswordViewSet(viewsets.GenericViewSet):
 
     queryset = Password.objects.all()
     serializer_class = PasswordGenerationSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [PasswordPermission]
 
     def get_queryset(self):
 
         queryset = super().get_queryset()
-        if not self.request.user.is_staff:
-            queryset = queryset.filter(user=self.request.user)
+        queryset = queryset.filter(user=self.request.user)
         return queryset
 
     def get_serializer_class(self):
@@ -51,3 +52,10 @@ class PasswordViewSet(viewsets.GenericViewSet):
         instance.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class AllPasswordsViewSet(viewsets.ReadOnlyModelViewSet):
+
+    queryset = Password.objects.all()
+    serializer_class = PasswordModelSerializer
+    permission_classes = [IsStaffOrAdmin]
