@@ -40,6 +40,19 @@
                     </div>
                 </div>
             </div>
+        {% else %}
+            <form action="{% url 'set_language' %}" method="post" id="language-form">
+                {% csrf_token %}
+                <select name="language" class="" onchange="document.getElementById('language-form').submit();">
+                    {% get_current_language as CURRENT_LANGUAGE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% for code, name in LANGUAGES %}
+                        <option value="{{ code }}" {% if code == CURRENT_LANGUAGE %}selected{% endif %} >
+                            {{ name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
         {% endif %}
         <nav class="nav">
             <a href="{% url 'my_passwords' %}" class="btn-header green ">{% trans "See my passwords" %}</a>
