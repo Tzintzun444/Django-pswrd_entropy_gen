@@ -7,13 +7,17 @@ from .permissions import IsStaffOrAdmin, CustomUserPermission
 class CustomClientViewSet(viewsets.ModelViewSet):
 
     serializer_class = CustomCustomerSerializer
-    queryset = CustomUser.objects.filter(is_staff=False)
     permission_classes = [CustomUserPermission]
+    queryset = CustomUser.objects.filter(is_staff=False)
 
     def get_queryset(self):
 
         queryset = super().get_queryset()
-        queryset = queryset.filter(username=self.request.user.username)
+
+        if self.request.user.is_superuser or self.request.user.is_staff:
+            return queryset
+
+        queryset = queryset.filter(id=self.request.user.id)
         return queryset
 
     def perform_create(self, serializer):
@@ -28,12 +32,6 @@ class CustomAdminViewSet(viewsets.ModelViewSet):
     serializer_class = CustomAdminSerializer
     queryset = CustomUser.objects.filter(is_staff=True)
     permission_classes = [IsStaffOrAdmin]
-
-    def get_queryset(self):
-
-        queryset = super().get_queryset()
-        queryset = queryset.filter(username=self.request.user.username)
-        return queryset
 
     def perform_create(self, serializer):
 

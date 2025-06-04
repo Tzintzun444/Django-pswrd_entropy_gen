@@ -26,6 +26,6 @@ class CustomUserPermission(BasePermission):
 
         if view.action in ['retrieve', 'destroy', 'update']:
 
-            return obj.owner == request.user or request.user.is_staff or request.user.is_superuser
+            return obj.username == request.user.username or request.user.is_staff or request.user.is_superuser
 
         return False
