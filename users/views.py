@@ -67,7 +67,7 @@ class RegisterClientView(CreateView):
         send_mail(
             'Email verification',
             f'Your verification code is {verification.code}',
-            'alfredotzintzun444@gmail.com',
+            'pswrdentropygen@gmail.com',
             [verification.email],
             fail_silently=False
         )
@@ -95,7 +95,7 @@ class RegisterAdminView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         send_mail(
             'Email verification',
             f'Your verification code is {verification.code}',
-            'alfredotzintzun444@gmail.com',
+            'pswrdentropygen@gmail.com',
             [verification.email],
             fail_silently=False
         )
