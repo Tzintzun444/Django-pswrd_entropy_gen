@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-03 22:05-0600\n"
+"POT-Creation-Date: 2025-06-05 00:02-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,127 +19,127 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
 
-#: .\users\forms.py:16
+#: .\forms.py:16
 msgid "Letters, digits and @.+-_ only"
 msgstr "Letras, dígitos y @.+-_ únicamente"
 
-#: .\users\forms.py:20 .\users\forms.py:105 .\users\forms.py:141
+#: .\forms.py:20 .\forms.py:105 .\forms.py:141
 msgid "Username:"
 msgstr "Nombre de usuario:"
 
-#: .\users\forms.py:24
+#: .\forms.py:24
 msgid "First name"
 msgstr "Nombre"
 
-#: .\users\forms.py:28 .\users\forms.py:144
+#: .\forms.py:28 .\forms.py:144
 msgid "First name:"
 msgstr "Nombre:"
 
-#: .\users\forms.py:32
+#: .\forms.py:32
 msgid "Last name"
 msgstr "Apellido"
 
-#: .\users\forms.py:36 .\users\forms.py:147
+#: .\forms.py:36 .\forms.py:147
 msgid "Last name:"
 msgstr "Apellido:"
 
-#: .\users\forms.py:40
+#: .\forms.py:40
 msgid "Enter an email address"
 msgstr "Ingresa una dirección de email"
 
-#: .\users\forms.py:46 .\users\forms.py:117
+#: .\forms.py:46 .\forms.py:117
 msgid "At least 8 characters"
 msgstr "Al menos 8 caracteres"
 
-#: .\users\forms.py:50 .\users\forms.py:109
+#: .\forms.py:50 .\forms.py:109
 msgid "Password:"
 msgstr "Contraseña:"
 
-#: .\users\forms.py:54 .\users\forms.py:126
+#: .\forms.py:54 .\forms.py:126
 msgid "Repeat your password"
 msgstr "Repite tu contraseña"
 
-#: .\users\forms.py:57 .\users\forms.py:128
+#: .\forms.py:57 .\forms.py:128
 msgid "Confirm password:"
 msgstr "Confirmar contraseña:"
 
-#: .\users\forms.py:95
+#: .\forms.py:95
 msgid "Code:"
 msgstr "Código:"
 
-#: .\users\forms.py:104
+#: .\forms.py:104
 msgid "Username"
 msgstr "Nombre de usuario"
 
-#: .\users\forms.py:108
+#: .\forms.py:108
 msgid "Password"
 msgstr "Contraseña"
 
-#: .\users\forms.py:120
+#: .\forms.py:120
 msgid "New password:"
 msgstr "Nueva contraseña:"
 
-#: .\users\templates\login.html:8 .\users\templates\login.html:14
-#: .\users\templates\login.html:18
+#: .\templates\login.html:9 .\templates\login.html:15 .\templates\login.html:19
 msgid "Log In"
 msgstr "Ingresar"
 
-#: .\users\templates\login.html:21
+#: .\templates\login.html:22
 msgid "Don't have an account?"
 msgstr "¿No tienes una cuenta?"
 
-#: .\users\templates\login.html:21
+#: .\templates\login.html:22
 msgid "Sign Up here"
 msgstr "Regístrate aquí"
 
-#: .\users\templates\registrate_admin.html:8
-#: .\users\templates\registrate_admin.html:28
+#: .\templates\login.html:25
+msgid "Log In with Google"
+msgstr "Inicia sesión con Google"
+
+#: .\templates\registrate_admin.html:8 .\templates\registrate_admin.html:28
 msgid "Sign Up Admin"
 msgstr "Registrar administrador"
 
-#: .\users\templates\registrate_admin.html:14
+#: .\templates\registrate_admin.html:14
 msgid "Sign Up an Admin"
 msgstr "Registra un administrador"
 
-#: .\users\templates\registrate_client.html:9
-#: .\users\templates\registrate_client.html:15
+#: .\templates\registrate_client.html:9 .\templates\registrate_client.html:15
 msgid "Sign Up Form"
 msgstr "Formulario de registro"
 
-#: .\users\templates\registrate_client.html:29
+#: .\templates\registrate_client.html:29
 msgid "Sign Up"
 msgstr "Registrarse"
 
-#: .\users\templates\settings.html:8
+#: .\templates\settings.html:8
 msgid "Settings"
 msgstr "Configuraciones"
 
-#: .\users\templates\settings.html:13
+#: .\templates\settings.html:13
 msgid "Update profile"
 msgstr "Actualizar perfil"
 
-#: .\users\templates\settings.html:31
+#: .\templates\settings.html:31
 msgid "Update"
 msgstr "Actualizar"
 
-#: .\users\templates\settings.html:33 .\users\templates\settings.html:49
+#: .\templates\settings.html:33 .\templates\settings.html:49
 msgid "Delete profile"
 msgstr "Eliminar perfil"
 
-#: .\users\templates\settings.html:40
+#: .\templates\settings.html:40
 msgid "Confirm deletion"
 msgstr "Confirmar eliminación"
 
-#: .\users\templates\settings.html:44
+#: .\templates\settings.html:44
 msgid "Are you sure you want to delete your profile?"
 msgstr "¿Estás seguro de que quieres eliminar tu perfil?"
 
-#: .\users\templates\settings.html:51
+#: .\templates\settings.html:51
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: .\users\templates\verify_email.html:5 .\users\templates\verify_email.html:12
-#: .\users\templates\verify_email_admin.html:5
-#: .\users\templates\verify_email_admin.html:12
+#: .\templates\verify_email.html:5 .\templates\verify_email.html:12
+#: .\templates\verify_email_admin.html:5 .\templates\verify_email_admin.html:12
 msgid "Verify email"
 msgstr "Verificar email"

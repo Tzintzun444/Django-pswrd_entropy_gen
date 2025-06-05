@@ -22,9 +22,14 @@
             {% trans "Don't have an account?" %} <a href="{% url 'register_customer' %}">{% trans "Sign Up here" %}</a>
         </p>
         <button onclick="openOAuthPopup('{% provider_login_url 'google' process='login' %}')">
-            Log In with Google
+            {% trans "Log In with Google" %}
         </button>
     </div>
 
-
+<script>
+function openOAuthPopup(url) {
+    const popup = window.open(url, "OAuthLogin", "width=500,height=700");
+    if (!popup) alert("Permite ventanas emergentes.");
+}
+</script>
 {% endblock body %}
