@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 # Application definition
@@ -44,6 +45,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_spectacular',
@@ -52,6 +58,23 @@ INSTALLED_APPS = [
     'generator',
     'api_docs',
 ]
+
+SITE_ID = 1
+
+ACCOUNT_SOCIALACCOUNT_LOGIN_ON_GET = True
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http"
+
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': env('CLIENT_ID_GOOGLE'),
+            'secret': env('SECRET_KEY_GOOGLE')
+        }
+    },
+}
 
 MIDDLEWARE = [
     "django_ratelimit.middleware.RatelimitMiddleware",
@@ -63,6 +86,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'pswrd_entropy_gen.urls'

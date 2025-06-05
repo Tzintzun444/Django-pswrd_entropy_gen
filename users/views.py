@@ -4,14 +4,12 @@ from django.urls import reverse_lazy
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.utils import timezone
-from django.utils.translation import activate
 from django.http import Http404, JsonResponse
 from .models import CustomUser, UserNotVerified
 from .forms import UserRegistrationForm, CustomLoginForm, VerificationEmailForm, UserSettingsForm
 from django.views.generic import TemplateView, FormView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
-import json
 
 
 # Create your views here.

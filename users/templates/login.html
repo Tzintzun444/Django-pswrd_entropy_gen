@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load socialaccount %}
 
 {% block head %}
     {% load static %}
@@ -20,5 +21,10 @@
         <p class="register-link">
             {% trans "Don't have an account?" %} <a href="{% url 'register_customer' %}">{% trans "Sign Up here" %}</a>
         </p>
+        <button onclick="openOAuthPopup('{% provider_login_url 'google' process='login' %}')">
+            Log In with Google
+        </button>
     </div>
+
+
 {% endblock body %}

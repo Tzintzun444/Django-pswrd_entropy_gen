@@ -24,8 +24,9 @@ urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('users/', include('users.urls')),
     path('generator/', include('generator.urls')),
-    path('api_docs/', include('api_docs.urls')),
+    path('api/docs/', include('api_docs.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='obtain_token'),
-    path('api/token/refresh', TokenRefreshView.as_view(), name='refresh_token')
+    path('api/token/refresh', TokenRefreshView.as_view(), name='refresh_token'),
+    path('accounts/', include('allauth.urls'))
 ]
