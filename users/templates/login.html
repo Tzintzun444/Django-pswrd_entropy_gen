@@ -16,20 +16,15 @@
         <form method="post">
             {% csrf_token %}
             {{form.as_p}}
-            <button type="submit">{% trans "Log In" %}</button>
+            <button  class="button" type="submit">{% trans "Log In" %}</button>
         </form>
         <p class="register-link">
             {% trans "Don't have an account?" %} <a href="{% url 'register_customer' %}">{% trans "Sign Up here" %}</a>
         </p>
-        <button onclick="openOAuthPopup('{% provider_login_url 'google' process='login' %}')">
+        <a class="google-login-btn" href="{% provider_login_url 'google' process='login' %}">
+            <img src="{% static 'images/google_logo.png'%}" alt="Google Logo">
             {% trans "Log In with Google" %}
-        </button>
+        </a>
     </div>
 
-<script>
-function openOAuthPopup(url) {
-    const popup = window.open(url, "OAuthLogin", "width=500,height=700");
-    if (!popup) alert("Permite ventanas emergentes.");
-}
-</script>
 {% endblock body %}

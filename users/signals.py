@@ -15,8 +15,15 @@ def link_to_existing_user(sender, request, sociallogin, **kwargs):
             sociallogin.connect(request, user)
 
         except CustomUser.DoesNotExist:
+            print(email)
+            username_from_email = email.split('@')
+            print(email.split('@'))
+            print(username_from_email)
+            if CustomUser.objects.get(username=username_from_email).exists():
+                username = sociallogin.account.extra_data.get('username', email)
+            else:
+                username = sociallogin.account.extra_data.get('username', username_from_email[0])
 
-            username = sociallogin.account.extra_data.get('username', email.split('@')[0])
             first_name = sociallogin.account.extra_data.get('given_name', '')
             last_name = sociallogin.account.extra_data.get('family_name', '')
 

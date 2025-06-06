@@ -1,0 +1,9 @@
+{% extends "account/base.html" %}
+
+{% block content %}
+<script>
+// Cierra el popup y redirige al index
+window.opener.postMessage('oauth_completed', window.location.origin);
+window.close();
+</script>
+{% endblock %}
