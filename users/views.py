@@ -128,17 +128,18 @@ class VerifyEmailCustomerView(FormView):
 
             form.add_error('code', 'Invalid code or expired')
             return self.form_invalid(form)
-        user = CustomUser.objects.create(
+        user = CustomUser(
             username=verification.data['username'],
             first_name=verification.data['first_name'],
             last_name=verification.data['last_name'],
             email=verification.email,
-            password=verification.data['password'],
             is_verified=True,
             role='customer',
             is_staff=False,
             is_superuser=False
         )
+        user.set_password(verification.data['password'])
+        user.save()
 
         verification.delete()
         del self.request.session['verification_email']

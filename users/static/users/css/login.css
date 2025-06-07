@@ -100,3 +100,9 @@
     outline: none;
     border-color: #4285F4;
 }
+
+.error {
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+}

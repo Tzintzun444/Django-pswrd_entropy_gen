@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinLengthValidator
 from .models import UserNotVerified, CustomUser
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -89,7 +89,7 @@ class UserRegistrationForm(forms.ModelForm):
             'username': self.cleaned_data['username'],
             'first_name': self.cleaned_data['first_name'],
             'last_name': self.cleaned_data['last_name'],
-            'password': make_password(self.cleaned_data['password'])
+            'password': self.cleaned_data['password']
         }
 
         if commit:
@@ -130,6 +130,12 @@ class CustomLoginForm(AuthenticationForm):
         label=_('Password:')
     )
 
+    error_messages = {
+        "invalid_login": _(
+            "Invalid data, please try again"
+        ),
+        "inactive": _("This account is inactive"),
+    }
 
 class UserSettingsForm(forms.ModelForm):
 

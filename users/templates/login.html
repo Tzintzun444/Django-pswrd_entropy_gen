@@ -15,7 +15,13 @@
         <h3 class="login-title">{% trans "Log In" %}</h3>
         <form method="post">
             {% csrf_token %}
-            {{form.as_p}}
+            <p>{{ form.username.label_tag }} {{ form.username }}</p>
+            <p>{{ form.password.label_tag }} {{ form.password }}</p>
+            {% if form.non_field_errors %}
+                <div class="error">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
             <button  class="button" type="submit">{% trans "Log In" %}</button>
         </form>
         <p class="register-link">
