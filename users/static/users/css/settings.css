@@ -31,3 +31,7 @@
 .green:hover {
     background-color: darkgreen;
 }
+
+.error {
+    color: red;
+}

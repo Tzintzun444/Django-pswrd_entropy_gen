@@ -75,7 +75,7 @@ class UserRegistrationForm(forms.ModelForm):
             self.add_error('email', _('Email already in use'))
 
         if password1.isnumeric():
-            self.add_error('password', _('Paswword can\'t be only numeric'))
+            self.add_error('password', _('Password can\'t be only numeric'))
 
         if password1 != password2:
             self.add_error('confirm_password', "Passwords don't match")
@@ -179,7 +179,7 @@ class UserSettingsForm(forms.ModelForm):
             if len(new_password) < 8:
                 self.add_error('password', _('At least 8 characters'))
             if new_password.isnumeric():
-                self.add_error('password', _('Password cannot be only numeric'))
+                self.add_error('password', _('Password can\'t be only numeric'))
             if new_password != confirm_password:
-                self.add_error('confirm_password', _('Passwords do not match'))
+                self.add_error('confirm_password', _('Passwords don\'t match'))
         return cleaned_data

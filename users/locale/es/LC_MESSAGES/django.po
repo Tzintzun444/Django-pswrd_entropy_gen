@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-07 10:34-0600\n"
+"POT-Creation-Date: 2025-06-07 15:19-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
 
-#: .\users\forms.py:13 .\users\forms.py:168
+#: .\users\forms.py:13 .\users\forms.py:158
 msgid "Letters, digits and @.+-_ only"
 msgstr "Letras, dígitos y @.+-_ únicamente"
 
@@ -27,7 +27,7 @@ msgstr "Letras, dígitos y @.+-_ únicamente"
 msgid "Username:"
 msgstr "Nombre de usuario:"
 
-#: .\users\forms.py:21 .\users\forms.py:171
+#: .\users\forms.py:21 .\users\forms.py:159
 msgid "First name"
 msgstr "Nombre"
 
@@ -35,7 +35,7 @@ msgstr "Nombre"
 msgid "First name:"
 msgstr "Nombre:"
 
-#: .\users\forms.py:29 .\users\forms.py:174
+#: .\users\forms.py:29 .\users\forms.py:160
 msgid "Last name"
 msgstr "Apellido"
 
@@ -47,7 +47,7 @@ msgstr "Apellido:"
 msgid "Enter an email address"
 msgstr "Ingresa una dirección de email"
 
-#: .\users\forms.py:43 .\users\forms.py:144
+#: .\users\forms.py:43 .\users\forms.py:143 .\users\forms.py:180
 msgid "At least 8 characters"
 msgstr "Al menos 8 caracteres"
 
@@ -55,15 +55,15 @@ msgstr "Al menos 8 caracteres"
 msgid "Password:"
 msgstr "Contraseña:"
 
-#: .\users\forms.py:51 .\users\forms.py:153
+#: .\users\forms.py:51 .\users\forms.py:148
 msgid "Repeat your password"
 msgstr "Repite tu contraseña"
 
-#: .\users\forms.py:54 .\users\forms.py:155
+#: .\users\forms.py:54 .\users\forms.py:149
 msgid "Confirm password:"
 msgstr "Confirmar contraseña:"
 
-#: .\users\forms.py:71 .\users\forms.py:186
+#: .\users\forms.py:71 .\users\forms.py:176
 msgid "Username already exists"
 msgstr "El usuario ya existe"
 
@@ -71,8 +71,8 @@ msgstr "El usuario ya existe"
 msgid "Email already in use"
 msgstr "Email en uso"
 
-#: .\users\forms.py:78
-msgid "Paswword can't be only numeric"
+#: .\users\forms.py:78 .\users\forms.py:182
+msgid "Password can't be only numeric"
 msgstr "La contraseña no puede ser solo números"
 
 #: .\users\forms.py:105
@@ -99,9 +99,13 @@ msgstr "Datos inválidos, intente de nuevo"
 msgid "This account is inactive"
 msgstr "La cuenta está inactiva"
 
-#: .\users\forms.py:147
+#: .\users\forms.py:144
 msgid "New password:"
 msgstr "Nueva contraseña:"
+
+#: .\users\forms.py:184
+msgid "Passwords don't match"
+msgstr "Las contraseñas no coinciden"
 
 #: .\users\templates\login.html:9 .\users\templates\login.html:15
 #: .\users\templates\login.html:25
@@ -146,23 +150,23 @@ msgstr "Configuraciones"
 msgid "Update profile"
 msgstr "Actualizar perfil"
 
-#: .\users\templates\settings.html:30
+#: .\users\templates\settings.html:28
 msgid "Update"
 msgstr "Actualizar"
 
-#: .\users\templates\settings.html:33 .\users\templates\settings.html:49
+#: .\users\templates\settings.html:31 .\users\templates\settings.html:47
 msgid "Delete profile"
 msgstr "Eliminar perfil"
 
-#: .\users\templates\settings.html:40
+#: .\users\templates\settings.html:38
 msgid "Confirm deletion"
 msgstr "Confirmar eliminación"
 
-#: .\users\templates\settings.html:44
+#: .\users\templates\settings.html:42
 msgid "Are you sure you want to delete your profile?"
 msgstr "¿Estás seguro de que quieres eliminar tu perfil?"
 
-#: .\users\templates\settings.html:51
+#: .\users\templates\settings.html:49
 msgid "Cancel"
 msgstr "Cancelar"
 

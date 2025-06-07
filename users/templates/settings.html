@@ -14,19 +14,17 @@
 
         <form method="post" autocomplete="off">
             {% csrf_token %}
-
             <div class="form-content">
-                <p>{{ form.username.label_tag }} {{ form.username }}</p>
-                <p>{{ form.first_name.label_tag }} {{ form.first_name }}</p>
-                <p>{{ form.last_name.label_tag }} {{ form.last_name }}</p>
-                <p>{{ form.email.label_tag }} {{ form.email }}</p>
-                <p>{{ form.password.label_tag }} {{ form.password }}</p>
-                <p>{{ form.confirm_password.label_tag }} {{ form.confirm_password }}</p>
-                {% if form.errors.confirm_password%}
-                    <p>{{ form.errors.confirm_password }}</p>
-                {% endif %}
+                {% for field in form %}
+                    <p>{{ field.label_tag}} {{ field }}</p>
+                    {% if field.errors %}
+                        <div class="error">
+                            <p>{{ field.errors }}</p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
             </div>
-        <div class="btn-row">
+            <div class="btn-row">
             <button type="submit" class="btn-update green">{% trans "Update" %}</button>
         </form>
             <button class="btn-update logout" type="button" data-bs-toggle="modal" data-bs-target="#confirmDelete{{ request.user.id }}">
