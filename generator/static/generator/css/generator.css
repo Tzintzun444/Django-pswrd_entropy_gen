@@ -17,3 +17,14 @@
     background-color: darkred;
     transform: scale(1.05);
 }
+
+.length-error {
+    color: red;
+    font-size: 14px;
+    font-weight: normal;
+    margin-top: 2px;
+}
+
+.error {
+    color: red;
+}
