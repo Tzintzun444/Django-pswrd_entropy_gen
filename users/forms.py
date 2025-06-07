@@ -54,6 +54,10 @@ class UserRegistrationForm(forms.ModelForm):
         label=_('Confirm password:')
     )
 
+    is_admin = forms.BooleanField(
+        label=_('Is admin:')
+    )
+
     class Meta:
 
         model = UserNotVerified
@@ -85,11 +89,14 @@ class UserRegistrationForm(forms.ModelForm):
     def save(self, commit=True):
 
         user = super().save(commit=False)
+        is_admin = self.cleaned_data['is_admin']
+
         user.data = {
             'username': self.cleaned_data['username'],
             'first_name': self.cleaned_data['first_name'],
             'last_name': self.cleaned_data['last_name'],
-            'password': self.cleaned_data['password']
+            'password': self.cleaned_data['password'],
+            'is_admin': is_admin
         }
 
         if commit:

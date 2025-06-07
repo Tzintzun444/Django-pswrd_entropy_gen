@@ -13,10 +13,8 @@ router.register('all-users', AllUsersViewSet, basename='all-users')
 
 urlpatterns = [
     path('settings/', UserSettingsView.as_view(), name='settings'),
-    path('register-customer/', RegisterClientView.as_view(), name='register_customer'),
-    path('register-admin/', RegisterAdminView.as_view(), name='register_admin'),
-    path('verify-email/', VerifyEmailCustomerView.as_view(), name='verify_email_customer'),
-    path('verify-email-admin/', VerifyEmailAdminView.as_view(), name='verify_email_admin'),
+    path('sign-up/', SignUpUserView.as_view(), name='sign_up'),
+    path('verify-email/', VerifyEmailUserView.as_view(), name='verify_email'),
     path('login/', CustomLogInView.as_view(), name='login'),
     path('logout/', CustomLogOutView.as_view(), name='logout'),
     path('delete-user/', DeleteUser.as_view(), name='delete_user'),

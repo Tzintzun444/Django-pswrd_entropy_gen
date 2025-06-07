@@ -44,6 +44,9 @@
                             {{ form.errors.confirm_password }}
                     </div>
                 {% endif %}
+                {% if form.is_admin and request.user.is_authenticated and request.user.is_superuser or request.user.is_staff %}
+                        <p>{{ form.is_admin.label_tag }} {{ form.is_admin }}</p>
+                {% endif %}
             </div>
 
             <button type="submit" class="btn-register green">{% trans "Sign Up" %}</button>
