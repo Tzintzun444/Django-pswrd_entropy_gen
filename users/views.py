@@ -10,6 +10,7 @@ from .forms import UserRegistrationForm, CustomLoginForm, VerificationEmailForm,
 from django.views.generic import TemplateView, FormView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.hashers import make_password
 
 
 # Create your views here.
@@ -28,28 +29,28 @@ class UserSettingsView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
     def form_valid(self, form):
-        user = form.instance
-        username = form.cleaned_data['username']
-        first_name = form.cleaned_data['first_name']
-        last_name = form.cleaned_data['last_name']
-        new_password = form.cleaned_data['new_password']
+        # Guardar usuario sin commit para manejar la contraseña
+        user = form.save(commit=False)
 
-        if username:
-            user.username = username
-        if first_name:
-            user.first_name = first_name
-        if last_name:
-            user.last_name = last_name
+        # Manejar cambio de contraseña
+        new_password = form.cleaned_data.get('password')
         if new_password:
             user.set_password(new_password)
 
-        user.email = self.request.user.email
-
+        # Guardar todos los cambios
         user.save()
+
+        # Mantener la sesión activa
         update_session_auth_hash(self.request, user)
-        user.backend = "django.contrib.auth.backends.ModelBackend"
-        login(self.request, user)
+
         return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        # Asegurar que la instancia siempre tenga el email correcto
+        if 'instance' not in kwargs:
+            kwargs['instance'] = self.request.user
+        return kwargs
 
 
 class RegisterClientView(CreateView):

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-03 22:05-0600\n"
+"POT-Creation-Date: 2025-06-07 10:34-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,23 +19,27 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
 
-#: .\generator\forms.py:9
+#: .\generator\forms.py:8
 msgid "Length of the password"
 msgstr "Longitud de la contraseña"
 
-#: .\generator\forms.py:22
+#: .\generator\forms.py:21
 msgid "These characters will appear in the password"
 msgstr "Estos caracteres aparecerán en la contraseña"
 
-#: .\generator\forms.py:26
+#: .\generator\forms.py:25
 msgid "These characters won't appear in the password"
 msgstr "Estos caracteres no aparecerán en la contraseña"
 
-#: .\generator\forms.py:40
+#: .\generator\forms.py:36
+msgid "Must be between 1 to 30"
+msgstr "Deber ser entre 1 a 30"
+
+#: .\generator\forms.py:43
 msgid "A character is crashing in custom and not allowed characters"
 msgstr "Un caracter colisiona entre los caracteres personalizados y bloqueados"
 
-#: .\generator\forms.py:60
+#: .\generator\forms.py:63
 msgid ""
 "There are more custom characters than available characters in the length of "
 "the password."
@@ -48,7 +52,7 @@ msgid "Generate Passwords"
 msgstr "Generar Contraseñas"
 
 #: .\generator\templates\generator.html:17
-#: .\generator\templates\generator.html:67
+#: .\generator\templates\generator.html:72
 #: .\generator\templates\list-passwords.html:86
 msgid "Generate a Password"
 msgstr "Generar contraseña"
@@ -57,39 +61,39 @@ msgstr "Generar contraseña"
 msgid "Length"
 msgstr "Longitud"
 
-#: .\generator\templates\generator.html:31
+#: .\generator\templates\generator.html:36
 msgid "Uppercase"
 msgstr "Mayúsculas"
 
-#: .\generator\templates\generator.html:35
+#: .\generator\templates\generator.html:40
 msgid "Numbers"
 msgstr "Números"
 
-#: .\generator\templates\generator.html:39
+#: .\generator\templates\generator.html:44
 msgid "Punctuation"
 msgstr "Puntuaciones"
 
-#: .\generator\templates\generator.html:47
+#: .\generator\templates\generator.html:52
 msgid "Custom characters allowed"
 msgstr "Caracteres personalizados"
 
-#: .\generator\templates\generator.html:57
+#: .\generator\templates\generator.html:62
 msgid "Characters not allowed"
 msgstr "Caracteres bloqueados"
 
-#: .\generator\templates\generator.html:68
+#: .\generator\templates\generator.html:73
 msgid "See my passwords"
 msgstr "Ver contraseñas"
 
-#: .\generator\templates\generator.html:73
+#: .\generator\templates\generator.html:78
 msgid "The generated password was"
 msgstr "La contraseña generada fue"
 
-#: .\generator\templates\generator.html:80
+#: .\generator\templates\generator.html:85
 msgid "Save password"
 msgstr "Guardar contraseña"
 
-#: .\generator\templates\generator.html:81
+#: .\generator\templates\generator.html:86
 msgid "Don't save"
 msgstr "No guardar"
 

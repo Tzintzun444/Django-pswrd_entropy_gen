@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-03 22:26-0600\n"
+"POT-Creation-Date: 2025-06-07 10:34-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,44 +19,44 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
 
-#: .\pswrd_entropy_gen\settings.py:122
+#: .\pswrd_entropy_gen\settings.py:159
 msgid "English"
 msgstr "English"
 
-#: .\templates\base.html:19 .\templates\base.html:36 .\templates\base.html:55
-#: .\templates\base.html:72
+#: .\templates\base.html:19 .\templates\base.html:36 .\templates\base.html:68
+#: .\templates\base.html:85
 msgid "Log Out"
 msgstr "Cerrar sesión"
 
-#: .\templates\base.html:27 .\templates\base.html:63
+#: .\templates\base.html:27 .\templates\base.html:76
 msgid "Confirm Log Out"
 msgstr "Confirmar cierre de sesión"
 
-#: .\templates\base.html:31 .\templates\base.html:67
+#: .\templates\base.html:31 .\templates\base.html:80
 msgid "Are you sure you want to log out?"
 msgstr "¿Estás seguro de que quieres cerrar sesión?"
 
-#: .\templates\base.html:38 .\templates\base.html:74
+#: .\templates\base.html:38 .\templates\base.html:87
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: .\templates\base.html:45
+#: .\templates\base.html:58
 msgid "See my passwords"
 msgstr "Ver contraseñas"
 
-#: .\templates\base.html:46
+#: .\templates\base.html:59
 msgid "Home"
 msgstr "Inicio"
 
-#: .\templates\base.html:47
+#: .\templates\base.html:60
 msgid "Generate a Password"
 msgstr "Generar contraseña"
 
-#: .\templates\base.html:53
+#: .\templates\base.html:66
 msgid "Settings"
 msgstr "Configuraciones"
 
-#: .\templates\base.html:94
+#: .\templates\base.html:107
 msgid "Log In"
 msgstr "Iniciar sesión"
 
