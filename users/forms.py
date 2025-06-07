@@ -138,13 +138,13 @@ class UserSettingsForm(forms.ModelForm):
                 'readonly': 'readonly',
             }),
             'username': forms.TextInput(
-                attrs={'placeholder': _('Username:')}
+                attrs={'placeholder': _("Letters, digits and @.+-_ only")}
             ),
             'first_name': forms.TextInput(
-                attrs={'placeholder': _('First name:')}
+                attrs={'placeholder': _('First name')}
             ),
             'last_name': forms.TextInput(
-                attrs={'placeholder': _('Last name:')}
+                attrs={'placeholder': _('Last name')}
             ),
         }
 

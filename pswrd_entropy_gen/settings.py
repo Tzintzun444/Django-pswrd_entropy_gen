@@ -32,8 +32,9 @@ ALLOWED_HOSTS = []
 
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+
 ]
 
 # Application definition
@@ -63,7 +64,6 @@ SITE_ID = 1
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
-
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http"
 
 ACCOUNT_LOGOUT_REDIRECT_URL = "index"
@@ -72,12 +72,20 @@ ACCOUNT_SIGNUP_REDIRECT_URL = "index"
 
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
 
+SOCIALACCOUNT_ADAPTER = 'users.adapters.CustomSocialAccountAdapter'
+
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+
+ACCOUNT_USERNAME_VALIDATORS = None
+
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
             'client_id': env('CLIENT_ID_GOOGLE'),
             'secret': env('SECRET_KEY_GOOGLE')
-        }
+        },
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
     },
 }
 
@@ -173,6 +181,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 
 # Default primary key field type

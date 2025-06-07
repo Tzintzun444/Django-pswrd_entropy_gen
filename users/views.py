@@ -47,6 +47,7 @@ class UserSettingsView(LoginRequiredMixin, UpdateView):
 
         user.save()
         update_session_auth_hash(self.request, user)
+        user.backend = "django.contrib.auth.backends.ModelBackend"
         login(self.request, user)
         return super().form_valid(form)
 
@@ -127,21 +128,22 @@ class VerifyEmailCustomerView(FormView):
 
             form.add_error('code', 'Invalid code or expired')
             return self.form_invalid(form)
-        user = CustomUser(
+        user = CustomUser.objects.create(
             username=verification.data['username'],
             first_name=verification.data['first_name'],
             last_name=verification.data['last_name'],
             email=verification.email,
             password=verification.data['password'],
             is_verified=True,
-            role='customer'
+            role='customer',
+            is_staff=False,
+            is_superuser=False
         )
-        user.is_staff = False
-        user.is_superuser = False
-        user.save()
+
         verification.delete()
         del self.request.session['verification_email']
 
+        user.backend = "django.contrib.auth.backends.ModelBackend"
         login(self.request, user)
         return redirect(self.get_success_url())
 
@@ -176,21 +178,22 @@ class VerifyEmailAdminView(LoginRequiredMixin, UserPassesTestMixin, FormView):
 
             form.add_error('code', 'Invalid code or expired')
             return self.form_invalid(form)
-        user = CustomUser(
+        user = CustomUser.objects.create(
             username=verification.data['username'],
             first_name=verification.data['first_name'],
             last_name=verification.data['last_name'],
             email=verification.email,
             password=verification.data['password'],
             is_verified=True,
-            role='customer'
+            role='admin',
+            is_staff=True,
+            is_superuser=True,
         )
-        user.is_staff = True
-        user.is_superuser = True
-        user.save()
+
         verification.delete()
         del self.request.session['verification_email']
 
+        user.backend = "django.contrib.auth.backends.ModelBackend"
         login(self.request, user)
         return redirect(self.get_success_url())
 

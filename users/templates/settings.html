@@ -26,9 +26,9 @@
                     <p>{{ form.errors.confirm_password }}</p>
                 {% endif %}
             </div>
-        </form>
         <div class="btn-row">
             <button type="submit" class="btn-update green">{% trans "Update" %}</button>
+        </form>
             <button class="btn-update logout" type="button" data-bs-toggle="modal" data-bs-target="#confirmDelete{{ request.user.id }}">
                                     {% trans "Delete profile" %}
             </button>
