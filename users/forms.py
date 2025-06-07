@@ -1,12 +1,9 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from .models import UserNotVerified, CustomUser
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
-
-user = get_user_model()
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -64,11 +61,24 @@ class UserRegistrationForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+        username = cleaned_data.get("username")
+        email = cleaned_data.get('email')
         password1 = cleaned_data.get("password")
         password2 = cleaned_data.get("confirm_password")
 
+        if CustomUser.objects.filter(username=username).exists():
+
+            self.add_error('username', _('Username already exists'))
+
+        if CustomUser.objects.filter(email=email).exists():
+
+            self.add_error('email', _('Email already in use'))
+
+        if password1.isnumeric():
+            self.add_error('password', _('Paswword can\'t be only numeric'))
+
         if password1 != password2:
-            self.add_error('confirm_password',"Passwords don't match")
+            self.add_error('confirm_password', "Passwords don't match")
 
         return cleaned_data
 
@@ -96,6 +106,17 @@ class VerificationEmailForm(forms.Form):
         validators=[MinLengthValidator(6)],
         widget=forms.TextInput(attrs={'autocomplete': 'off'})
     )
+
+    def clean(self):
+
+        cleaned_data = super().clean()
+        code = self.cleaned_data['code']
+
+        if not code.isnumeric():
+
+            self.add_error('code', _('Only numbers are allowed'))
+
+        return cleaned_data
 
 
 class CustomLoginForm(AuthenticationForm):
@@ -150,8 +171,13 @@ class UserSettingsForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+        username = self.cleaned_data['username']
         new_password = self.cleaned_data['new_password']
         confirm_password = self.cleaned_data['confirm_password']
+
+        if CustomUser.objects.filter(username=username).exists():
+
+            self.add_error('username', _('Username already exists'))
 
         if new_password != confirm_password:
             self.add_error('confirm_password', 'Passwords don\'t match')

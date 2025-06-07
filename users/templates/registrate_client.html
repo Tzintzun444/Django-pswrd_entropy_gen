@@ -19,11 +19,31 @@
 
             <div class="form-content">
                 <p>{{ form.username.label_tag }} {{ form.username }}</p>
+                {% if form.errors.username %}
+                    <div class="error">
+                            {{ form.errors.username }}
+                    </div>
+                {% endif %}
                 <p>{{ form.first_name.label_tag }} {{ form.first_name }}</p>
                 <p>{{ form.last_name.label_tag }} {{ form.last_name }}</p>
                 <p>{{ form.email.label_tag }} {{ form.email }}</p>
+                {% if form.errors.email %}
+                    <div class="error">
+                            {{ form.errors.email }}
+                    </div>
+                {% endif %}
                 <p>{{ form.password.label_tag }} {{ form.password }}</p>
+                {% if form.errors.password %}
+                    <div class="error">
+                            {{ form.errors.password }}
+                    </div>
+                {% endif %}
                 <p>{{ form.confirm_password.label_tag }} {{ form.confirm_password }}</p>
+                {% if form.errors.confirm_password %}
+                    <div class="error">
+                            {{ form.errors.confirm_password }}
+                    </div>
+                {% endif %}
             </div>
 
             <button type="submit" class="btn-register green">{% trans "Sign Up" %}</button>
