@@ -3,7 +3,6 @@ from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinLengthValidator
 from .models import UserNotVerified, CustomUser
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -55,7 +54,9 @@ class UserRegistrationForm(forms.ModelForm):
     )
 
     is_admin = forms.BooleanField(
-        label=_('Is admin:')
+        label=_('Is admin:'),
+        initial=True,
+        required=False
     )
 
     class Meta:
@@ -89,7 +90,7 @@ class UserRegistrationForm(forms.ModelForm):
     def save(self, commit=True):
 
         user = super().save(commit=False)
-        is_admin = self.cleaned_data['is_admin']
+        is_admin = self.cleaned_data.get('is_admin', False)
 
         user.data = {
             'username': self.cleaned_data['username'],
@@ -105,21 +106,42 @@ class UserRegistrationForm(forms.ModelForm):
         return user
 
 
+class CodeInputWidget(forms.MultiWidget):
+    def __init__(self, attrs=None):
+        widgets = [forms.TextInput(attrs={
+            "maxlength": "1",
+            "class": "code-input",
+            "inputmode": "numeric"
+        }) for _ in range(6)]
+        super().__init__(widgets, attrs)
+
+    def decompress(self, value):
+        if value:
+            return list(value)
+        return [""] * 6
+
+    def value_from_datadict(self, data, files, name):
+        values = super().value_from_datadict(data, files, name)
+        return ''.join(values)
+
+
 class VerificationEmailForm(forms.Form):
 
     code = forms.CharField(
-        max_length=6,
-        label=_('Code:'),
-        validators=[MinLengthValidator(6)],
-        widget=forms.TextInput(attrs={'autocomplete': 'off'})
+        label=_("Code:"),
+        widget=CodeInputWidget(),
+        required=True
     )
 
     def clean(self):
 
         cleaned_data = super().clean()
-        code = self.cleaned_data['code']
+        code = cleaned_data.get('code', '')
+        if len(code) != 6:
 
-        if not code.isnumeric():
+            self.add_error('code', _('Code must be 6 digits'))
+
+        if not code.isdigit():
 
             self.add_error('code', _('Only numbers are allowed'))
 

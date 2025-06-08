@@ -32,9 +32,8 @@ ALLOWED_HOSTS = []
 
 
 AUTHENTICATION_BACKENDS = [
-    'allauth.account.auth_backends.AuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend',
-
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 # Application definition
@@ -61,6 +60,12 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+
+ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_USERNAME_REQUIRED = True
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
 

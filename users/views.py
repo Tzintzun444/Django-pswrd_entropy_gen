@@ -1,15 +1,16 @@
 from django.core.mail import send_mail
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
-from django.http import Http404, JsonResponse
+from django.http import Http404
 from .models import CustomUser, UserNotVerified
 from .forms import UserRegistrationForm, CustomLoginForm, VerificationEmailForm, UserSettingsForm
 from django.views.generic import TemplateView, FormView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
+from django.utils.translation import gettext_lazy as _
 
 
 class IndexView(TemplateView):
@@ -55,7 +56,7 @@ class SignUpUserView(CreateView):
     model = UserNotVerified
     form_class = UserRegistrationForm
     template_name = 'registrate_client.html'
-    success_url = reverse_lazy('verify_email_customer')
+    success_url = reverse_lazy('verify_email')
 
     def form_valid(self, form):
 
@@ -68,7 +69,6 @@ class SignUpUserView(CreateView):
             [verification.email],
             fail_silently=False
         )
-
         return super().form_valid(form)
 
     def dispatch(self, request, *args, **kwargs):
@@ -100,7 +100,7 @@ class VerifyEmailUserView(FormView):
 
         except UserNotVerified.DoesNotExist:
 
-            form.add_error('code', 'Invalid code or expired')
+            form.add_error('code', _('Invalid code or expired'))
             return self.form_invalid(form)
 
         role = 'customer'

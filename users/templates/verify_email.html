@@ -2,13 +2,91 @@
 {% load i18n %}
 
 {% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'users/css/verify_email.css' %}">
     <title>{% trans "Verify email" %}</title>
 {% endblock head %}
 
 {% block body %}
-    <form method="post">
+    <div class="verification-container">
+        <h4 class="content">{% trans "Verify email" %}</h4>
+        <form method="post">
         {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit">{% trans "Verify email" %}</button>
-    </form>
+
+            {{ form.code.label_tag }}
+            <div class="code-input-wrapper">
+                {{ form.code }}
+            </div>
+            {% if form.code.errors %}
+                <div class="error">
+                   {{ form.code.errors }}
+                </div>
+            {% endif %}
+
+            <button type="submit" class="verify-button">{% trans "Verify email" %}</button>
+        </form>
+    </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const inputs = document.querySelectorAll(".code-input");
+        const form = document.getElementById("verification-form");
+
+        inputs.forEach((input, index) => {
+            // Manejo de entrada de texto
+            input.addEventListener("input", (e) => {
+                // Limpiar valores no numéricos
+                e.target.value = e.target.value.replace(/\D/g, '');
+
+                if (e.target.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+
+                // Auto-enviar cuando se completan todos los campos
+                const allFilled = Array.from(inputs).every(i => i.value.length === 1);
+                if (allFilled) form.submit();
+            });
+
+            // Manejo de teclas especiales (Backspace, Delete, flechas)
+            input.addEventListener("keydown", (e) => {
+                // Permitir teclas de navegación y borrado
+                const allowedKeys = [
+                    'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight',
+                    'ArrowUp', 'ArrowDown', 'Tab', 'Home', 'End'
+                ];
+
+                if (allowedKeys.includes(e.key)) {
+                    // Manejar Backspace en campo vacío
+                    if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                        inputs[index - 1].focus();
+                        inputs[index - 1].select();
+                    }
+                    return;
+                }
+
+                // Permitir atajos de teclado (Ctrl+C, Ctrl+V, etc.)
+                if (e.ctrlKey || e.metaKey) {
+                    return;
+                }
+
+                // Bloquear cualquier tecla que no sea número
+                if (!/^\d$/.test(e.key)) {
+                    e.preventDefault();
+                }
+            });
+
+            // Manejar el pegado de texto
+            input.addEventListener("paste", (e) => {
+                e.preventDefault();
+                const pasteData = e.clipboardData.getData('text').replace(/\D/g, '');
+
+                if (pasteData.length >= 6) {
+                    for (let i = 0; i < 6; i++) {
+                        inputs[i].value = pasteData[i] || '';
+                    }
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
 {% endblock body %}

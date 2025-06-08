@@ -1,8 +1,7 @@
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
-from allauth.exceptions import ImmediateHttpResponse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login
 import re
 
 
@@ -26,9 +25,10 @@ class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
 
                 # Conectar la cuenta social al usuario existente
                 sociallogin.connect(request, existing_user)
+                login(request, existing_user, backend="django.contrib.auth.backends.ModelBackend")
 
                 # Aquí puedes personalizar el mensaje o redirección
-                raise ImmediateHttpResponse(HttpResponseRedirect(reverse('index')))
+                return HttpResponseRedirect(reverse('index'))
             except User.DoesNotExist:
                 pass
 

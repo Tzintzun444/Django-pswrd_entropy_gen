@@ -29,7 +29,7 @@ h1:hover{
 }
 
 .content:hover {
-    transform: scale(1.05); /* 🔹 Agranda el bloque ligeramente */
+    transform: scale(1.05);
 }
 
 .header {
