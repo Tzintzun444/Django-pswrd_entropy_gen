@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load socialaccount %}
 
 {% block head %}
     {% load static %}
@@ -12,7 +13,7 @@
     <div class="register-container">
         <h3 class="content">{% trans "Update profile" %}</h3>
 
-        <form method="post" autocomplete="off">
+        <form method="post" autocomplete="off" id="settings-form">
             {% csrf_token %}
             <div class="form-content">
                 {% for field in form %}
@@ -24,33 +25,83 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <div class="btn-row">
-            <button type="submit" class="btn-update green">{% trans "Update" %}</button>
         </form>
-            <button class="btn-update logout" type="button" data-bs-toggle="modal" data-bs-target="#confirmDelete{{ request.user.id }}">
-                                    {% trans "Delete profile" %}
-            </button>
-                <!-- Modal de Confirmación -->
-                <div class="modal fade" id="confirmDelete{{ request.user.id }}" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">{% trans "Confirm deletion" %}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                                <div class="modal-body">
-                                    {% trans "Are you sure you want to delete your profile?" %}
+            <div class="btn-row">
+                <button type="submit" class="btn-update green" form="settings-form">{% trans "Update" %}</button>
+                <button class="btn-update logout" type="button" data-bs-toggle="modal" data-bs-target="#confirmDelete{{ request.user.id }}">
+                                        {% trans "Delete profile" %}
+                </button>
+                    <!-- Modal de Confirmación -->
+                    <div class="modal fade" id="confirmDelete{{ request.user.id }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{% trans "Confirm deletion" %}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                            <div class="modal-footer">
-                                <form method="post" action="{% url 'delete_user' %}">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger">{% trans "Delete profile" %}</button>
-                                </form>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+                                    <div class="modal-body">
+                                        {% trans "Are you sure you want to delete your profile?" %}
+                                    </div>
+                                <div class="modal-footer">
+                                    <form method="post" action="{% url 'delete_user' %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">{% trans "Delete profile" %}</button>
+                                    </form>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+            </div>
+        <div>
+            <h5 class="content">{% trans "Link or unlink external social media accounts" %}</h5>
+            <p>
+                {% blocktrans %}
+                    If you want to unlink an external social media account,
+                    you must have a password set on your account.
+                {% endblocktrans %}
+            </p>
+            <div>
+                <label for="#google-btn"><strong>Google account:</strong></label>
+                {% if linked_google_account and has_password %}
+                    <button id="google-btn" class="google-login-btn" type="button" data-bs-toggle="modal" data-bs-target="#unlinkGoogleAccount">
+                        <img src="{% static 'images/google_logo.png'%}" alt="Google Logo">
+                        {% trans "Unlink google account" %}
+                    </button>
+                        <!-- Modal de Confirmación -->
+                        <div class="modal fade" id="unlinkGoogleAccount" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">{% trans "Confirm unlink google account" %}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                        <div class="modal-body">
+                                            {% trans "Are you sure you want to unlink your google account?" %}
+                                        </div>
+                                    <div class="modal-footer">
+                                        <form method="post" action="{% url 'unlink_google' %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">{% trans "Unlink google account" %}</button>
+                                        </form>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                {% elif linked_google_account and not has_password %}
+                    <button class="disabled google-login-btn" type="button" data-bs-toggle="modal">
+                        <img src="{% static 'images/google_logo.png'%}" alt="Google Logo">
+                        {% trans "Unlink google account" %}
+                    </button>
+                    <p>You have to set a password for unlink a external social media account</p>
+                {% else %}
+                    <a class="google-login-btn" href="{% provider_login_url 'google' process='login' %}">
+                        <img src="{% static 'images/google_logo.png'%}" alt="Google Logo">
+                        {% trans "Log In with Google" %}
+                    </a>
+                {% endif %}
+            </div>
         </div>
     </div>
 

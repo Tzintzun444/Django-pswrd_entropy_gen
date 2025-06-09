@@ -13,6 +13,7 @@ router.register('all-users', AllUsersViewSet, basename='all-users')
 
 urlpatterns = [
     path('settings/', UserSettingsView.as_view(), name='settings'),
+    path('unlink-google/', unlink_oauth_google, name='unlink_google'),
     path('sign-up/', SignUpUserView.as_view(), name='sign_up'),
     path('verify-email/', VerifyEmailUserView.as_view(), name='verify_email'),
     path('login/', CustomLogInView.as_view(), name='login'),

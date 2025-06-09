@@ -11,6 +11,8 @@ from django.views.generic import TemplateView, FormView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.utils.translation import gettext_lazy as _
+from allauth.socialaccount.models import SocialAccount
+from django.contrib.auth.decorators import login_required
 
 
 class IndexView(TemplateView):
@@ -45,10 +47,24 @@ class UserSettingsView(LoginRequiredMixin, UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        # Asegurar que la instancia siempre tenga el email correcto
         if 'instance' not in kwargs:
             kwargs['instance'] = self.request.user
         return kwargs
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        is_linked = SocialAccount.objects.filter(user=self.request.user, provider='google').exists()
+
+        if self.request.user.has_usable_password():
+            context['has_password'] = True
+
+        else:
+            context['has_password'] = False
+
+        context['linked_google_account'] = is_linked
+
+        return context
 
 
 class SignUpUserView(CreateView):
@@ -175,3 +191,17 @@ class DeleteUser(LoginRequiredMixin, DeleteView):
     def get(self, request, *args, **kwargs):
 
         raise Http404('Page not found')
+
+
+@login_required
+def unlink_oauth_google(request):
+
+    if request.method != 'POST':
+
+        raise Http404('Page not found')
+
+    google_account = SocialAccount.objects.filter(user=request.user, provider='google').first()
+    if google_account:
+        google_account.delete()
+
+    return redirect('settings')

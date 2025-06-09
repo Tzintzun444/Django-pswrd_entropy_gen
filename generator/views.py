@@ -48,7 +48,6 @@ class CreatePasswordView(LoginRequiredMixin, FormView):
             context['password'] = self.request.session.get('password')
             self.request.session['password_is_new'] = False
         else:
-            # Elimina la contraseña si no es nueva
             if 'generated_password' in self.request.session:
                 del self.request.session['generated_password']
 

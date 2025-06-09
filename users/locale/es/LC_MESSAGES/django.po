@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-07 15:19-0600\n"
+"POT-Creation-Date: 2025-06-08 23:26-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,91 +19,99 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
 
-#: .\users\forms.py:13 .\users\forms.py:158
+#: .\users\forms.py:12 .\users\forms.py:187
 msgid "Letters, digits and @.+-_ only"
 msgstr "Letras, dígitos y @.+-_ únicamente"
 
-#: .\users\forms.py:17 .\users\forms.py:126
+#: .\users\forms.py:16 .\users\forms.py:155
 msgid "Username:"
 msgstr "Nombre de usuario:"
 
-#: .\users\forms.py:21 .\users\forms.py:159
+#: .\users\forms.py:20 .\users\forms.py:188
 msgid "First name"
 msgstr "Nombre"
 
-#: .\users\forms.py:25
+#: .\users\forms.py:24
 msgid "First name:"
 msgstr "Nombre:"
 
-#: .\users\forms.py:29 .\users\forms.py:160
+#: .\users\forms.py:28 .\users\forms.py:189
 msgid "Last name"
 msgstr "Apellido"
 
-#: .\users\forms.py:33
+#: .\users\forms.py:32
 msgid "Last name:"
 msgstr "Apellido:"
 
-#: .\users\forms.py:37
+#: .\users\forms.py:36
 msgid "Enter an email address"
 msgstr "Ingresa una dirección de email"
 
-#: .\users\forms.py:43 .\users\forms.py:143 .\users\forms.py:180
+#: .\users\forms.py:42 .\users\forms.py:172 .\users\forms.py:209
 msgid "At least 8 characters"
 msgstr "Al menos 8 caracteres"
 
-#: .\users\forms.py:47 .\users\forms.py:130
+#: .\users\forms.py:46 .\users\forms.py:159
 msgid "Password:"
 msgstr "Contraseña:"
 
-#: .\users\forms.py:51 .\users\forms.py:148
+#: .\users\forms.py:50 .\users\forms.py:177
 msgid "Repeat your password"
 msgstr "Repite tu contraseña"
 
-#: .\users\forms.py:54 .\users\forms.py:149
+#: .\users\forms.py:53 .\users\forms.py:178
 msgid "Confirm password:"
 msgstr "Confirmar contraseña:"
 
-#: .\users\forms.py:71 .\users\forms.py:176
+#: .\users\forms.py:57
+msgid "Is admin:"
+msgstr "Es administrador:"
+
+#: .\users\forms.py:76 .\users\forms.py:205
 msgid "Username already exists"
 msgstr "El usuario ya existe"
 
-#: .\users\forms.py:75
+#: .\users\forms.py:80
 msgid "Email already in use"
 msgstr "Email en uso"
 
-#: .\users\forms.py:78 .\users\forms.py:182
+#: .\users\forms.py:83 .\users\forms.py:211
 msgid "Password can't be only numeric"
 msgstr "La contraseña no puede ser solo números"
 
-#: .\users\forms.py:105
+#: .\users\forms.py:131
 msgid "Code:"
 msgstr "Código:"
 
-#: .\users\forms.py:117
+#: .\users\forms.py:142
+msgid "Code must be 6 digits"
+msgstr "El código debe ser de 6 dígitos"
+
+#: .\users\forms.py:146
 msgid "Only numbers are allowed"
 msgstr "Solo números son permitidos"
 
-#: .\users\forms.py:125
+#: .\users\forms.py:154
 msgid "Username"
 msgstr "Nombre de usuario"
 
-#: .\users\forms.py:129
+#: .\users\forms.py:158
 msgid "Password"
 msgstr "Contraseña"
 
-#: .\users\forms.py:135
+#: .\users\forms.py:164
 msgid "Invalid data, please try again"
 msgstr "Datos inválidos, intente de nuevo"
 
-#: .\users\forms.py:137
+#: .\users\forms.py:166
 msgid "This account is inactive"
 msgstr "La cuenta está inactiva"
 
-#: .\users\forms.py:144
+#: .\users\forms.py:173
 msgid "New password:"
 msgstr "Nueva contraseña:"
 
-#: .\users\forms.py:184
+#: .\users\forms.py:213
 msgid "Passwords don't match"
 msgstr "Las contraseñas no coinciden"
 
@@ -120,58 +128,83 @@ msgstr "¿No tienes una cuenta?"
 msgid "Sign Up here"
 msgstr "Regístrate aquí"
 
-#: .\users\templates\login.html:32
+#: .\users\templates\login.html:32 .\users\templates\settings.html:101
 msgid "Log In with Google"
 msgstr "Inicia sesión con Google"
-
-#: .\users\templates\registrate_admin.html:8
-#: .\users\templates\registrate_admin.html:28
-msgid "Sign Up Admin"
-msgstr "Registrar administrador"
-
-#: .\users\templates\registrate_admin.html:14
-msgid "Sign Up an Admin"
-msgstr "Registra un administrador"
 
 #: .\users\templates\registrate_client.html:9
 #: .\users\templates\registrate_client.html:15
 msgid "Sign Up Form"
 msgstr "Formulario de registro"
 
-#: .\users\templates\registrate_client.html:49
+#: .\users\templates\registrate_client.html:51
 msgid "Sign Up"
 msgstr "Registrarse"
 
-#: .\users\templates\settings.html:8
+#: .\users\templates\settings.html:9
 msgid "Settings"
 msgstr "Configuraciones"
 
-#: .\users\templates\settings.html:13
+#: .\users\templates\settings.html:14
 msgid "Update profile"
 msgstr "Actualizar perfil"
 
-#: .\users\templates\settings.html:28
+#: .\users\templates\settings.html:30
 msgid "Update"
 msgstr "Actualizar"
 
-#: .\users\templates\settings.html:31 .\users\templates\settings.html:47
+#: .\users\templates\settings.html:32 .\users\templates\settings.html:48
 msgid "Delete profile"
 msgstr "Eliminar perfil"
 
-#: .\users\templates\settings.html:38
+#: .\users\templates\settings.html:39
 msgid "Confirm deletion"
 msgstr "Confirmar eliminación"
 
-#: .\users\templates\settings.html:42
+#: .\users\templates\settings.html:43
 msgid "Are you sure you want to delete your profile?"
 msgstr "¿Estás seguro de que quieres eliminar tu perfil?"
 
-#: .\users\templates\settings.html:49
+#: .\users\templates\settings.html:50 .\users\templates\settings.html:87
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: .\users\templates\verify_email.html:5 .\users\templates\verify_email.html:12
-#: .\users\templates\verify_email_admin.html:5
-#: .\users\templates\verify_email_admin.html:12
+#: .\users\templates\settings.html:57
+msgid "Link or unlink external social media accounts"
+msgstr "Vincula o desvincula cuentas de redes sociales externas"
+
+#: .\users\templates\settings.html:59
+msgid ""
+"\n"
+"                    If you want to unlink an external social media account,\n"
+"                    you must have a password set on your account.\n"
+"                "
+msgstr "Si quieres desvincular una cuenta de redes sociales externa, debes tener una contraseña puesta en tu cuenta."
+
+#: .\users\templates\settings.html:69 .\users\templates\settings.html:85
+#: .\users\templates\settings.html:95
+msgid "Unlink google account"
+msgstr "Desvincular cuenta de google"
+
+#: .\users\templates\settings.html:76
+msgid "Confirm unlink google account"
+msgstr "Confirmación para desvincular cuenta de google"
+
+#: .\users\templates\settings.html:80
+msgid "Are you sure you want to unlink your google account?"
+msgstr "¿Estás seguro de que quieres desvincular tu cuenta de google?"
+
+#: .\users\templates\verify_email.html:7 .\users\templates\verify_email.html:12
+#: .\users\templates\verify_email.html:26
 msgid "Verify email"
 msgstr "Verificar email"
+
+#: .\users\views.py:119
+msgid "Invalid code or expired"
+msgstr "Código inválido o expirado"
+
+#~ msgid "Sign Up Admin"
+#~ msgstr "Registrar administrador"
+
+#~ msgid "Sign Up an Admin"
+#~ msgstr "Registra un administrador"
