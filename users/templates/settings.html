@@ -62,7 +62,7 @@
                 {% endblocktrans %}
             </p>
             <div>
-                <label for="#google-btn"><strong>Google account:</strong></label>
+                <label for="#google-btn"><strong>{% trans "Google account" %}:</strong></label>
                 {% if linked_google_account and has_password %}
                     <button id="google-btn" class="google-login-btn" type="button" data-bs-toggle="modal" data-bs-target="#unlinkGoogleAccount">
                         <img src="{% static 'images/google_logo.png'%}" alt="Google Logo">
