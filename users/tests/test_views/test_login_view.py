@@ -23,3 +23,16 @@ def test_custom_login_view_success(client, general_user):
 
     assert response.status_code == 302
     assert response.url == reverse('index')
+
+
+@pytest.mark.django_db
+def test_custom_login_view_error(client):
+
+    response = client.post(reverse('login'), {
+        'username': 'invalid',
+        'password': 'invalid'
+    })
+
+    assert response.status_code == 200
+    assert 'form' in response.context
+    assert response.context['form'].errors
