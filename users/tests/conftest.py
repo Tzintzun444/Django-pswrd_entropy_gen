@@ -12,6 +12,7 @@ def general_user(django_user_model):
         last_name='last_name',
         email='email@example.com',
         is_verified=True,
+        user_status=False,
         role='customer',
     )
     user.set_password('password123')

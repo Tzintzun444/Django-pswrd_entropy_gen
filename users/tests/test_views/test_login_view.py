@@ -20,9 +20,12 @@ def test_custom_login_view_success(client, general_user):
         'username': 'user_test',
         'password': 'password123'
     })
+    user = response.wsgi_request.user
 
     assert response.status_code == 302
     assert response.url == reverse('index')
+    assert user.is_authenticated is True
+    assert user.user_status is True
 
 
 @pytest.mark.django_db

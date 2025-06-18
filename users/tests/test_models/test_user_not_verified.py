@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.db.utils import IntegrityError
 from users.models import UserNotVerified
+from freezegun import freeze_time
 import pytest
 
 User = get_user_model()
@@ -35,21 +36,21 @@ def test_validate_customernotverified_creation():
 
 @pytest.mark.django_db
 def test_validate_adminnotverified_creation():
-
-    now = timezone.now()
-    in_5_minutes = now + timezone.timedelta(minutes=5)
-    admin_not_verified = UserNotVerified.objects.create(
-        email='email@example.com',
-        data={
-            'username': 'Juan1234',
-            'first_name': 'Juan',
-            'last_name': 'Lopez',
-            'password': 'password1234',
-            'role': 'customer',
-            'is_verified': True,
-            'is_admin': True
-        }
-    )
+    with freeze_time("2025-01-01 00:00:00"):
+        now = timezone.now()
+        in_5_minutes = now + timezone.timedelta(minutes=5)
+        admin_not_verified = UserNotVerified.objects.create(
+            email='email@example.com',
+            data={
+                'username': 'Juan1234',
+                'first_name': 'Juan',
+                'last_name': 'Lopez',
+                'password': 'password1234',
+                'role': 'customer',
+                'is_verified': True,
+                'is_admin': True
+            }
+        )
 
     assert admin_not_verified.pk is not None
     assert admin_not_verified.email == 'email@example.com'
