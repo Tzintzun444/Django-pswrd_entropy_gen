@@ -8,6 +8,7 @@ import secrets
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     is_verified = models.BooleanField(default=False)
+    registration_date = models.DateTimeField(auto_now_add=True)
     user_status = models.BooleanField(default=False)
     role = models.CharField(
         max_length=10,
