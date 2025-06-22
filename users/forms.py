@@ -122,7 +122,8 @@ class CodeInputWidget(forms.MultiWidget):
 
     def value_from_datadict(self, data, files, name):
         values = super().value_from_datadict(data, files, name)
-        return ''.join(values)
+        cleaned_values = [v if v is not None else '' for v in values]
+        return ''.join(cleaned_values)
 
 
 class VerificationEmailForm(forms.Form):

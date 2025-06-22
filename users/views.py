@@ -138,7 +138,8 @@ class VerifyEmailUserView(FormView):
         user.save()
 
         verification.delete()
-        del self.request.session['verification_email']
+        if 'verification_email' in self.request.session:
+            del self.request.session['verification_email']
 
         user.backend = "django.contrib.auth.backends.ModelBackend"
         login(self.request, user)
