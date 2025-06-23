@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.db.utils import IntegrityError
-from users.models import UserNotVerified
 from freezegun import freeze_time
 import pytest
 
@@ -31,7 +30,7 @@ def test_validate_customer_creation():
     assert customer.is_active is True
     assert customer.is_staff is False
     assert customer.is_superuser is False
-    assert customer.registration_date == now
+    assert customer.date_joined == now
 
 
 @pytest.mark.django_db
@@ -57,7 +56,7 @@ def test_validate_admin_creation():
     assert admin.email == 'newemail@example.com'
     assert admin.is_staff is True
     assert admin.is_superuser is True
-    assert admin.registration_date == now
+    assert admin.date_joined == now
 
 
 @pytest.mark.django_db

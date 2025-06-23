@@ -9,21 +9,23 @@ User = get_user_model()
 
 
 @pytest.mark.django_db
-def test_validate_customernotverified_creation():
-    now = timezone.now()
-    in_5_minutes = now + timezone.timedelta(minutes=5)
-    customer_not_verified = UserNotVerified.objects.create(
-        email='email@example.com',
-        data={
-            'username': 'Juan1234',
-            'first_name': 'Juan',
-            'last_name': 'Lopez',
-            'password': 'password1234',
-            'role': 'customer',
-            'is_verified': True,
-            'is_admin': False
-        }
-    )
+def test_validate_customer_not_verified_creation():
+
+    with freeze_time("2025-01-01 00:00:00"):
+        now = timezone.now()
+        in_5_minutes = now + timezone.timedelta(minutes=5)
+        customer_not_verified = UserNotVerified.objects.create(
+            email='email@example.com',
+            data={
+                'username': 'Juan1234',
+                'first_name': 'Juan',
+                'last_name': 'Lopez',
+                'password': 'password1234',
+                'role': 'customer',
+                'is_verified': True,
+                'is_admin': False
+            }
+        )
 
     assert customer_not_verified.pk is not None
     assert customer_not_verified.email == 'email@example.com'
@@ -35,7 +37,7 @@ def test_validate_customernotverified_creation():
 
 
 @pytest.mark.django_db
-def test_validate_adminnotverified_creation():
+def test_validate_admin_not_verified_creation():
     with freeze_time("2025-01-01 00:00:00"):
         now = timezone.now()
         in_5_minutes = now + timezone.timedelta(minutes=5)
@@ -62,7 +64,7 @@ def test_validate_adminnotverified_creation():
 
 
 @pytest.mark.django_db
-def test_usernotverified_duplicated_raises_error():
+def test_user_not_verified_duplicated_raises_error():
 
     UserNotVerified.objects.create(
         email='email@example.com',
@@ -93,7 +95,7 @@ def test_usernotverified_duplicated_raises_error():
 
 
 @pytest.mark.django_db
-def test_usernotverified_creates_code_correctly():
+def test_user_not_verified_creates_code_correctly():
     user = UserNotVerified.objects.create(
         email='email@example.com',
         data={
