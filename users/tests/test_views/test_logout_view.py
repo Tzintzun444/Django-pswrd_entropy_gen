@@ -7,6 +7,14 @@ User = get_user_model()
 
 
 @pytest.mark.django_db
+def test_logout_view_raises_404_in_get(auth_user):
+
+    response = auth_user.get(reverse('logout'))
+
+    assert response.status_code == 405
+
+
+@pytest.mark.django_db
 def test_logout_view(client, general_user):
 
     response_login = client.post(reverse('login'), {

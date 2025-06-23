@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
-from django.http import Http404
+from django.views.decorators.http import require_POST
 from .models import CustomUser, UserNotVerified
 from .forms import UserRegistrationForm, CustomLoginForm, VerificationEmailForm, UserSettingsForm
 from django.views.generic import TemplateView, FormView
@@ -185,21 +185,15 @@ class DeleteUser(LoginRequiredMixin, DeleteView):
     model = CustomUser
     template_name = 'delete_user.html'
     success_url = reverse_lazy('index')
+    http_method_names = ['post']
 
     def get_object(self, queryset=None):
         return self.request.user
 
-    def get(self, request, *args, **kwargs):
-
-        raise Http404('Page not found')
-
 
 @login_required
+@require_POST
 def unlink_oauth_google(request):
-
-    if request.method != 'POST':
-
-        raise Http404('Page not found')
 
     google_account = SocialAccount.objects.filter(user=request.user, provider='google').first()
     if google_account:

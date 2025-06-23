@@ -4,10 +4,9 @@ import pytest
 
 
 @pytest.mark.django_db
-def test_user_settings_view_renders_with_context(client, general_user):
+def test_user_settings_view_renders_with_context(auth_user):
 
-    client.force_login(general_user)
-    response = client.get(reverse('settings'))
+    response = auth_user.get(reverse('settings'))
 
     assert response.status_code == 200
     assert 'settings.html' in [t.name for t in response.templates]
@@ -18,9 +17,8 @@ def test_user_settings_view_renders_with_context(client, general_user):
 
 
 @pytest.mark.django_db
-def test_user_settings_view_changes_data(client, general_user):
+def test_user_settings_view_changes_data(auth_user, general_user):
 
-    client.force_login(general_user)
     data = {
         'username': 'new_username',
         'first_name': 'new_first_name',
@@ -29,7 +27,7 @@ def test_user_settings_view_changes_data(client, general_user):
 
 
     }
-    response = client.post(reverse('settings'), data=data)
+    response = auth_user.post(reverse('settings'), data=data)
 
     assert response.status_code == 302
     assert response.url == reverse('settings')
@@ -41,3 +39,11 @@ def test_user_settings_view_changes_data(client, general_user):
     assert general_user.last_name == 'last_name'
     assert general_user.email == 'email@example.com'
     assert general_user.check_password('password123') is True
+
+
+def test_user_settings_view_with_not_auth_user(client):
+
+    response = client.get(reverse('settings'))
+
+    assert response.status_code == 302
+    assert response.url == reverse('login') + '?next=' + reverse('settings')

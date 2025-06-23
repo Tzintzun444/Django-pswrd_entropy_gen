@@ -9,23 +9,29 @@ User = get_user_model()
 
 
 @pytest.mark.django_db
-def test_delete_user_raises_404_in_get(client, general_user):
+def test_delete_user_raises_404_in_get(auth_user, general_user):
 
-    client.force_login(general_user)
-    response = client.get(reverse('delete_user'))
+    response = auth_user.get(reverse('delete_user'))
 
-    assert response.status_code == 404
+    assert response.status_code == 405
 
     general_user.refresh_from_db()
 
     assert User.objects.filter(username=general_user.username).exists() is True
     
 
-@pytest.mark.django_db
-def test_delete_user_works(client, general_user):
+def test_delete_user_with_not_auth_user(client):
 
-    client.force_login(general_user)
     response = client.post(reverse('delete_user'))
+
+    assert response.status_code == 302
+    assert response.url == reverse('login') + '?next=' + reverse('delete_user')
+
+
+@pytest.mark.django_db
+def test_delete_user_works(auth_user):
+
+    response = auth_user.post(reverse('delete_user'))
 
     assert response.status_code == 302
     assert response.url == reverse('index')

@@ -61,6 +61,6 @@ def user_not_verified():
 @pytest.fixture
 def auth_user(client, general_user):
 
-    client.login(username='user_test', password='password123')
+    client.force_login(general_user)
 
     return client

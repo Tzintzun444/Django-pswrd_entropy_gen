@@ -1,6 +1,6 @@
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from users.tests.conftest import user_not_verified
+from users.tests.conftest import user_not_verified, auth_user, admin_user, general_user
 from users.models import UserNotVerified
 import pytest
 
@@ -8,16 +8,14 @@ User = get_user_model()
 
 
 @pytest.mark.django_db
-def test_auth_user_is_redirected(client, general_user):
+def test_auth_user_is_redirected(auth_user):
 
-    client.force_login(general_user)
-    response = client.get(reverse('verify_email'))
+    response = auth_user.get(reverse('verify_email'))
 
     assert response.status_code == 302
     assert response.url == reverse('index')
 
 
-@pytest.mark.django_db
 def test_verify_email_user_renders_correctly(client):
 
     response = client.get(reverse('verify_email'))
@@ -25,6 +23,15 @@ def test_verify_email_user_renders_correctly(client):
     assert response.status_code == 200
     assert 'verify_email.html' in [t.name for t in response.templates]
     assert 'form' in response.context
+
+
+@pytest.mark.django_db
+def test_auth_admin_user_is_not_redirected(client, admin_user):
+
+    client.force_login(admin_user)
+    response = client.get(reverse('verify_email'))
+
+    assert response.status_code == 200
 
 
 @pytest.mark.django_db

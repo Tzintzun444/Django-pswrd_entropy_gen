@@ -1,5 +1,5 @@
 from django.urls import reverse
-from users.tests.conftest import general_user
+from users.tests.conftest import general_user, auth_user
 import pytest
 
 
@@ -39,3 +39,12 @@ def test_custom_login_view_error(client):
     assert response.status_code == 200
     assert 'form' in response.context
     assert response.context['form'].errors
+
+
+@pytest.mark.django_db
+def test_custom_login_view_redirects_auth_user(auth_user):
+
+    response = auth_user.get(reverse('login'))
+
+    assert response.status_code == 302
+    assert response.url == reverse('index')
