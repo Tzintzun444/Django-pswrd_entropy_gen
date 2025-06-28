@@ -18,7 +18,6 @@ class CreatePasswordView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
 
-        user = self.request.user
         length_password = form.cleaned_data['length_password']
         use_uppercase_letters = form.cleaned_data['use_uppercase_letters']
         use_digits = form.cleaned_data['use_digits']
@@ -32,7 +31,6 @@ class CreatePasswordView(LoginRequiredMixin, FormView):
             use_punctuations=use_punctuation_characters,
             customized=custom_characters_allowed,
             not_allowed=characters_not_allowed
-
         )
 
         self.request.session['password'] = password
@@ -48,8 +46,8 @@ class CreatePasswordView(LoginRequiredMixin, FormView):
             context['password'] = self.request.session.get('password')
             self.request.session['password_is_new'] = False
         else:
-            if 'generated_password' in self.request.session:
-                del self.request.session['generated_password']
+            if 'password' in self.request.session:
+                del self.request.session['password']
 
         return context
 
@@ -70,18 +68,17 @@ class PasswordDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Password
     template_name = 'delete_password.html'
     success_url = reverse_lazy('my_passwords')
+    http_method_names = ['post']
 
     def test_func(self):
 
         password = self.get_object()
         return password.user == self.request.user
 
-    def get(self, request, *args, **kwargs):
-
-        raise Http404('Page not found')
-
 
 class SavePasswordView(LoginRequiredMixin, View):
+
+    http_method_names = ['post']
 
     def post(self, request, *args, **kwargs):
         password = request.POST.get('password')
@@ -99,7 +96,6 @@ class SavePasswordView(LoginRequiredMixin, View):
                 decryption_years_needed=decryption_time
             )
 
-            # Elimina la contraseña de la sesión
             if 'password' in request.session:
                 del request.session['password']
 
@@ -107,7 +103,3 @@ class SavePasswordView(LoginRequiredMixin, View):
                 del request.session['password_is_new']
 
         return redirect('my_passwords')
-
-    def get(self, request, *args, **kwargs):
-
-        raise Http404('Page not found')
