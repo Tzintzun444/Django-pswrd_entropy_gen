@@ -9,7 +9,7 @@ User = get_user_model()
 
 
 @pytest.mark.django_db
-def test_delete_user_raises_404_in_get(auth_user, general_user):
+def test_delete_user_raises_405_in_get(auth_user, general_user):
 
     response = auth_user.get(reverse('delete_user'))
 
