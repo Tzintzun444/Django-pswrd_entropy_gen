@@ -83,7 +83,7 @@ class SavePasswordView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         password = request.POST.get('password')
 
-        if password:
+        if isinstance(password, str) and password:
             # Calcula métricas
             entropy = Generator.calculate_entropy(password, decimals=2)
             decryption_time = Generator.calculate_decryption_time(entropy, decimals=3)

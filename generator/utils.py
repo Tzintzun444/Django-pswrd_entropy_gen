@@ -7,6 +7,14 @@ from typing import Union
 # This is the main class
 class Generator:
 
+    punctuation_characters = '!#$%&*+_-/'
+    type_of_characters = {
+        'default': string.ascii_lowercase,
+        'uppercase': string.ascii_uppercase,
+        'numbers': string.digits,
+        'punctuations': punctuation_characters
+    }
+
     # The class receives the length of the password as an attribute.
     # The other attributes are given by the create_password method.
     def __init__(self, length):
@@ -74,14 +82,6 @@ class Generator:
             # Message error.
             raise ValueError('The number must be a positive integer')
 
-        punctuation_characters = '!#$%&*+_-/'
-
-        cls.type_of_characters = {
-            'default': string.ascii_lowercase,
-            'uppercase': string.ascii_uppercase,
-            'numbers': string.digits,
-            'punctuations': punctuation_characters
-        }
         if not_allowed:
 
             for situation, characters in cls.type_of_characters.items():
