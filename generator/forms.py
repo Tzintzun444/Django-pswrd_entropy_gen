@@ -37,7 +37,6 @@ class CreatePasswordForm(forms.Form):
 
         if characters_not_allowed:
             if any([character in custom_characters_allowed for character in characters_not_allowed]):
-                print('error')
                 self.add_error(
                     'characters_not_allowed',
                     _('A character is crashing in custom and not allowed characters')
@@ -56,8 +55,8 @@ class CreatePasswordForm(forms.Form):
 
                     length_password -= 1
 
-            if length_password <= len(custom_characters_allowed):
-                print('error')
+            if length_password <= len(set(custom_characters_allowed)):
+
                 self.add_error(
                     'custom_characters_allowed',
                     _('There are more custom characters than available characters in the length of the password.')
