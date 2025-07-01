@@ -19,7 +19,6 @@ def test_user_registration_form_using_valid_data(data_for_user_registration_form
     assert 'is_admin' in fields
 
     user_not_verified_instance = form.save()
-    data_from_instance = user_not_verified_instance.data
 
     assert user_not_verified_instance.pk is not None
     assert user_not_verified_instance.email == data_for_user_registration_form['email']
