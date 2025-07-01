@@ -63,4 +63,5 @@ def test_create_password_form_length_custom_characters_greater_than_length_passw
 
     assert form.is_valid() is False
     assert 'custom_characters_allowed' in form.errors
-    assert 'There are more custom characters than available characters in the length of the password.' in form.errors['custom_characters_allowed']
+    assert ('There are more custom characters than available characters in the length of the password.'
+            in form.errors['custom_characters_allowed'])
