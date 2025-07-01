@@ -1,6 +1,5 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from django.core.validators import MinLengthValidator
 from .models import UserNotVerified, CustomUser
 from django.contrib.auth.forms import AuthenticationForm
 
@@ -55,7 +54,7 @@ class UserRegistrationForm(forms.ModelForm):
 
     is_admin = forms.BooleanField(
         label=_('Is admin:'),
-        initial=True,
+        initial=False,
         required=False
     )
 
@@ -192,7 +191,6 @@ class UserSettingsForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Mantener el email original siempre
         if self.instance and self.instance.pk:
             self.initial['email'] = self.instance.email
 

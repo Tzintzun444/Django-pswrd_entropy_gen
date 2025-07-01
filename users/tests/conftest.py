@@ -48,10 +48,7 @@ def user_not_verified():
             'username': 'user_test',
             'first_name': 'first_name',
             'last_name': 'last_name',
-            'email': 'email@example.com',
             'password': 'password123',
-            'is_verified': True,
-            'role': 'customer',
             'is_admin': False
         }
     )
@@ -64,3 +61,19 @@ def auth_user(client, general_user):
     client.force_login(general_user)
 
     return client
+
+
+@pytest.fixture
+def data_for_user_registration_form():
+
+    data = {
+        'username': 'user_test',
+        'first_name': 'user',
+        'last_name': 'test',
+        'email': 'email@example.com',
+        'password': 'password123',
+        'confirm_password': 'password123',
+        'is_admin': False
+    }
+
+    return data
