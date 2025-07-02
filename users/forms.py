@@ -179,6 +179,10 @@ class UserSettingsForm(forms.ModelForm):
         required=False
     )
 
+    email = forms.EmailField(
+        required=False
+    )
+
     class Meta:
         model = CustomUser
         fields = ['username', 'first_name', 'last_name', 'email']
@@ -201,13 +205,15 @@ class UserSettingsForm(forms.ModelForm):
         confirm_password = cleaned_data.get('confirm_password')
 
         if CustomUser.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
-            self.add_error('username',_('Username already exists'))
+            self.add_error('username', _('Username already exists'))
 
         if new_password:
             if len(new_password) < 8:
                 self.add_error('password', _('At least 8 characters'))
-            if new_password.isnumeric():
+            if new_password.isdigit():
                 self.add_error('password', _('Password can\'t be only numeric'))
             if new_password != confirm_password:
                 self.add_error('confirm_password', _('Passwords don\'t match'))
+
+        cleaned_data['email'] = self.instance.email
         return cleaned_data

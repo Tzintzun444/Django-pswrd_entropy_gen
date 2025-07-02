@@ -29,18 +29,14 @@ class UserSettingsView(LoginRequiredMixin, UpdateView):
         return self.request.user
 
     def form_valid(self, form):
-        # Guardar usuario sin commit para manejar la contraseña
+
         user = form.save(commit=False)
 
-        # Manejar cambio de contraseña
         new_password = form.cleaned_data.get('password')
         if new_password:
             user.set_password(new_password)
 
-        # Guardar todos los cambios
         user.save()
-
-        # Mantener la sesión activa
         update_session_auth_hash(self.request, user)
 
         return super().form_valid(form)
