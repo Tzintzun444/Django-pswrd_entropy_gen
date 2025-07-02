@@ -156,7 +156,7 @@ class VerifyEmailUserView(FormView):
 class CustomLogInView(LoginView):
 
     template_name = 'login.html'
-    form_class = CustomLoginForm
+    authentication_form = CustomLoginForm
     redirect_authenticated_user = True
 
     def form_valid(self, form):

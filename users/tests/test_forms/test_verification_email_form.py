@@ -1,6 +1,5 @@
-import pytest
-
 from users.forms import VerificationEmailForm, CodeInputWidget
+import pytest
 
 data = {}
 for index in range(6):
