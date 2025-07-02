@@ -17,9 +17,12 @@ def test_is_staff_or_admin_permission(general_user, is_staff, is_superuser, expe
     general_user.is_staff = is_staff
     general_user.is_superuser = is_superuser
     general_user.save()
+
     request = factory.get('/fake-url/')
     request.user = general_user
+
     mock_view = object()
+
     permission = IsStaffOrAdmin()
 
     assert permission.has_permission(request, mock_view) is expected
