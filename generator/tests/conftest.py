@@ -19,3 +19,19 @@ def general_password(general_user):
     )
 
     return general_password
+
+
+@pytest.fixture()
+def data_for_general_password():
+
+    password = Generator.generate_password(12)
+    entropy = Generator.calculate_entropy(password)
+    decryption_years_needed = Generator.calculate_decryption_time(entropy)
+
+    data = {
+        'password': password,
+        'entropy': entropy,
+        'decryption_years_needed': decryption_years_needed
+    }
+
+    return data
