@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from users.models import UserNotVerified
+from rest_framework.test import APIClient
 import pytest
 
 User = get_user_model()
@@ -77,3 +78,12 @@ def data_for_user_registration_form():
     }
 
     return data
+
+
+@pytest.fixture()
+def api_client_auth_with_admin(admin_user):
+
+    client = APIClient()
+    client.force_authenticate(user=admin_user)
+
+    return client
