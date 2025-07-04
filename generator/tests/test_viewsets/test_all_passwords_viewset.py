@@ -1,6 +1,5 @@
 from generator.serializers import PasswordModelSerializer
 from generator.viewsets import AllPasswordsViewSet
-from generator.tests.conftest import general_password
 from generator.models import Password
 from users.permissions import IsStaffOrAdmin
 from users.tests.conftest import admin_user, api_client_auth_with_admin
@@ -30,7 +29,7 @@ def test_all_passwords_viewset_list_action(api_client_auth_with_admin, admin_use
     response = api_client_auth_with_admin.get(reverse('all_passwords-list'))
 
     assert response.status_code == 200
-    assert len(response.data['results']) == 1
+    assert len(response.data['results']) == len(Password.objects.filter(user=admin_user))
 
 
 @pytest.mark.django_db

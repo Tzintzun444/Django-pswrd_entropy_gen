@@ -16,6 +16,10 @@ class PasswordViewSet(viewsets.GenericViewSet):
     def get_queryset(self):
 
         queryset = super().get_queryset()
+
+        if not self.request.user.is_authenticated:
+            return queryset.none()
+
         queryset = queryset.filter(user=self.request.user)
         return queryset
 

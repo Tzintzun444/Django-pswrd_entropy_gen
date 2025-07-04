@@ -28,10 +28,10 @@ def admin_user():
         username='user_admin_test',
         first_name='first_name',
         last_name='last_name',
-        email='email@example.com',
+        email='admin@example.com',
         is_verified=True,
         user_status=False,
-        role='customer',
+        role='admin',
         is_staff=True,
         is_superuser=True
     )
@@ -85,5 +85,14 @@ def api_client_auth_with_admin(admin_user):
 
     client = APIClient()
     client.force_authenticate(user=admin_user)
+
+    return client
+
+
+@pytest.fixture()
+def api_client_auth_with_general_user(general_user):
+
+    client = APIClient()
+    client.force_authenticate(user=general_user)
 
     return client

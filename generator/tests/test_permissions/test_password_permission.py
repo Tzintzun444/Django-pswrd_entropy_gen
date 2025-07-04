@@ -51,7 +51,7 @@ def test_custom_user_permission_has_object_permission(general_user, action, is_o
     request = factory.get('/fake-url/')
     request.user = request_user
 
-    obj = type('Obj', (), {'owner': general_user if is_owner else type('CustomUser', (), {'username': 'another_user'})})
+    obj = type('Obj', (), {'user': general_user if is_owner else type('CustomUser', (), {'username': 'another_user'})})
     mock_view = type('View', (), {'action': action})
 
     permission = PasswordPermission()
