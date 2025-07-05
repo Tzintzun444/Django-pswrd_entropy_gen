@@ -3,7 +3,6 @@ from users.serializers import CustomAdminSerializer
 from users.permissions import IsStaffOrAdmin
 from users.models import CustomUser
 from users.tests.conftest import api_client_auth_with_admin, admin_user, general_user
-from generator.tests.conftest import general_password
 from django.urls import reverse
 import pytest
 

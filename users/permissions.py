@@ -7,6 +7,10 @@ class IsStaffOrAdmin(BasePermission):
 
         return request.user.is_authenticated and (request.user.is_staff or request.user.is_superuser)
 
+    def has_object_permission(self, request, view, obj):
+
+        return request.user.is_authenticated and (request.user.is_staff or request.user.is_superuser)
+
 
 class CustomUserPermission(BasePermission):
 
@@ -24,7 +28,7 @@ class CustomUserPermission(BasePermission):
 
     def has_object_permission(self, request, view, obj):
 
-        if view.action in ['retrieve', 'destroy', 'update']:
+        if view.action in ['retrieve', 'destroy', 'update', 'partial_update']:
 
             return obj.username == request.user.username or request.user.is_staff or request.user.is_superuser
 

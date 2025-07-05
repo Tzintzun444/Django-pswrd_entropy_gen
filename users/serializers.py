@@ -47,11 +47,13 @@ class CustomCustomerSerializer(serializers.ModelSerializer):
 
                 raise serializers.ValidationError('username', 'The username is already in use')
 
-        if len(data.get('password')) < 8:
-            raise serializers.ValidationError('password', 'Password must have at least 8 characters')
+        if data.get('password', False):
 
-        if data.get('password').isdigit():
-            raise serializers.ValidationError('password', 'Password can\'t be only numeric')
+            if len(data.get('password')) < 8:
+                raise serializers.ValidationError('password', 'Password must have at least 8 characters')
+
+            if data.get('password').isdigit():
+                raise serializers.ValidationError('password', 'Password can\'t be only numeric')
 
         return super().validate(data)
 
