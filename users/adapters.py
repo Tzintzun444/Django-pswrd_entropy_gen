@@ -17,6 +17,7 @@ class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
 
         # Verificar si ya existe un usuario con este email
         if user.email:
+
             User = get_user_model()
 
             try:
