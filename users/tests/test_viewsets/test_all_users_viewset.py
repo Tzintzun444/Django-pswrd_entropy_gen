@@ -13,6 +13,7 @@ def test_all_users_viewset_attributes():
 
     assert viewset.serializer_class == CustomAdminSerializer
     assert viewset.permission_classes == [IsStaffOrAdmin]
+    assert list(viewset.queryset) == list(CustomUser.objects.all())
 
 
 @pytest.mark.django_db

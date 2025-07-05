@@ -17,6 +17,7 @@ def test_password_viewset_attributes():
 
     assert viewset.serializer_class == PasswordGenerationSerializer
     assert viewset.permission_classes == [PasswordPermission]
+    assert list(viewset.queryset) == list(Password.objects.all())
 
 
 @pytest.mark.parametrize('action,serializer_class',[

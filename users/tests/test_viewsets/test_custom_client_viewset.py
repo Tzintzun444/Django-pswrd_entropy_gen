@@ -307,4 +307,3 @@ def test_custom_client_viewset_destroy_action_with_not_auth_users(general_user):
 
     assert response.status_code == 404
     assert CustomUser.objects.filter(pk=general_user.pk).exists() is True
-

@@ -15,6 +15,7 @@ def test_all_passwords_viewset_attributes():
 
     assert viewset.serializer_class == PasswordModelSerializer
     assert viewset.permission_classes == [IsStaffOrAdmin]
+    assert list(viewset.queryset) == list(Password.objects.all())
 
 
 @pytest.mark.django_db
