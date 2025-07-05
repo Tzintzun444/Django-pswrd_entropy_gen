@@ -9,7 +9,6 @@ class Generator:
 
     punctuation_characters = '!#$%&*+_-/'
     type_of_characters = {
-        'default': string.ascii_lowercase,
         'uppercase': string.ascii_uppercase,
         'numbers': string.digits,
         'punctuations': punctuation_characters
@@ -31,50 +30,34 @@ class Generator:
 
         return self._length
 
-    @length.setter
-    def length(self, length):
-
-        self._length = length
-
     @property
     def generated_password(self):
 
         return self._generated_password
-
-    @generated_password.setter
-    def generated_password(self, generated_password):
-
-        self._generated_password = generated_password
 
     @property
     def entropy_of_password(self):
 
         return self._entropy_of_password
 
-    @entropy_of_password.setter
-    def entropy_of_password(self, entropy_of_password):
-
-        self._entropy_of_password = entropy_of_password
-
     @property
     def decryption_password_time(self):
 
         return self._decryption_password_time
 
-    @decryption_password_time.setter
-    def decryption_password_time(self, decryption_password_time):
-
-        self._decryption_password_time = decryption_password_time
-
     # This method generates a password based on the characters allowed and the provided length.
     @classmethod
     def generate_password(cls, length: int, use_uppercase=True,
                           use_numbers=True, use_punctuations=True,
-                          not_allowed=None, customized=None) -> str:
+                          not_allowed='', customized='') -> str:
 
-        if not_allowed:
+        # This is the list that stores the characters of the password.
+        password = []
+        characters = string.ascii_lowercase
 
-            not_allowed = {not_allowed}
+        if not isinstance(length, int):
+
+            raise TypeError('The number must be a positive integer')
 
         # Ensure that length is a positive integer.
         if length <= 0:
@@ -82,15 +65,42 @@ class Generator:
             # Message error.
             raise ValueError('The number must be a positive integer')
 
+        if not (
+                isinstance(use_uppercase, bool) and isinstance(use_numbers, bool) and isinstance(use_punctuations, bool)
+        ):
+
+            raise TypeError('use_uppercase, use_numbers and use_punctuations must be boolean')
+
+        if customized:
+
+            if not isinstance(customized, str):
+
+                raise TypeError('Customized characters must be a string')
+
+            customized = set(customized)
+            password.extend(list(customized))
+
         if not_allowed:
 
-            for situation, characters in cls.type_of_characters.items():
+            if not isinstance(not_allowed, str):
+
+                raise TypeError('Not allowed characters must be a string')
+
+            not_allowed = ''.join(sorted(list(set(not_allowed))))
+
+            for characters_string in cls.type_of_characters.values():
+
+                if not_allowed == characters_string or not_allowed == string.ascii_lowercase:
+
+                    raise ValueError('Not allowed characters are the same characters of lower, upper, digits or punctuation characters, instead set its parameter as False')
+
+            for situation, characters_string in cls.type_of_characters.items():
 
                 for letter in not_allowed:
 
-                    if letter in characters:
+                    if letter in characters_string:
 
-                        cls.type_of_characters[situation] = characters.replace(letter, '')
+                        cls.type_of_characters[situation] = cls.type_of_characters[situation].replace(letter, '')
 
         # Stores the situations in a dictionary as the key, amd their boolean values and the characters related
         # as the values.
@@ -100,9 +110,7 @@ class Generator:
                       # True, !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
                       }
 
-        # This is the list that stores the characters of the password.
-        password = []
-        characters = cls.type_of_characters['default']
+        password.append(secrets.choice(string.ascii_lowercase))
 
         # The for loop checks if the situations are True or false.
         for character_type in situations.values():
@@ -116,18 +124,20 @@ class Generator:
                 # Also adds 1 character of each type allowed to ensure that there is at least 1.
                 password.append(secrets.choice(character_type[1]))
 
-        if customized:
-
-            password.extend(list(customized))
-
         # This is the necessary length to complete the password.
         remaining = length - len(password)
 
-        # Selects all necessary characters to complete the password
-        random_password = [secrets.choice(characters) for _ in range(remaining)]
+        if remaining < 0:
 
-        # Extends the original 'password' list with the list above.
-        password.extend(random_password)
+            raise ValueError('Length of custom characters is greater than characters available in password, reduce it')
+
+        elif remaining > 0:
+
+            # Selects all necessary characters to complete the password
+            random_password = [secrets.choice(characters) for _ in range(remaining)]
+
+            # Extends the original 'password' list with the list above.
+            password.extend(random_password)
 
         # The 'password' list is shuffled for avoid patterns
         secrets.SystemRandom().shuffle(password)
@@ -142,6 +152,18 @@ class Generator:
     @classmethod
     def calculate_entropy(cls, password: str, decimals: int = 1) -> Union[int, float]:
 
+        if not isinstance(password, str):
+
+            raise TypeError('password must be a string')
+
+        if not isinstance(decimals, int):
+
+            raise TypeError('The number of decimals must be an integer')
+
+        if decimals < 0:
+
+            raise ValueError('The number of decimals must be a positive integer')
+
         # The set ensures that we don't take repetitive characters.
         unique_characters = set(password)
 
@@ -153,7 +175,7 @@ class Generator:
 
         # The dictionary stores the possible characters and the number of them.
         situations = {'uppercase': (cls.type_of_characters['uppercase'], len(cls.type_of_characters['uppercase'])),  # ABCDEFGHIJKLMNOPQRSTUVWXYZ, 26
-                      'lowercase': (cls.type_of_characters['default'], len(cls.type_of_characters['default'])),  # abcdefghijklmnopqrstuvwxyz, 26
+                      'lowercase': (string.ascii_lowercase, len(string.ascii_lowercase)),  # abcdefghijklmnopqrstuvwxyz, 26
                       'numbers': (cls.type_of_characters['numbers'], len(cls.type_of_characters['numbers'])),  # 0123456789, 10
                       'punctuations': (cls.type_of_characters['punctuations'], len(cls.type_of_characters['punctuations'])),  # !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~, 32
                       }
@@ -178,6 +200,26 @@ class Generator:
     @staticmethod
     def calculate_decryption_time(entropy: Union[int, float],
                                   decimals: int = 2, attempts_per_second=1e12) -> Union[int, float]:
+
+        if not isinstance(entropy, Union[int, float]):
+
+            raise TypeError('entropy must be a number')
+
+        if not isinstance(decimals, int):
+
+            raise TypeError('Number of decimals must be an integer')
+
+        if decimals < 0:
+
+            raise ValueError('Number of decimals cannot be a negative integer')
+
+        if not isinstance(attempts_per_second, Union[int, float]):
+
+            raise TypeError('attempts per second must be an integer')
+
+        if attempts_per_second <= 0:
+
+            raise ValueError('attempts per second must be a positive integer')
 
         # Seconds per year = 60 seconds * 60 minutes * 24 hours * 365 days.
         seconds_per_year = 60 * 60 * 24 * 365
@@ -211,8 +253,9 @@ class Generator:
 
         # If an error happens, this will handle it.
         except Exception as exception:
+
             print(f'There was an error: {exception}')
-            # This is the message error.
+
             return None, None, None
 
     # For printing the object.
