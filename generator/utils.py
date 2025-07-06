@@ -86,11 +86,16 @@ class Generator:
 
                 raise TypeError('Not allowed characters must be a string')
 
-            not_allowed = ''.join(sorted(list(set(not_allowed))))
+            not_allowed = set(not_allowed)
+            not_allowed = ''.join(sorted(list(not_allowed)))
+
+            if customized and any(letter in customized for letter in not_allowed):
+
+                raise ValueError('A character is crashing in customized and not allowed characters')
 
             for characters_string in cls.type_of_characters.values():
 
-                if not_allowed == characters_string or not_allowed == string.ascii_lowercase:
+                if all(c in not_allowed for c in characters_string) or all(c in not_allowed for c in string.ascii_lowercase):
 
                     raise ValueError('Not allowed characters are the same characters of lower, upper, digits or punctuation characters, instead set its parameter as False')
 
@@ -102,6 +107,10 @@ class Generator:
 
                         cls.type_of_characters[situation] = cls.type_of_characters[situation].replace(letter, '')
 
+                    elif letter in characters:
+
+                        characters = characters.replace(letter, '')
+
         # Stores the situations in a dictionary as the key, amd their boolean values and the characters related
         # as the values.
         situations = {'uppercase': (use_uppercase, cls.type_of_characters['uppercase']),  # True, ABCDEFGHIJKLMNOPQRSTUVWXYZ
@@ -110,7 +119,7 @@ class Generator:
                       # True, !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
                       }
 
-        password.append(secrets.choice(string.ascii_lowercase))
+        password.append(secrets.choice(characters))
 
         # The for loop checks if the situations are True or false.
         for character_type in situations.values():
@@ -193,6 +202,13 @@ class Generator:
         # Using the previous formula, we calculate its entropy and we verify the formula is not empty.
         entropy = length_password * math.log2(argument_log) if length_password > 0 else 0
 
+        if isinstance(entropy, int):
+
+            return entropy
+
+        if decimals == 0:
+            return round(entropy)
+
         # Finally, we return the entropy rounded to the indicated decimals.
         return round(entropy, decimals)
 
@@ -227,9 +243,16 @@ class Generator:
         # These are all the possible combinations of the password,
         # therefore, all the possible attempts to crack it.
         combinations = 2 ** entropy
-
         # T = 2^H / V * S
         decryption_time_in_years = combinations / (attempts_per_second * seconds_per_year)
+
+        if isinstance(decryption_time_in_years, int):
+
+            return decryption_time_in_years
+
+        if decimals == 0:
+
+            return round(decryption_time_in_years)
 
         # Finally, we return the time rounded to the provided decimals.
         return float(f'{decryption_time_in_years:.{decimals}e}')

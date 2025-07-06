@@ -7,6 +7,7 @@ from django.urls import reverse
 import pytest
 
 
+@pytest.mark.django_db
 def test_all_users_viewset_attributes():
 
     viewset = AllUsersViewSet()

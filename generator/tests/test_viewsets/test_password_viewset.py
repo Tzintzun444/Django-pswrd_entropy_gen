@@ -11,6 +11,7 @@ import pytest
 factory = APIRequestFactory()
 
 
+@pytest.mark.django_db
 def test_password_viewset_attributes():
 
     viewset = PasswordViewSet()
