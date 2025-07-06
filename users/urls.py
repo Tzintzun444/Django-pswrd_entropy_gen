@@ -1,5 +1,3 @@
-from xml.etree.ElementInclude import include
-
 from django.urls import path, include
 from django.views.i18n import set_language
 from rest_framework.routers import DefaultRouter
