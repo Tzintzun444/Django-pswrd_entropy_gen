@@ -1,5 +1,4 @@
 from django.urls import reverse
-import pytest
 
 
 def test_IndexView(client):

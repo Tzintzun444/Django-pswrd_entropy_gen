@@ -7,16 +7,12 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 from .models import CustomUser, UserNotVerified
 from .forms import UserRegistrationForm, CustomLoginForm, VerificationEmailForm, UserSettingsForm
-from django.views.generic import TemplateView, FormView
+from django.views.generic import FormView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.utils.translation import gettext_lazy as _
 from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.decorators import login_required
-
-
-class IndexView(TemplateView):
-    template_name = 'index.html'
 
 
 class UserSettingsView(LoginRequiredMixin, UpdateView):
