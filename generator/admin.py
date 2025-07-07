@@ -7,5 +7,4 @@ from .models import Password
 class PasswordAdmin(admin.ModelAdmin):
 
     list_display = ['user__username', 'password', 'entropy', 'decryption_years_needed', 'creation_date']
-    search_fields = ['user__username', 'password', 'decryption_years_needed', 'creation_date']
-
+    search_fields = ['user__username', 'password', 'entropy', 'decryption_years_needed', 'creation_date']
