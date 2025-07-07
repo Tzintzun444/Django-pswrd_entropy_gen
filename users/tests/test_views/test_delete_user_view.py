@@ -1,6 +1,5 @@
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from django.http import Http404
 from users.tests.conftest import general_user
 import pytest
 

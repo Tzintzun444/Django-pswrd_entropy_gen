@@ -16,7 +16,7 @@ urlpatterns = [
     path('verify-email/', VerifyEmailUserView.as_view(), name='verify_email'),
     path('login/', CustomLogInView.as_view(), name='login'),
     path('logout/', CustomLogOutView.as_view(), name='logout'),
-    path('delete-user/', DeleteUser.as_view(), name='delete_user'),
-    path('set_language/', set_language, name='set_language'),
+    path('delete-user/', DeleteUserView.as_view(), name='delete_user'),
+    path('set-language/', set_language, name='set_language'),
     path('api/', include(router.urls))
 ]

@@ -176,7 +176,7 @@ class CustomLogOutView(LogoutView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class DeleteUser(LoginRequiredMixin, DeleteView):
+class DeleteUserView(LoginRequiredMixin, DeleteView):
 
     model = CustomUser
     template_name = 'delete_user.html'
