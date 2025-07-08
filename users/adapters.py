@@ -55,7 +55,6 @@ class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
 
             user.username = username
 
-        # Asegurarse de obtener first_name y last_name de Google
         extra_data = sociallogin.account.extra_data
         if not user.first_name and 'given_name' in extra_data:
             user.first_name = extra_data.get('given_name', '')
