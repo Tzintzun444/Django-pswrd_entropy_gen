@@ -213,9 +213,9 @@ def test_generator_class_create_password_method(length, valid):
 def test_generator_class_(length, valid):
 
     generator = Generator(length)
-    password = generator.generated_password
-    entropy = generator.entropy_of_password
-    decryption_time = generator.decryption_password_time
+    password = generator.password
+    entropy = generator.entropy
+    decryption_time = generator.decryption_time
 
     if valid:
 

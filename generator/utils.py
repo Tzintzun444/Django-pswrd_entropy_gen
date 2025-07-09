@@ -7,17 +7,6 @@ from typing import Union
 # This is the main class.
 class Generator:
 
-    # These are all type of characters available for all the class.
-    punctuation_characters = '!#$%&*+_-/'
-    type_of_characters = {
-        # ABCDEFGHIJKLMNOPQRSTUVWXYZ
-        'uppercase': string.ascii_uppercase,
-        # 1234567890
-        'numbers': string.digits,
-        # !#$%&*+_-/
-        'punctuations': punctuation_characters
-    }
-
     # The class is initialized with the length of the password as an attribute.
     # The other attributes are given by the create_password method.
     def __init__(self, length):
@@ -50,13 +39,25 @@ class Generator:
         return self._decryption_time
 
     # This class method generates a password based on the characters allowed and the provided length.
-    @classmethod
-    def generate_password(cls, length: int, use_uppercase=True,
+    @staticmethod
+    def generate_password(length: int, use_uppercase=True,
                           use_numbers=True, use_punctuations=True,
                           not_allowed='', customized='') -> str:
 
         # This is the list that stores the characters of the password.
         password = []
+
+        # These are all the default optional characters for the password.
+        punctuation_characters = '!#$%&*+_-/'
+        type_of_characters = {
+            # ABCDEFGHIJKLMNOPQRSTUVWXYZ
+            'uppercase': string.ascii_uppercase,
+            # 1234567890
+            'numbers': string.digits,
+            # !#$%&*+_-/
+            'punctuations': punctuation_characters
+        }
+
         # abcdefghijklmnopqrstuvwxyz
         characters = string.ascii_lowercase
 
@@ -108,7 +109,7 @@ class Generator:
                 raise ValueError('A character is crashing in customized and not allowed characters')
 
             # for each characters string stored as values in the initial dict:
-            for characters_string in cls.type_of_characters.values():
+            for characters_string in type_of_characters.values():
 
                 # This ensures not allowed characters doesn't invalid any characters string.
                 # If all not allowed characters are the same in a characters string (uppercase, numbers, punctuations)
@@ -118,7 +119,7 @@ class Generator:
                     raise ValueError('Not allowed characters are the same characters of lower, upper, digits or punctuation characters, instead set its parameter as False')
 
             # For each situation (key) and characters string (value) in the original dict:
-            for situation, characters_string in cls.type_of_characters.items():
+            for situation, characters_string in type_of_characters.items():
 
                 # For each character of the not allowed characters:
                 for character in not_allowed:
@@ -127,7 +128,7 @@ class Generator:
                     if character in characters_string:
 
                         # This deletes the character from the characters string and replace the string in the dict.
-                        cls.type_of_characters[situation] = cls.type_of_characters[situation].replace(character, '')
+                        type_of_characters[situation] = type_of_characters[situation].replace(character, '')
 
                     # If the above condition is not met, and if the character is in the default characters (lowercase)
                     elif character in characters:
@@ -137,9 +138,9 @@ class Generator:
 
         # This stores the situations in a dictionary as the key, amd their boolean values and the characters related
         # as the values.
-        situations = {'uppercase': (use_uppercase, cls.type_of_characters['uppercase']),
-                      'numbers': (use_numbers, cls.type_of_characters['numbers']),
-                      'punctuations': (use_punctuations, cls.type_of_characters['punctuations']),
+        situations = {'uppercase': (use_uppercase, type_of_characters['uppercase']),
+                      'numbers': (use_numbers, type_of_characters['numbers']),
+                      'punctuations': (use_punctuations, type_of_characters['punctuations']),
                       }
 
         # This appends a random character from the default (or the characters available if any character was deleted).
@@ -186,8 +187,8 @@ class Generator:
         return final_password
 
     # This class method calculates the entropy of the provided password.
-    @classmethod
-    def calculate_entropy(cls, password: str, decimals: int = 1) -> Union[int, float]:
+    @staticmethod
+    def calculate_entropy(password: str, decimals: int = 1) -> Union[int, float]:
 
         # This ensures the password provided is a string.
         if not isinstance(password, str):
@@ -214,10 +215,14 @@ class Generator:
         argument_log = 0
 
         # The dictionary stores the possible characters and the number of them.
-        situations = {'uppercase': (cls.type_of_characters['uppercase'], len(cls.type_of_characters['uppercase'])),
+        situations = {'uppercase': (string.ascii_uppercase, len(string.ascii_uppercase)),
+                      # ABCDEFGHIJKLMNOPQRSTUVWXYZ
                       'lowercase': (string.ascii_lowercase, len(string.ascii_lowercase)),
-                      'numbers': (cls.type_of_characters['numbers'], len(cls.type_of_characters['numbers'])),
-                      'punctuations': (cls.type_of_characters['punctuations'], len(cls.type_of_characters['punctuations'])),
+                      # abcdefghijklmnopqrstuvwxyz
+                      'numbers': (string.digits, len(string.digits)),
+                      # 1234567890
+                      'punctuations': ('!#$%&*+_-/', len('!#$%&*+_-/')),
+                      # !#$%&*+_-/
                       }
 
         # Separates the characters from the number of possible characters.
@@ -249,7 +254,8 @@ class Generator:
     # This static method calculates necessary decryption time to crack a password (in years) in a brute-force attack.
     @staticmethod
     def calculate_decryption_time(entropy: Union[int, float],
-                                  decimals: int = 2, attempts_per_second=1e12) -> Union[int, float]:
+                                  decimals: int = 2,
+                                  attempts_per_second: Union[int, float] = 1e12) -> Union[int, float]:
 
         # This ensures entropy provided is a number.
         if not isinstance(entropy, Union[int, float]):
