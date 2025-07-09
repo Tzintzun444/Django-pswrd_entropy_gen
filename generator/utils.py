@@ -4,17 +4,21 @@ import string
 from typing import Union
 
 
-# This is the main class
+# This is the main class.
 class Generator:
 
+    # These are all type of characters available for all the class.
     punctuation_characters = '!#$%&*+_-/'
     type_of_characters = {
+        # ABCDEFGHIJKLMNOPQRSTUVWXYZ
         'uppercase': string.ascii_uppercase,
+        # 1234567890
         'numbers': string.digits,
+        # !#$%&*+_-/
         'punctuations': punctuation_characters
     }
 
-    # The class receives the length of the password as an attribute.
+    # The class is initialized with the length of the password as an attribute.
     # The other attributes are given by the create_password method.
     def __init__(self, length):
 
@@ -22,8 +26,8 @@ class Generator:
         self._length = length
 
         # These are the password, its entropy and the time to decrypt it.
-        (self._generated_password, self._entropy_of_password,
-         self._decryption_password_time) = self.create_password()
+        (self._password, self._entropy,
+         self._decryption_time) = self.create_password()
 
     @property
     def length(self):
@@ -31,21 +35,21 @@ class Generator:
         return self._length
 
     @property
-    def generated_password(self):
+    def password(self):
 
-        return self._generated_password
-
-    @property
-    def entropy_of_password(self):
-
-        return self._entropy_of_password
+        return self._password
 
     @property
-    def decryption_password_time(self):
+    def entropy(self):
 
-        return self._decryption_password_time
+        return self._entropy
 
-    # This method generates a password based on the characters allowed and the provided length.
+    @property
+    def decryption_time(self):
+
+        return self._decryption_time
+
+    # This class method generates a password based on the characters allowed and the provided length.
     @classmethod
     def generate_password(cls, length: int, use_uppercase=True,
                           use_numbers=True, use_punctuations=True,
@@ -53,72 +57,92 @@ class Generator:
 
         # This is the list that stores the characters of the password.
         password = []
+        # abcdefghijklmnopqrstuvwxyz
         characters = string.ascii_lowercase
 
+        # This validates length is an integer.
         if not isinstance(length, int):
 
             raise TypeError('The number must be a positive integer')
 
-        # Ensure that length is a positive integer.
+        # This ensures length is a positive integer.
         if length <= 0:
 
-            # Message error.
             raise ValueError('The number must be a positive integer')
 
+        # This ensures all arguments for allowing uppercase, numbers and/or punctuations are boolean values.
         if not (
                 isinstance(use_uppercase, bool) and isinstance(use_numbers, bool) and isinstance(use_punctuations, bool)
         ):
 
             raise TypeError('use_uppercase, use_numbers and use_punctuations must be boolean')
 
+        # If custom characters are provided:
         if customized:
 
+            # This ensures the custom characters are a string.
             if not isinstance(customized, str):
 
                 raise TypeError('Customized characters must be a string')
 
+            # This deletes duplicated characters in the custom characters.
             customized = set(customized)
+
+            # This adds the custom characters in the password list.
             password.extend(list(customized))
 
+        # If not allowed characters are provided:
         if not_allowed:
 
+            # This ensures not allowed characters provided are a string.
             if not isinstance(not_allowed, str):
 
                 raise TypeError('Not allowed characters must be a string')
 
+            # This deletes duplicated characters in not allowed characters.
             not_allowed = set(not_allowed)
-            not_allowed = ''.join(sorted(list(not_allowed)))
 
+            # This ensures that there are no identical characters in the custom and not allowed characters.
             if customized and any(letter in customized for letter in not_allowed):
 
                 raise ValueError('A character is crashing in customized and not allowed characters')
 
+            # for each characters string stored as values in the initial dict:
             for characters_string in cls.type_of_characters.values():
 
+                # This ensures not allowed characters doesn't invalid any characters string.
+                # If all not allowed characters are the same in a characters string (uppercase, numbers, punctuations)
+                # For example, 0123456789 has the same characters of 1234567890, order doesn't matter.
                 if all(c in not_allowed for c in characters_string) or all(c in not_allowed for c in string.ascii_lowercase):
 
                     raise ValueError('Not allowed characters are the same characters of lower, upper, digits or punctuation characters, instead set its parameter as False')
 
+            # For each situation (key) and characters string (value) in the original dict:
             for situation, characters_string in cls.type_of_characters.items():
 
-                for letter in not_allowed:
+                # For each character of the not allowed characters:
+                for character in not_allowed:
 
-                    if letter in characters_string:
+                    # If the character is in a character string:
+                    if character in characters_string:
 
-                        cls.type_of_characters[situation] = cls.type_of_characters[situation].replace(letter, '')
+                        # This deletes the character from the characters string and replace the string in the dict.
+                        cls.type_of_characters[situation] = cls.type_of_characters[situation].replace(character, '')
 
-                    elif letter in characters:
+                    # If the above condition is not met, and if the character is in the default characters (lowercase)
+                    elif character in characters:
 
-                        characters = characters.replace(letter, '')
+                        # This deletes the character from the default characters string and replace it.
+                        characters = characters.replace(character, '')
 
-        # Stores the situations in a dictionary as the key, amd their boolean values and the characters related
+        # This stores the situations in a dictionary as the key, amd their boolean values and the characters related
         # as the values.
-        situations = {'uppercase': (use_uppercase, cls.type_of_characters['uppercase']),  # True, ABCDEFGHIJKLMNOPQRSTUVWXYZ
-                      'numbers': (use_numbers, cls.type_of_characters['numbers']),  # True, 0123456789
+        situations = {'uppercase': (use_uppercase, cls.type_of_characters['uppercase']),
+                      'numbers': (use_numbers, cls.type_of_characters['numbers']),
                       'punctuations': (use_punctuations, cls.type_of_characters['punctuations']),
-                      # True, !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
                       }
 
+        # This appends a random character from the default (or the characters available if any character was deleted).
         password.append(secrets.choice(characters))
 
         # The for loop checks if the situations are True or false.
@@ -136,19 +160,23 @@ class Generator:
         # This is the necessary length to complete the password.
         remaining = length - len(password)
 
+        # If remaining is negative means that length of the password generated is greater than the provided
+        # as an argument.
         if remaining < 0:
 
             raise ValueError('Length of custom characters is greater than characters available in password, reduce it')
 
+        # If remaining is positive means that lacks characters in the password.
         elif remaining > 0:
 
-            # Selects all necessary characters to complete the password
+            # Selects all necessary characters to complete the password.
             random_password = [secrets.choice(characters) for _ in range(remaining)]
 
             # Extends the original 'password' list with the list above.
             password.extend(random_password)
 
-        # The 'password' list is shuffled for avoid patterns
+        # If remaining equals to 0 means that password has been completed.
+        # The 'password' list is shuffled for avoid patterns.
         secrets.SystemRandom().shuffle(password)
 
         # Finally, the shuffled characters are joined in a string.
@@ -157,18 +185,21 @@ class Generator:
         # Returns the secure password.
         return final_password
 
-    # This method calculates the entropy of the provided password.
+    # This class method calculates the entropy of the provided password.
     @classmethod
     def calculate_entropy(cls, password: str, decimals: int = 1) -> Union[int, float]:
 
+        # This ensures the password provided is a string.
         if not isinstance(password, str):
 
             raise TypeError('password must be a string')
 
+        # This ensures the number of decimals required is an integer.
         if not isinstance(decimals, int):
 
             raise TypeError('The number of decimals must be an integer')
 
+        # This ensures the number of decimals required is greater than or equal to 0.
         if decimals < 0:
 
             raise ValueError('The number of decimals must be a positive integer')
@@ -183,10 +214,10 @@ class Generator:
         argument_log = 0
 
         # The dictionary stores the possible characters and the number of them.
-        situations = {'uppercase': (cls.type_of_characters['uppercase'], len(cls.type_of_characters['uppercase'])),  # ABCDEFGHIJKLMNOPQRSTUVWXYZ, 26
-                      'lowercase': (string.ascii_lowercase, len(string.ascii_lowercase)),  # abcdefghijklmnopqrstuvwxyz, 26
-                      'numbers': (cls.type_of_characters['numbers'], len(cls.type_of_characters['numbers'])),  # 0123456789, 10
-                      'punctuations': (cls.type_of_characters['punctuations'], len(cls.type_of_characters['punctuations'])),  # !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~, 32
+        situations = {'uppercase': (cls.type_of_characters['uppercase'], len(cls.type_of_characters['uppercase'])),
+                      'lowercase': (string.ascii_lowercase, len(string.ascii_lowercase)),
+                      'numbers': (cls.type_of_characters['numbers'], len(cls.type_of_characters['numbers'])),
+                      'punctuations': (cls.type_of_characters['punctuations'], len(cls.type_of_characters['punctuations'])),
                       }
 
         # Separates the characters from the number of possible characters.
@@ -202,37 +233,45 @@ class Generator:
         # Using the previous formula, we calculate its entropy and we verify the formula is not empty.
         entropy = length_password * math.log2(argument_log) if length_password > 0 else 0
 
+        # If entropy is already an integer:
         if isinstance(entropy, int):
 
             return entropy
 
+        # If the entropy must not have decimals, round to an integer:
         if decimals == 0:
+
             return round(entropy)
 
         # Finally, we return the entropy rounded to the indicated decimals.
         return round(entropy, decimals)
 
-    # This method calculates the necessary decryption time to crack a password (in years) in a brute-force attack.
+    # This static method calculates necessary decryption time to crack a password (in years) in a brute-force attack.
     @staticmethod
     def calculate_decryption_time(entropy: Union[int, float],
                                   decimals: int = 2, attempts_per_second=1e12) -> Union[int, float]:
 
+        # This ensures entropy provided is a number.
         if not isinstance(entropy, Union[int, float]):
 
             raise TypeError('entropy must be a number')
 
+        # This ensures the number of decimals required is an integer.
         if not isinstance(decimals, int):
 
             raise TypeError('Number of decimals must be an integer')
 
+        # This ensures the number of decimals required is greater than or equal to 0.
         if decimals < 0:
 
             raise ValueError('Number of decimals cannot be a negative integer')
 
+        # This ensures attempts per second is a number.
         if not isinstance(attempts_per_second, Union[int, float]):
 
             raise TypeError('attempts per second must be an integer')
 
+        # This ensures attempts per second is a positive number.
         if attempts_per_second <= 0:
 
             raise ValueError('attempts per second must be a positive integer')
@@ -243,13 +282,16 @@ class Generator:
         # These are all the possible combinations of the password,
         # therefore, all the possible attempts to crack it.
         combinations = 2 ** entropy
+
         # T = 2^H / V * S
         decryption_time_in_years = combinations / (attempts_per_second * seconds_per_year)
 
+        # If decryption time in years is an integer:
         if isinstance(decryption_time_in_years, int):
 
             return decryption_time_in_years
 
+        # If the condition above is not met, and if the number of decimals provided is 0, round to an integer:
         if decimals == 0:
 
             return round(decryption_time_in_years)
@@ -257,7 +299,7 @@ class Generator:
         # Finally, we return the time rounded to the provided decimals.
         return float(f'{decryption_time_in_years:.{decimals}e}')
 
-    # Call the 3 static methods of the class to create their respective attributes.
+    # Call the 3 methods of the class to create their respective attributes.
     def create_password(self):
 
         try:
@@ -279,11 +321,15 @@ class Generator:
 
             print(f'There was an error: {exception}')
 
+            # Returns None for each variable respectively
             return None, None, None
 
     # For printing the object.
     def __str__(self):
 
-        return (f'The password generated is: {self.generated_password}\n'
-                f'Entropy={self.entropy_of_password}\n'
-                f'The time necessary to decrypt it is {self.decryption_password_time} years')
+        return ('Generator(' +
+                f'length={self.length}, ' +
+                f'password={self.password}, ' +
+                f'entropy={self.entropy}, ' +
+                f'decryption_time={self.decryption_time})'
+                )
