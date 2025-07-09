@@ -10,8 +10,9 @@ djangorestframework==3.16.0
 djangorestframework_simplejwt==5.5.0
 drf-spectacular==0.28.0
 freezegun==1.5.2
+Markdown==3.8.2
 pswrd_entropy_gen==1.0.2
 psycopg2==2.9.10
 pytest==8.4.0
 pytest-django==4.11.1
-requests==2.32.3
+requests==2.32.4
