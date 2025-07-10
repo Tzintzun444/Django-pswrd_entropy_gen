@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-08 23:25-0600\n"
+"POT-Creation-Date: 2025-07-10 17:40-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,44 +19,48 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
 
-#: .\pswrd_entropy_gen\settings.py:164
+#: .\pswrd_entropy_gen\settings\base.py:162
 msgid "English"
 msgstr "English"
 
-#: .\templates\base.html:19 .\templates\base.html:36 .\templates\base.html:68
-#: .\templates\base.html:85
+#: .\pswrd_entropy_gen\views.py:31
+msgid "This version or language is not available or does not exist"
+msgstr "Esta versión o idioma no está disponible o no existe"
+
+#: .\templates\base.html:21 .\templates\base.html:38 .\templates\base.html:70
+#: .\templates\base.html:87
 msgid "Log Out"
 msgstr "Cerrar sesión"
 
-#: .\templates\base.html:27 .\templates\base.html:76
+#: .\templates\base.html:29 .\templates\base.html:78
 msgid "Confirm Log Out"
 msgstr "Confirmar cierre de sesión"
 
-#: .\templates\base.html:31 .\templates\base.html:80
+#: .\templates\base.html:33 .\templates\base.html:82
 msgid "Are you sure you want to log out?"
 msgstr "¿Estás seguro de que quieres cerrar sesión?"
 
-#: .\templates\base.html:38 .\templates\base.html:87
+#: .\templates\base.html:40 .\templates\base.html:89
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: .\templates\base.html:58
+#: .\templates\base.html:60
 msgid "See my passwords"
 msgstr "Ver contraseñas"
 
-#: .\templates\base.html:59
+#: .\templates\base.html:61
 msgid "Home"
 msgstr "Inicio"
 
-#: .\templates\base.html:60
+#: .\templates\base.html:62
 msgid "Generate a Password"
 msgstr "Generar contraseña"
 
-#: .\templates\base.html:66
+#: .\templates\base.html:68
 msgid "Settings"
 msgstr "Configuraciones"
 
-#: .\templates\base.html:107
+#: .\templates\base.html:109
 msgid "Log In"
 msgstr "Iniciar sesión"
 

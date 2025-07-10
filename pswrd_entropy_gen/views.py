@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
-from django.utils.translation import get_language
+from django.utils.translation import get_language, gettext_lazy as _
 from django.http import Http404
 from django.conf import settings
 from pathlib import Path
@@ -28,7 +28,7 @@ class DocumentationView(TemplateView):
 
         if version not in allowed_versions or language not in languages:
 
-            raise Http404('This version is not available or does not exist')
+            raise Http404(_('This version or language is not available or does not exist'))
 
         if version == 'latest':
 

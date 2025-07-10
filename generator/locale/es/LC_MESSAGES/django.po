@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-07 10:34-0600\n"
+"POT-Creation-Date: 2025-07-10 17:37-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,11 +35,11 @@ msgstr "Estos caracteres no aparecerán en la contraseña"
 msgid "Must be between 1 to 30"
 msgstr "Deber ser entre 1 a 30"
 
-#: .\generator\forms.py:43
+#: .\generator\forms.py:42
 msgid "A character is crashing in custom and not allowed characters"
 msgstr "Un caracter colisiona entre los caracteres personalizados y bloqueados"
 
-#: .\generator\forms.py:63
+#: .\generator\forms.py:62
 msgid ""
 "There are more custom characters than available characters in the length of "
 "the password."
