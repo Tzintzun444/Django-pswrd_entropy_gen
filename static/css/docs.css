@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+
+.markdown-body {
+    max-width: 1050px;
+    margin: 20px auto 60px auto;
+    padding: 0 40px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    line-height: 1.7;
+    font-size: 16px;
+    color: #2c2c2c;
+    border: 5px solid #CCC;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3 {
+    color: #1a1a1a;
+    margin-top: 1.5em;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 0.3em;
+    width: 100%
+}
+
+.markdown-body p {
+    margin-bottom: 1em;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+    padding-left: 1.5em;
+}
+
+.markdown-body a {
+    color: #0066cc;
+    text-decoration: none;
+}
+.markdown-body a:hover {
+    text-decoration: underline;
+}
+
+.markdown-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 15px;
+}
+.markdown-body th,
+.markdown-body td {
+    padding: 10px;
+    border: 1px solid #e1e1e1;
+}
+
+.markdown-body code {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 14px;
+}
+
+.markdown-body pre {
+    background-color: #f5f7fa;
+    padding: 16px;
+    overflow-x: auto;
+    border-radius: 6px;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 14px;
+    border: 1px solid #e1e1e1;
+    margin-bottom: 1.5em;
+}
+
+.version-selector {
+    margin: 10px 0 0px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    background-color: #f5f7fa;
+    border-left: 5px solid #0066cc;
+    border-radius: 6px;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    max-width: fit-content;
+}
+
+.version-selector label {
+    font-weight: 600;
+    color: #2c2c2c;
+}
+
+.version-selector select {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 14px;
+    font-family: inherit;
+    color: #2c2c2c;
+}
+
+.version-selector select:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 0 2px rgba(0,102,204,0.2);
+}
+
+.content {
+    margin: 5px auto !important;
+}

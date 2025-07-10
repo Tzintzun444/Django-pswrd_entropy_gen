@@ -145,7 +145,6 @@ select[name="language"] {
     font-size: 16px;
 }
 
-/* Efectos dinámicos */
 select[name="language"]:hover {
     background-color: #f0f0f0; /* Cambio de color en hover */
 }

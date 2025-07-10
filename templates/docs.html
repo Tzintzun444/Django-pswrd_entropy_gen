@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/docs.css'%}">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+{% endblock head %}
+
+{% block body %}
+
+    <div class="version-header">
+        <div class="version-selector">
+            <label for="version-select">Version:</label>
+            <select id="version-select" onchange="navigateVersion(this)">
+                {% for select_version in allowed_versions %}
+                <option value="{{select_version}}" {% if version == select_version %}selected{% endif %}>{{select_version}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <h3 class="content">
+            {% if version == "latest" %}
+                {{ allowed_versions.1 }}
+            {% else %}
+                {{ version }}
+            {% endif %}
+        </h3>
+    </div>
+    <div class="markdown-body">
+        {{ html_content|safe }}
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll("pre code").forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        });
+
+        function navigateVersion(select) {
+            const selected = select.value;
+            window.location.href = `/docs/${selected}/`;
+        }
+    </script>
+{% endblock body %}

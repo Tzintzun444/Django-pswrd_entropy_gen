@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from .views import IndexView
+from .views import IndexView, DocumentationView
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
@@ -30,6 +30,7 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='obtain_token'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='refresh_token'),
     path('accounts/', include('allauth.urls')),
+    path('docs/<str:version>/', DocumentationView.as_view(), name='docs')
 ]
 
 if settings.DEBUG:

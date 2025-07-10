@@ -24,9 +24,13 @@ from pswrd_entropy_gen.generator import Generator
 ### Class Generator:
 
 The class 'Generator' 3 static methods and 1 instance method:
+
 + generate_password\() static method.
+
 + calculate_entropy\() static method.
+
 + calculate_decryption_time\() static method.
+
 + create_password\() instance method.
 
 Class 'Generator' creates a password based on the length provided, it receives as a parameter the required length 
@@ -88,21 +92,27 @@ The method generates a secure password based on entropy, it ensures that is cryp
 while more characters in the password, security grows.
 
 The method has 6 parameters:
+
 + length:
 It is the length of the password, it must be a positive integer \(do not exist decimal or negative passwords), 
 it is recommended to be 8 or greater numbers. It is not defined by default.
+
 + use_uppercase:
 It is a boolean value, it is true by default. This means that is allowed to have at least 1 uppercase letter in
 the password, it may be more than 1.
+
 + use_numbers:
 Also is a boolean value, true by default. Also means that is allowed to have at least 1 number \(0-9) in the 
 password, it may be more than 1.
+
 + use_punctuations:
 This is a boolean value, true by default. Includes at least 1 punctuation character \(#$%/! for example)
 in the password, also it may be more than 1.
+
 + customized:
 It is a string, al character in the string will be in the password mandatory, it would be a string with unique 
 characters, but if a character is duplicated, will be fixed in the class.
+
 + not_allowed:
 Finally, this is a string that contains all characters that will not be in the password, also if there is a duplicated 
 character, will be fixed. If you have a character in the customized and not allowed characters simultaneously, an error
@@ -402,10 +412,12 @@ password, and if it is, we add to the argument the number of possible characters
 
 Finally, we calculate entropy using the next formula, where:
 
-![Entropy formula](https://github.com/Tzintzun444/pswrd_entropy_gen/blob/images/entropy_formula.png)
+![Entropy formula](entropy_formula.png)
 
 + H: Represents the password entropy.
+
 + L: Represents the password length.
+
 + n: Represents the total possibilities for each character in the password.
 
 ```python
@@ -506,11 +518,14 @@ After that, we calculate how many combinations are possible with the entropy rec
 
 Next, we calculate the decryption time based on the following formula, where:
 
-![Decryption_time_formula](https://github.com/Tzintzun444/pswrd_entropy_gen/blob/images/decryption_time_formula.png)
+![Decryption_time_formula](decryption_time_formula.png)
 
 + T: Represents the decryption time in years.
+
 + H: Represents the password entropy.
+
 + V: Represents the attempts per second that a hacker can make.
+
 + S: Represents the seconds in 1 year.
 
 ```python
@@ -547,10 +562,11 @@ We've finished!
   In this case, we will use the default performance of the method \(this means all types of characters are allowed), 
   we need a password with 12 characters:
   
-  ```python
-  pswrd_generator = Generator.create_password(12) # The password length is 12 characters
-  # output: UbMlRi/N5+4, 78.7, 15568.76
-  ```
+```python
+# The password length is 12 characters
+pswrd_generator = Generator.create_password(12)
+# output: UbMlRi/N5+4, 78.7, 15568.76
+```
 
 ### generate_password() static method:
 
@@ -560,81 +576,81 @@ All the following passwords will have 18 characters.
 
   As we saw before, we will generate the password with the default performance of the method.
   
-  ```python
-  # This is the needed password.
-  generated_password = Generator.generate_password(18)
-  # output: +1ND%q#h2tOC-4_F$8 
-  ```
+```python
+# This is the needed password.
+generated_password = Generator.generate_password(18)
+# output: +1ND%q#h2tOC-4_F$8 
+```
 
 + Password without punctuation:
 
   Now, the password does not allow punctuation characters \(or, as the same way, lower and uppercase letters and 
   digits are allowed):
   
-  ```python
-  # This is the needed password.
-  generated_password = Generator.generate_password(18, use_punctuations=False)
-  # output: 6dVf1UKHUHOq0RSEUL 
-  ```
+```python
+# This is the needed password.
+generated_password = Generator.generate_password(18, use_punctuations=False)
+# output: 6dVf1UKHUHOq0RSEUL 
+```
 
 + Password without digits:
 
   Now, the password does not allow digits \(or, as the same way, lower and uppercase letters and 
   punctuation characters are allowed):
   
-  ```python
-  # This is the needed password.
-  generated_password = Generator.generate_password(18, use_numbers=False)
-  # output: vf/CE_uu!W&#Sw%jhD 
-  ```
+```python
+# This is the needed password.
+generated_password = Generator.generate_password(18, use_numbers=False)
+# output: vf/CE_uu!W&#Sw%jhD 
+```
 
 + Password without uppercase letters:
 
   Now, the password does not allow uppercase letters \(or, as the same way, lowercase letters, digits and 
   punctuation characters are allowed):
   
-  ```python
-  # This is the needed password.
-  generated_password = Generator.generate_password(18, use_uppercase=False)
-  # output: /3_4!#&u991_43-m4t
-  ```
+```python
+# This is the needed password.
+generated_password = Generator.generate_password(18, use_uppercase=False)
+# output: /3_4!#&u991_43-m4t
+```
 
 + Password with only lowercase letters: 
 
   Finally, the password only allows lowercase letters:
   
-  ```python
-  # This is the needed password.
-  generated_password = Generator.generate_password(18, use_uppercase=False, 
-                                                   use_punctuations=False, use_numbers=False)
-  # output: ytvyyzlfnamurebtoh
-  ```
+```python
+# This is the needed password.
+generated_password = Generator.generate_password(18, use_uppercase=False, 
+                                                 use_punctuations=False, use_numbers=False)
+# output: ytvyyzlfnamurebtoh
+```
 
 + Combined situations: 
 
   In this case, the password allows lowercase letters and digits, but does not allow uppercase letters
   and punctuation characters:
   
-  ```python
-  # This is the needed password.
-  generated_password = Generator.generate_password(18, use_uppercase=False, 
-                                                   use_punctuations=False)
-  # output: ou0h92pj1cwqe8ny02
-  ```
+```python
+# This is the needed password.
+generated_password = Generator.generate_password(18, use_uppercase=False, 
+                                                 use_punctuations=False)
+# output: ou0h92pj1cwqe8ny02
+```
 
 + Password with uppercase and lowercase letters, digits and punctuations, customized and not_allowed characters:
 
   In this final case, the password allow all type of characters, but sets some specific characters and disallow others:
   
-  ```python
-  # This is the needed password.
-  generated_password = Generator.generate_password(12, use_uppercase=True, use_numbers=True, use_punctuations=True,
-                                                   customized='t4zA7', not_allowed='129685dfg/-'
-                                                   )
-  # output: Qy4A&PZ3t0z7
-  # As you can see, each character of customized is in the password at least once, and all characters in not allowed 
-  # are not in the password.
-  ```
+```python
+# This is the needed password.
+generated_password = Generator.generate_password(12, use_uppercase=True, use_numbers=True, use_punctuations=True,
+                                                 customized='t4zA7', not_allowed='129685dfg/-'
+                                                 )
+# output: Qy4A&PZ3t0z7
+# As you can see, each character of customized is in the password at least once, and all characters in not allowed 
+# are not in the password.
+```
 
 ### calculate_entropy() static method:
 
@@ -644,61 +660,61 @@ We will use the passwords generated above for these examples.
   
   This is the entropy of the password with all types of characters:
 
-  ```python
-  # This is the entropy of the password: +1ND%q#h2tOC-4_F$8
-  entropy = Generator.calculate_entropy("+1ND%q#h2tOC-4_F$8")
-  # output: 118.0
-  ```
+```python
+# This is the entropy of the password: +1ND%q#h2tOC-4_F$8
+entropy = Generator.calculate_entropy("+1ND%q#h2tOC-4_F$8")
+# output: 118.0
+```
 
 + Password without punctuation:
 
   This is the entropy of the password without punctuation characters:
 
-  ```python
-  # This is the entropy of the password: 6dVf1UKHUHOq0RSEUL
-  entropy = Generator.calculate_entropy("6dVf1UKHUHOq0RSEUL")
-  # output: 107.2
-  ```
+```python
+# This is the entropy of the password: 6dVf1UKHUHOq0RSEUL
+entropy = Generator.calculate_entropy("6dVf1UKHUHOq0RSEUL")
+# output: 107.2
+```
 
 + Password without digits:
 
   This is the entropy of the password without digits:
 
-  ```python
-  # This is the entropy of the password: vf/CE_uu!W&#Sw%jhD
-  entropy = Generator.calculate_entropy("vf/CE_uu!W&#Sw%jhD")
-  # output: 115.1
-  ```
+```python
+# This is the entropy of the password: vf/CE_uu!W&#Sw%jhD
+entropy = Generator.calculate_entropy("vf/CE_uu!W&#Sw%jhD")
+# output: 115.1
+```
 
 + Password without uppercase letters:
 
   This is the entropy of the password without uppercase letters:
 
-  ```python
-  # This is the entropy of the password: /3_4!#&u991_43-m4t
-  entropy = Generator.calculate_entropy("/3_4!#&u991_43-m4t")
-  # output: 109.6
-  ```
+```python
+# This is the entropy of the password: /3_4!#&u991_43-m4t
+entropy = Generator.calculate_entropy("/3_4!#&u991_43-m4t")
+# output: 109.6
+```
 
 + Password with only lowercase letters: 
 
   This is the entropy of the password with only lowercase letters:
 
-  ```python
-  # This is the entropy of the password: ytvyyzlfnamurebtoh
-  entropy = Generator.calculate_entropy("ytvyyzlfnamurebtoh")
-  # output: 84.6
-  ```
+```python
+# This is the entropy of the password: ytvyyzlfnamurebtoh
+entropy = Generator.calculate_entropy("ytvyyzlfnamurebtoh")
+# output: 84.6
+```
   
 + Combined situations:
 
   Finally, this is the entropy of the password with lowercase letters and digits allowed:
 
-  ```python
-  # This is the entropy of the password: ou0h92pj1cwqe8ny0
-  generated_password = Generator.calculate_entropy('ou0h92pj1cwqe8ny02')
-  # output: 93.1
-  ```
+```python
+# This is the entropy of the password: ou0h92pj1cwqe8ny0
+generated_password = Generator.calculate_entropy('ou0h92pj1cwqe8ny02')
+# output: 93.1
+```
 
 The entropy of each password is used to calculate its security in a brute force attack.
 
@@ -711,68 +727,68 @@ theoretical and is a metric of password security in a brute-force attack:
   
   This is the necessary decryption time \(in years) to crack the password with all types of characters:
 
-  ```python
-  # This is the decryption time of the password: +1ND%q#h2tOC-4_F$8
-  # Its entropy is 118.0
-  decryption_password_time = Generator.calculate_decryption_time(118.0)
-  # output: 1.05e+16
-  ```
+```python
+# This is the decryption time of the password: +1ND%q#h2tOC-4_F$8
+# Its entropy is 118.0
+decryption_password_time = Generator.calculate_decryption_time(118.0)
+# output: 1.05e+16
+```
 
 + Password without punctuation:
 
   This is the necessary decryption time \(in years) to crack the password without punctuation characters:
 
-  ```python
-  # This is the decryption time of the password: 6dVf1UKHUHOq0RSEUL
-  # Its entropy is 107.2
-  decryption_password_time = Generator.calculate_decryption_time(107.2)
-  # output: 5910000000000.0
-  ```
+```python
+# This is the decryption time of the password: 6dVf1UKHUHOq0RSEUL
+# Its entropy is 107.2
+decryption_password_time = Generator.calculate_decryption_time(107.2)
+# output: 5910000000000.0
+```
 
 + Password without digits:
 
   This is the necessary decryption time \(in years) to crack the password without digits:
 
-  ```python
-  # This is the decryption time of the password: vf/CE_uu!W&#Sw%jhD
-  # Its entropy is 115.1
-  decryption_password_time = Generator.calculate_decryption_time(115.1)
-  # output: 1410000000000000.0
-  ```
+```python
+# This is the decryption time of the password: vf/CE_uu!W&#Sw%jhD
+# Its entropy is 115.1
+decryption_password_time = Generator.calculate_decryption_time(115.1)
+# output: 1410000000000000.0
+```
 
 + Password without uppercase letters:
 
   This is the necessary decryption time \(in years) to crack the password without uppercase letters:
 
-  ```python
-  # This is the decryption time of the password: /3_4!#&u991_43-m4t
-  # Its entropy is 109.6
-  decryption_password_time = Generator.calculate_decryption_time(109.6)
-  # output: 1410000000000000.0
-  ```
+```python
+# This is the decryption time of the password: /3_4!#&u991_43-m4t
+# Its entropy is 109.6
+decryption_password_time = Generator.calculate_decryption_time(109.6)
+# output: 1410000000000000.0
+```
 
 + Password with only lowercase letters: 
 
   This is the necessary decryption time \(in years) to crack the password only with uppercase letters:
 
-  ```python
-  # This is the entropy of the password: ytvyyzlfnamurebtoh
-  # Its entropy is 84.6
-  decryption_password_time = Generator.calculate_decryption_time(109.6)
-  # output: 31200000000000.0
-  ```
+```python
+# This is the entropy of the password: ytvyyzlfnamurebtoh
+# Its entropy is 84.6
+decryption_password_time = Generator.calculate_decryption_time(109.6)
+# output: 31200000000000.0
+```
   
 + Combined situations:
 
   Finally, this is the necessary decryption time \(in years) to crack the password with lowercase letters and 
   digits allowed:
 
-  ```python
-  # This is the entropy of the password: ou0h92pj1cwqe8ny02
-  # Its entropy is 93.1
-  decryption_password_time = Generator.calculate_decryption_time(93.1)
-  # output: 337000000.0
-  ```
+```python
+# This is the entropy of the password: ou0h92pj1cwqe8ny02
+# Its entropy is 93.1
+decryption_password_time = Generator.calculate_decryption_time(93.1)
+# output: 337000000.0
+```
 
 ## Contributions
 
@@ -782,7 +798,7 @@ report a bug, and add new features without any problems!
 ## License
 
 This project was made under the MIT license:
-[MIT License](https://github.com/Tzintzun444/pswrd_entropy_gen/blob/write-readme/pswrd_entropy_gen/LICENSE.txt)
+[MIT License](https://github.com/Tzintzun444/pswrd_entropy_gen/blob/main/pswrd_entropy_gen/LICENSE.txt)
 
 ## Credits
 
