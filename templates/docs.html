@@ -32,17 +32,5 @@
     <div class="markdown-body">
         {{ html_content|safe }}
     </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll("pre code").forEach((el) => {
-                hljs.highlightElement(el);
-            });
-        });
-
-        function navigateVersion(select) {
-            const selected = select.value;
-            window.location.href = `/docs/${selected}/`;
-        }
-    </script>
+    <script src="{% static 'js/docs.js' %}"></script>
 {% endblock body %}

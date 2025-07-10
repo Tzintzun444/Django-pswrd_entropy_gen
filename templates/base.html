@@ -113,19 +113,6 @@
     {% block body %}
 
     {% endblock body %}
-    <script>
-        document.getElementById("userButton").addEventListener("click", function() {
-            var menu = document.getElementById("menuDropdown");
-            menu.style.display = menu.style.display === "block" ? "none" : "block";
-        });
-        document.addEventListener("click", function(event) {
-            var menu = document.getElementById("menuDropdown");
-            var button = document.getElementById("userButton");
-
-            if (!menu.contains(event.target) && !button.contains(event.target)) {
-                menu.style.display = "none";
-            }
-        });
-    </script>
+    <script src="{% static 'js/base.js' %}"></script>
 </body>
 </html>
