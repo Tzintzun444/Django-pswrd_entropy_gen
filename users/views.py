@@ -70,12 +70,23 @@ class SignUpUserView(CreateView):
 
     def form_valid(self, form):
 
-        if UserNotVerified.objects.filter(email=form.cleaned_data.get('email')).exists():
-
+        user_not_verified = UserNotVerified.objects.filter(email=form.cleaned_data.get('email'))
+        if user_not_verified.exists():
+            updated_user = user_not_verified.first()
+            updated_user.data = {
+                'username': form.cleaned_data['username'],
+                'first_name': form.cleaned_data['first_name'],
+                'last_name': form.cleaned_data['last_name'],
+                'password': form.cleaned_data['password'],
+                'is_admin': form.cleaned_data.get('is_admin', False)
+            }
+            updated_user.save()
+            self.object = updated_user
             return redirect('verify_email')
 
         verification = form.save()
-        self.request.session['verification_email'] = form.instance.email
+        self.object = verification
+        self.request.session['verification_email'] = verification.email
         send_mail(
             'Email verification',
             f'Your verification code is {verification.code}',
@@ -83,7 +94,7 @@ class SignUpUserView(CreateView):
             [verification.email],
             fail_silently=False
         )
-        return super().form_valid(form)
+        return redirect(self.get_success_url())
 
     def dispatch(self, request, *args, **kwargs):
 

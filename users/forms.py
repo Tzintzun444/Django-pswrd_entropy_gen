@@ -88,21 +88,25 @@ class UserRegistrationForm(forms.ModelForm):
 
     def save(self, commit=True):
 
-        user = super().save(commit=False)
         is_admin = self.cleaned_data.get('is_admin', False)
-
-        user.data = {
-            'username': self.cleaned_data['username'],
-            'first_name': self.cleaned_data['first_name'],
-            'last_name': self.cleaned_data['last_name'],
-            'password': self.cleaned_data['password'],
-            'is_admin': is_admin
-        }
+        user_not_verified = UserNotVerified(
+            email=self.cleaned_data['email'],
+            data={
+                'username': self.cleaned_data['username'],
+                'first_name': self.cleaned_data['first_name'],
+                'last_name': self.cleaned_data['last_name'],
+                'password': self.cleaned_data['password'],
+                'is_admin': is_admin
+            }
+        )
 
         if commit:
-            user.save()
+            user_not_verified.save()
 
-        return user
+        return user_not_verified
+
+    def validate_unique(self):
+        pass
 
 
 class CodeInputWidget(forms.MultiWidget):
@@ -146,7 +150,6 @@ class VerificationEmailForm(forms.Form):
             self.add_error('code', _('Only numbers are allowed'))
 
         return cleaned_data
-
 
 class CustomLoginForm(AuthenticationForm):
 
