@@ -59,3 +59,36 @@ label {
 .error {
     color: red !important;
 }
+
+.resend-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: darkred;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.resend-btn:hover {
+    background-color: red;
+}
+
+.btn-disabled {
+    width: 180px;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #999;
+    cursor: not-allowed;
+    background-color: #ccc;
+}
+
+.btn-disabled:hover {
+    background-color: gray
+}

@@ -52,3 +52,40 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const cooldownActive = document.getElementById("resend-data").dataset.blocked === "true";
+    const btn = document.getElementById("resend-btn");
+    const timer = document.getElementById("resend-timer");
+    const timerDiv = document.getElementById("timer-div");
+    let remaining = document.getElementById("remaining").dataset.remaining;
+
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    }
+
+    if (cooldownActive) {
+        btn.disabled = true;
+        btn.classList.toggle('btn-disabled')
+        timerDiv.style.display = "block"
+        timer.textContent = `${formatTime(remaining)}`;
+
+        const interval = setInterval(() => {
+            remaining -= 1;
+            if (remaining <= 0) {
+                clearInterval(interval);
+                btn.disabled = false;
+                btn.classList.toggle('btn-disabled')
+                timerDiv.style.display = "none"
+                timer.textContent = "";
+            } else {
+                timer.textContent = `${formatTime(remaining)}`;
+            }
+        }, 1000);
+    } else {
+        btn.disabled = false;
+        timer.textContent = "";
+    }
+});

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-10 17:37-0600\n"
+"POT-Creation-Date: 2025-07-14 15:21-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -202,11 +202,27 @@ msgid "Are you sure you want to unlink your google account?"
 msgstr "¿Estás seguro de que quieres desvincular tu cuenta de google?"
 
 #: .\users\templates\verify_email.html:7 .\users\templates\verify_email.html:12
-#: .\users\templates\verify_email.html:26
+#: .\users\templates\verify_email.html:27
 msgid "Verify email"
 msgstr "Verificar email"
 
-#: .\users\views.py:111
+#: .\users\templates\verify_email.html:13
+msgid "Code sent to"
+msgstr "Código enviado a"
+
+#: .\users\templates\verify_email.html:31
+msgid "Resend code"
+msgstr "Reenviar código"
+
+#: .\users\templates\verify_email.html:34
+msgid "Please wait"
+msgstr "Espere"
+
+#: .\users\templates\verify_email.html:36
+msgid "for resend a new code"
+msgstr "para reenviar un nuevo código"
+
+#: .\users\views.py:117
 msgid "Invalid code or expired"
 msgstr "Código inválido o expirado"
 

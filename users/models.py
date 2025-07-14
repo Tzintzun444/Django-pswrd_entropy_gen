@@ -34,6 +34,12 @@ class UserNotVerified(models.Model):
             self.expires_at = timezone.now() + timezone.timedelta(minutes=5)
         super().save(*args, **kwargs)
 
+    def reset_code(self):
+
+        self.code = self.generate_code()
+        self.expires_at = timezone.now() + timezone.timedelta(minutes=5)
+        self.save()
+
     @classmethod
     def generate_code(cls):
         return str(secrets.randbelow(999999)).zfill(6)

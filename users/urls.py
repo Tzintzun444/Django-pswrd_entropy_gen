@@ -14,6 +14,7 @@ urlpatterns = [
     path('unlink-google/', unlink_oauth_google, name='unlink_google'),
     path('sign-up/', SignUpUserView.as_view(), name='sign_up'),
     path('verify-email/', VerifyEmailUserView.as_view(), name='verify_email'),
+    path('resend-code/', ResendCodeView.as_view(), name="resend_code"),
     path('login/', CustomLogInView.as_view(), name='login'),
     path('logout/', CustomLogOutView.as_view(), name='logout'),
     path('delete-user/', DeleteUserView.as_view(), name='delete_user'),

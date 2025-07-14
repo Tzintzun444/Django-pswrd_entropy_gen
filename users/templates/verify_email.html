@@ -10,6 +10,7 @@
 {% block body %}
     <div class="verification-container">
         <h4 class="content">{% trans "Verify email" %}</h4>
+        <p>{% trans "Code sent to"%} <strong>{{ email }}</strong></p>
         <form method="post">
         {% csrf_token %}
 
@@ -25,6 +26,17 @@
 
             <button type="submit" class="verify-button">{% trans "Verify email" %}</button>
         </form>
+        <form method="post" action="{% url 'resend_code' %}" id="resend-form">
+            {% csrf_token %}
+            <button type="submit" id="resend-btn" class="resend-btn">{% trans "Resend code" %}</button>
+        </form>
+        <div style="display: none;" id="timer-div">
+            {% trans "Please wait" %}
+            <strong><span id="resend-timer"></span></strong>
+            {% trans "for resend a new code" %}
+        </div>
     </div>
+    <div id="resend-data" data-blocked="{{ resend_blocked|yesno:'true,false' }}"></div>
+    <div id="remaining" data-remaining="{{ cooldown_remaining }}"></div>
     <script src="{% static 'users/js/verify_email.js' %}"></script>
 {% endblock body %}

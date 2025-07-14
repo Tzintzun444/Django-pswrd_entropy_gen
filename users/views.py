@@ -1,13 +1,15 @@
 from django.core.mail import send_mail
+from django.core.cache import cache
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
+from django.http import HttpResponseForbidden
 from django.views.decorators.http import require_POST
 from .models import CustomUser, UserNotVerified
 from .forms import UserRegistrationForm, CustomLoginForm, VerificationEmailForm, UserSettingsForm
-from django.views.generic import FormView
+from django.views.generic import FormView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.utils.translation import gettext_lazy as _
@@ -67,6 +69,10 @@ class SignUpUserView(CreateView):
     success_url = reverse_lazy('verify_email')
 
     def form_valid(self, form):
+
+        if UserNotVerified.objects.filter(email=form.cleaned_data.get('email')).exists():
+
+            return redirect('verify_email')
 
         verification = form.save()
         self.request.session['verification_email'] = form.instance.email
@@ -141,6 +147,68 @@ class VerifyEmailUserView(FormView):
 
         if request.user.is_authenticated and not (request.user.is_superuser or request.user.is_staff):
             return redirect('index')
+
+        if not self.request.session.get('verification_email', False) and not (request.user.is_staff or
+                                                                              request.user.is_superuser):
+            return redirect('sign_up')
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        context['resend_blocked'] = (cache.get(f"resend_block_{self.request.session.get('verification_email', False)}")
+                                     is True)
+        start_time = cache.get(f"resend_block_time")
+
+        if start_time:
+
+            elapsed = (timezone.now() - start_time).total_seconds()
+            remaining = max(0, 120 - int(elapsed))
+
+        else:
+            remaining = 0
+
+        context['cooldown_remaining'] = remaining
+        context['email'] = self.request.session.get('verification_email')
+
+        return context
+
+
+class ResendCodeView(View):
+
+    http_method_names = ['post']
+
+    def post(self, request):
+
+        email = self.request.session.get('verification_email')
+        cooldown_key = f"resend_block_{email}"
+
+        if cache.get(cooldown_key):
+            return HttpResponseForbidden("Wait before resending")
+
+        user_not_verified = UserNotVerified.objects.filter(email=email).first()
+
+        if user_not_verified:
+
+            user_not_verified.reset_code()
+            send_mail('Email verification',
+                      f'Your verification code is {user_not_verified.code}',
+                      'pswrdentropygen@gmail.com',
+                      [user_not_verified.email],
+                      fail_silently=False)
+            cache.set(cooldown_key, True, timeout=120)
+            cache.set('resend_block_time', timezone.now(), timeout=120)
+
+            return redirect('verify_email')
+
+        return redirect('sign_up')
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if not self.request.session.get('verification_email', False):
+
+            return redirect('sign_up')
 
         return super().dispatch(request, *args, **kwargs)
 
