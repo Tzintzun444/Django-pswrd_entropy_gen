@@ -2,9 +2,73 @@
 {% load i18n %}
 
 {% block head %}
+    {% load static %}
     <title>Password Entropy Generator</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock head %}
 
 {% block body %}
     <h1>{% trans "Password Entropy Generator" %}</h1>
+    <div class="content">
+        <div class="inner-content">
+            <h2>{% trans "What is this project?" %}</h2>
+        <p>
+            {% blocktrans %}
+                This password generator was originally created as a way to apply Python knowledge, but it gradually evolved into a technical, simple, and flexible tool with a clear purpose: to produce passwords that are reliable, strong, and resistant to being cracked.
+            {% endblocktrans %}
+        </p>
+        <p>
+            {% blocktrans %}
+                It’s not meant to generate easily memorable passwords, but to offer high-security credentials—especially valuable in systems that demand maximum protection, such as sensitive credentials, environment variables, access keys for servers, or APIs.
+            {% endblocktrans %}
+        </p>
+        </div>
+        <div class="inner-content">
+            <h2>{% trans "Why trust entropy?" %}</h2>
+            <p>
+                {% blocktrans %}
+                    The strength of a password isn't about how “complicated” it looks—it's about how unpredictable it really is. That unpredictability is measured using a core concept from information theory: <strong>entropy</strong>.
+                    In this project:
+                {% endblocktrans %}
+            </p>
+                <ul>
+                    <li>{% blocktrans %}Each password includes a real entropy value in bits.{% endblocktrans %}</li>
+                    <li>{% blocktrans %}It estimates how many attempts per second would make a hacker to crack it by brute force.{% endblocktrans %}</li>
+                    <li>{% blocktrans %}It calculates a decryption time, offering a reliable reference for how hard it is to break.{% endblocktrans %}</li>
+                </ul>
+            <p>
+                {% blocktrans %}This gives you a real, data-based understanding of your password’s resistance—far more meaningful than a generic strength meter.{% endblocktrans %}
+            </p>
+        </div>
+        <div class="inner-content">
+            <h2>{% trans "Design philosophy" %}</h2>
+            <p>
+                {% blocktrans %}
+                    This tool doesn’t rely on commercial standards of password complexity. Instead, it offers:
+                {% endblocktrans %}
+            </p>
+                <ul>
+                    <li>{% blocktrans %}Generation free of human bias.{% endblocktrans %}</li>
+                    <li>{% blocktrans %}Full control over configuration and strength.{% endblocktrans %}</li>
+                    <li>{% blocktrans %}A mathematical foundation behind each password{% endblocktrans %}</li>
+                    <li>{% blocktrans %}Adaptability to a wide range of environments (development, production, CI/CD, etc.){% endblocktrans %}</li>
+                </ul>
+            <p>
+                {% blocktrans %}The generator is flexible by design, allowing each password to suit the security level required for its context.{% endblocktrans %}
+            </p>
+        </div>
+        <div class="inner-content">
+            <h2>{% trans "Project purpose and philosophy" %}</h2>
+            <p>
+                {% blocktrans %}
+                    This project was created with a practical and educational spirit—starting as a personal exercise in Python and growing into a tool meant for developers, sysadmins, and anyone seeking real security without unnecessary complexity.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans %}
+                    It is built to be Open Source, freely shareable and continuously improvable. Its purpose is to promote solid practices, protect sensitive systems, and offer a solution rooted in theory rather than guesswork.
+                {% endblocktrans %}
+            </p>
+        </div>
+    </div>
 {% endblock body %}

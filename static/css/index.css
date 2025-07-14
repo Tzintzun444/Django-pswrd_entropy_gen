@@ -1,0 +1,24 @@
+p {
+    text-align: justify !important;
+    hyphens: auto;
+}
+
+li {
+    text-align: left !important;
+}
+
+.content {
+    font-weight: normal;
+    font-size: 23px;
+    width: 80%;
+    border: 10px solid #CCC;
+}
+
+.content:hover {
+    transform: scale(1.01);
+}
+
+.inner-content {
+    margin: 0px 25px 10px;
+    padding: 10px 20px 10px;
+}

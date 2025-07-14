@@ -153,3 +153,33 @@ select[name="language"]:focus {
     outline: none;
     box-shadow: 0 0 5px rgba(255, 152, 0, 0.5);
 }
+
+.project-footer {
+    background-color: #000;
+    padding: 30px 0;
+    text-align: center;
+    border-top: 4px solid #0066cc;
+    margin-top: 60px;
+}
+
+.github-footer-button img {
+    width: 70px;
+    height: 70px;
+    transition: transform 0.2s ease-in-out;
+}
+
+img {
+    border-radius: 50px;
+}
+
+.github-footer-button img:hover {
+    transform: scale(1.1);
+}
+
+.github-label {
+    color: #ffffff;
+    font-size: 15px;
+    margin-top: 12px;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    text-align: center !important;
+}

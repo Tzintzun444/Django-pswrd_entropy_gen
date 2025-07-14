@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-10 17:40-0600\n"
+"POT-Creation-Date: 2025-07-13 22:05-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,6 +64,170 @@ msgstr "Configuraciones"
 msgid "Log In"
 msgstr "Iniciar sesión"
 
-#: .\templates\index.html:9
+#: .\templates\base.html:120
+msgid "Link to GitHub repository"
+msgstr "Link al repositorio de GitHub"
+
+#: .\templates\base.html:121
+msgid "Latest version"
+msgstr "Versión más reciente"
+
+#: .\templates\index.html:11
 msgid "Password Entropy Generator"
 msgstr "Generador de contraseñas por entropía"
+
+
+#: .\templates\index.html:14
+msgid "What is this project?"
+msgstr "¿Qué es este proyecto?"
+
+#: .\templates\index.html:16
+msgid ""
+"\n"
+"                This password generator was originally created as a way to "
+"apply Python knowledge, but it gradually evolved into a technical, simple, "
+"and flexible tool with a clear purpose: to produce passwords that are "
+"reliable, strong, and resistant to being cracked.\n"
+"            "
+msgstr ""
+"\n"
+"Este generador de contraseñas nació como una forma de aplicar conocimientos "
+"en Python, pero con el tiempo evolucionó hacia una herramienta técnica, "
+"sencilla y flexible con un propósito claro: generar contraseñas fiables, "
+"robustas y difíciles de descifrar."
+
+#: .\templates\index.html:21
+msgid ""
+"\n"
+"                It’s not meant to generate easily memorable passwords, but "
+"to offer high-security credentials—especially valuable in systems that "
+"demand maximum protection, such as sensitive credentials, environment "
+"variables, access keys for servers, or APIs.\n"
+"            "
+msgstr ""
+"\n"
+"No está diseñado para crear contraseñas fáciles de memorizar, sino para "
+"generar claves con altos niveles de seguridad, especialmente útiles en "
+"sistemas donde se requiere protección máxima, como credenciales sensibles, "
+"variables de entorno, claves de acceso a servidores o APIs."
+
+#: .\templates\index.html:27
+msgid "Why trust entropy?"
+msgstr "¿Por qué confiar en la entropía?"
+
+#: .\templates\index.html:29
+msgid ""
+"\n"
+"                    The strength of a password isn't about how “complicated” "
+"it looks—it's about how unpredictable it really is. That unpredictability is "
+"measured using a core concept from information theory: <strong>entropy</"
+"strong>.\n"
+"                    In this project:\n"
+"                "
+msgstr ""
+"\n"
+"La seguridad de una contraseña no se basa en lo complicada que parezca, sino "
+"en cuán impredecible es. Esa impredecibilidad se mide mediante un concepto "
+"fundamental de la teoría de la información: <strong>la entropía.</strong> En este proyecto:"
+
+#: .\templates\index.html:35
+msgid "Each password includes a real entropy value in bits."
+msgstr "Se calcula la entropía en bits de cada contraseña."
+
+#: .\templates\index.html:36
+msgid ""
+"It estimates how many attempts per second would make a hacker to crack it by "
+"brute force."
+msgstr ""
+"Se estima cuántos intentos por segundo haría un hacker para descifrarla "
+"mediante ataques de fuerza bruta."
+
+#: .\templates\index.html:37
+msgid ""
+"It calculates a decryption time, offering a reliable reference for how hard "
+"it is to break."
+msgstr ""
+"Se calcula el tiempo de descifrado como referencia práctica y confiable."
+
+#: .\templates\index.html:40
+msgid ""
+"This gives you a real, data-based understanding of your password’s resistance"
+"—far more meaningful than a generic strength meter."
+msgstr ""
+"Esto te permite saber con datos reales cuán resistente es tu contraseña, más "
+"allá de la intuición o de los típicos indicadores visuales."
+
+#: .\templates\index.html:44
+msgid "Design philosophy"
+msgstr "Filosofía de diseño"
+
+#: .\templates\index.html:46
+msgid ""
+"\n"
+"                    This tool doesn’t rely on commercial standards of "
+"password complexity. Instead, it offers:\n"
+"                "
+msgstr ""
+"\n"
+"Esta herramienta no busca cumplir un estándar comercial de complejidad "
+"visual, sino ofrecer:"
+
+#: .\templates\index.html:51
+msgid "Generation free of human bias."
+msgstr "Contraseñas generadas sin sesgos humanos"
+
+#: .\templates\index.html:52
+msgid "Full control over configuration and strength."
+msgstr "Control total sobre su configuración y nivel de seguridad"
+
+#: .\templates\index.html:53
+msgid "A mathematical foundation behind each password"
+msgstr "Fundamento matemático y técnico detrás de cada generación"
+
+#: .\templates\index.html:54
+msgid ""
+"Adaptability to a wide range of environments (development, production, CI/"
+"CD, etc.)"
+msgstr "Adaptabilidad para diversos entornos (dev, prod, CI/CD, etc.)"
+
+#: .\templates\index.html:57
+msgid ""
+"The generator is flexible by design, allowing each password to suit the "
+"security level required for its context."
+msgstr ""
+"La flexibilidad del generador permite ajustar cada contraseña a la necesidad "
+"específica del sistema en el que se utilizará."
+
+#: .\templates\index.html:61
+msgid "Project purpose and philosophy"
+msgstr "Propósito y filosofía del proyecto"
+
+#: .\templates\index.html:63
+msgid ""
+"\n"
+"                    This project was created with a practical and "
+"educational spirit—starting as a personal exercise in Python and growing "
+"into a tool meant for developers, sysadmins, and anyone seeking real "
+"security without unnecessary complexity.\n"
+"                "
+msgstr ""
+"\n"
+"Este proyecto fue creado con una visión práctica y educativa. Al principio "
+"como ejercicio personal en Python, y luego como una herramienta pensada para "
+"desarrolladores, sysadmins y usuarios que buscan seguridad sin "
+"complicaciones."
+
+#: .\templates\index.html:68
+msgid ""
+"\n"
+"                    It is built to be Open Source, freely shareable and "
+"continuously improvable. Its purpose is to promote solid practices, protect "
+"sensitive systems, and offer a solution rooted in theory rather than "
+"guesswork.\n"
+"                "
+msgstr ""
+"\n"
+"Está diseñado para ser Open Source, compartido libremente y mejorado "
+"colaborativamente. Su propósito es promover buenas prácticas, facilitar la "
+"protección de sistemas sensibles, y ofrecer una solución basada en teoría "
+"sólida en lugar de estándares subjetivos."
