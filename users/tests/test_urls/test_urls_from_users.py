@@ -1,5 +1,5 @@
 from users.views import (UserSettingsView, SignUpUserView, VerifyEmailUserView, CustomLogInView, CustomLogOutView,
-                         DeleteUserView, unlink_oauth_google)
+                         DeleteUserView, unlink_oauth_google, ResendCodeView)
 from users.viewsets import CustomClientViewSet, CustomAdminViewSet, AllUsersViewSet
 from django.urls import resolve, reverse
 from django.views.i18n import set_language
@@ -10,6 +10,7 @@ import pytest
     ('settings/', None, 'settings', UserSettingsView, True, False),
     ('sign-up/', None, 'sign_up', SignUpUserView, True, False),
     ('verify-email/', None, 'verify_email', VerifyEmailUserView, True, False),
+    ('resend-code/', None, 'resend_code', ResendCodeView, True, False),
     ('login/', None, 'login', CustomLogInView, True, False),
     ('logout/', None, 'logout', CustomLogOutView, True, False),
     ('delete-user/', None, 'delete_user', DeleteUserView, True, False),
