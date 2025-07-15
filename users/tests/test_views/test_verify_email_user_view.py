@@ -16,13 +16,20 @@ def test_auth_user_is_redirected(auth_user):
     assert response.url == reverse('index')
 
 
+@pytest.mark.django_db
 def test_verify_email_user_renders_correctly(client):
 
+    session = client.session
+    session['verification_email'] = 'correo@example.com'
+    session.save()
     response = client.get(reverse('verify_email'))
 
     assert response.status_code == 200
     assert 'verify_email.html' in [t.name for t in response.templates]
     assert 'form' in response.context
+    assert 'email' in response.context
+    assert 'resend_blocked' in response.context
+    assert 'cooldown_remaining' in response.context
 
 
 @pytest.mark.django_db
