@@ -4,6 +4,7 @@ from django.db.utils import IntegrityError
 from users.models import UserNotVerified
 from freezegun import freeze_time
 import pytest
+import time
 
 User = get_user_model()
 
@@ -112,3 +113,21 @@ def test_user_not_verified_creates_code_correctly():
     assert isinstance(user.code, str) is True
     assert len(user.code) == 6
     assert int(user.code) > 0
+
+
+@pytest.mark.django_db
+def test_user_not_verified_reset_code_method():
+
+    user = UserNotVerified.objects.create(
+        email='email@example.com',
+        data={}
+    )
+
+    first_code = user.code
+    first_expiration_time = user.expires_at
+    time.sleep(1)
+    user.reset_code()
+    user.refresh_from_db()
+
+    assert first_code != user.code
+    assert first_expiration_time != user.expires_at
