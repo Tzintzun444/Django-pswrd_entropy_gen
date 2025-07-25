@@ -421,7 +421,7 @@ Finally, we calculate entropy using the next formula, where:
 + n: Represents the total possibilities for each character in the password.
 
 ```python
-        # Using the previous formula, we calculate its entropy and we verify the formula is not empty.
+        # Using the previous formula, we calculate its entropy and we verify the password is not empty.
         entropy = length_password * math.log2(argument_log) if length_password > 0 else 0
 ```
 
@@ -772,7 +772,7 @@ decryption_password_time = Generator.calculate_decryption_time(109.6)
   This is the necessary decryption time \(in years) to crack the password only with uppercase letters:
 
 ```python
-# This is the entropy of the password: ytvyyzlfnamurebtoh
+# This is the decryption time of the password: ytvyyzlfnamurebtoh
 # Its entropy is 84.6
 decryption_password_time = Generator.calculate_decryption_time(109.6)
 # output: 31200000000000.0
@@ -784,7 +784,7 @@ decryption_password_time = Generator.calculate_decryption_time(109.6)
   digits allowed:
 
 ```python
-# This is the entropy of the password: ou0h92pj1cwqe8ny02
+# This is the decryption time of the password: ou0h92pj1cwqe8ny02
 # Its entropy is 93.1
 decryption_password_time = Generator.calculate_decryption_time(93.1)
 # output: 337000000.0

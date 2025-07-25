@@ -24,7 +24,7 @@ class DocumentationView(TemplateView):
 
         allowed_versions = ['v1.0.2', 'v2.0.0', 'latest']
         allowed_versions.sort(reverse=True)
-        languages = ['en']
+        languages = ['en', 'es']
 
         if version not in allowed_versions or language not in languages:
 
