@@ -82,7 +82,7 @@ bits and finally calculate how much time is necessary to crack the password.
 
             print(f'There was an error: {exception}')
 
-            # Returns None for each variable respectively
+            # Returns None for each variable respectively.
             return None, None, None
 ```
 
@@ -110,7 +110,7 @@ This is a boolean value, true by default. Includes at least 1 punctuation charac
 in the password, also it may be more than 1.
 
 + customized:
-It is a string, al character in the string will be in the password mandatory, it would be a string with unique 
+It is a string, all characters in the string will be in the password mandatory, it should be a string with unique 
 characters, but if a character is duplicated, will be fixed in the class.
 
 + not_allowed:
@@ -299,7 +299,7 @@ which is joined with our 'password' list.
 
             raise ValueError('Length of custom characters is greater than characters available in password, reduce it')
 
-        # If remaining is positive means that lacks characters in the password.
+        # If remaining is positive means that lack characters in the password.
         elif remaining > 0:
 
             # Selects all necessary characters to complete the password.
@@ -559,8 +559,8 @@ We've finished!
 
 + Default use:
 
-  In this case, we will use the default performance of the method \(this means all types of characters are allowed), 
-  we need a password with 12 characters:
+In this case, we will use the default performance of the method \(this means all types of characters are allowed), 
+we need a password with 12 characters:
   
 ```python
 # The password length is 12 characters
@@ -574,7 +574,7 @@ All the following passwords will have 18 characters.
 
 + Default use:
 
-  As we saw before, we will generate the password with the default performance of the method.
+As we saw before, we will generate the password with the default performance of the method.
   
 ```python
 # This is the needed password.
@@ -584,8 +584,8 @@ generated_password = Generator.generate_password(18)
 
 + Password without punctuation:
 
-  Now, the password does not allow punctuation characters \(or, as the same way, lower and uppercase letters and 
-  digits are allowed):
+Now, the password does not allow punctuation characters \(or, as the same way, lower and uppercase letters and 
+digits are allowed):
   
 ```python
 # This is the needed password.
@@ -595,8 +595,8 @@ generated_password = Generator.generate_password(18, use_punctuations=False)
 
 + Password without digits:
 
-  Now, the password does not allow digits \(or, as the same way, lower and uppercase letters and 
-  punctuation characters are allowed):
+Now, the password does not allow digits \(or, as the same way, lower and uppercase letters and 
+punctuation characters are allowed):
   
 ```python
 # This is the needed password.
@@ -606,8 +606,8 @@ generated_password = Generator.generate_password(18, use_numbers=False)
 
 + Password without uppercase letters:
 
-  Now, the password does not allow uppercase letters \(or, as the same way, lowercase letters, digits and 
-  punctuation characters are allowed):
+Now, the password does not allow uppercase letters \(or, as the same way, lowercase letters, digits and 
+punctuation characters are allowed):
   
 ```python
 # This is the needed password.
@@ -617,7 +617,7 @@ generated_password = Generator.generate_password(18, use_uppercase=False)
 
 + Password with only lowercase letters: 
 
-  Finally, the password only allows lowercase letters:
+Finally, the password only allows lowercase letters:
   
 ```python
 # This is the needed password.
@@ -628,8 +628,8 @@ generated_password = Generator.generate_password(18, use_uppercase=False,
 
 + Combined situations: 
 
-  In this case, the password allows lowercase letters and digits, but does not allow uppercase letters
-  and punctuation characters:
+In this case, the password allows lowercase letters and digits, but does not allow uppercase letters
+and punctuation characters:
   
 ```python
 # This is the needed password.
@@ -640,7 +640,7 @@ generated_password = Generator.generate_password(18, use_uppercase=False,
 
 + Password with uppercase and lowercase letters, digits and punctuations, customized and not_allowed characters:
 
-  In this final case, the password allow all type of characters, but sets some specific characters and disallow others:
+In this final case, the password allow all type of characters, but sets some specific characters and disallow others:
   
 ```python
 # This is the needed password.
@@ -658,7 +658,7 @@ We will use the passwords generated above for these examples.
 
 + Default use:
   
-  This is the entropy of the password with all types of characters:
+This is the entropy of the password with all types of characters:
 
 ```python
 # This is the entropy of the password: +1ND%q#h2tOC-4_F$8
@@ -668,7 +668,7 @@ entropy = Generator.calculate_entropy("+1ND%q#h2tOC-4_F$8")
 
 + Password without punctuation:
 
-  This is the entropy of the password without punctuation characters:
+This is the entropy of the password without punctuation characters:
 
 ```python
 # This is the entropy of the password: 6dVf1UKHUHOq0RSEUL
@@ -678,7 +678,7 @@ entropy = Generator.calculate_entropy("6dVf1UKHUHOq0RSEUL")
 
 + Password without digits:
 
-  This is the entropy of the password without digits:
+This is the entropy of the password without digits:
 
 ```python
 # This is the entropy of the password: vf/CE_uu!W&#Sw%jhD
@@ -688,7 +688,7 @@ entropy = Generator.calculate_entropy("vf/CE_uu!W&#Sw%jhD")
 
 + Password without uppercase letters:
 
-  This is the entropy of the password without uppercase letters:
+This is the entropy of the password without uppercase letters:
 
 ```python
 # This is the entropy of the password: /3_4!#&u991_43-m4t
@@ -698,7 +698,7 @@ entropy = Generator.calculate_entropy("/3_4!#&u991_43-m4t")
 
 + Password with only lowercase letters: 
 
-  This is the entropy of the password with only lowercase letters:
+This is the entropy of the password with only lowercase letters:
 
 ```python
 # This is the entropy of the password: ytvyyzlfnamurebtoh
@@ -708,7 +708,7 @@ entropy = Generator.calculate_entropy("ytvyyzlfnamurebtoh")
   
 + Combined situations:
 
-  Finally, this is the entropy of the password with lowercase letters and digits allowed:
+Finally, this is the entropy of the password with lowercase letters and digits allowed:
 
 ```python
 # This is the entropy of the password: ou0h92pj1cwqe8ny0
@@ -725,7 +725,7 @@ theoretical and is a metric of password security in a brute-force attack:
 
 + Default use:
   
-  This is the necessary decryption time \(in years) to crack the password with all types of characters:
+This is the necessary decryption time \(in years) to crack the password with all types of characters:
 
 ```python
 # This is the decryption time of the password: +1ND%q#h2tOC-4_F$8
@@ -736,7 +736,7 @@ decryption_password_time = Generator.calculate_decryption_time(118.0)
 
 + Password without punctuation:
 
-  This is the necessary decryption time \(in years) to crack the password without punctuation characters:
+This is the necessary decryption time \(in years) to crack the password without punctuation characters:
 
 ```python
 # This is the decryption time of the password: 6dVf1UKHUHOq0RSEUL
@@ -747,7 +747,7 @@ decryption_password_time = Generator.calculate_decryption_time(107.2)
 
 + Password without digits:
 
-  This is the necessary decryption time \(in years) to crack the password without digits:
+This is the necessary decryption time \(in years) to crack the password without digits:
 
 ```python
 # This is the decryption time of the password: vf/CE_uu!W&#Sw%jhD
@@ -758,7 +758,7 @@ decryption_password_time = Generator.calculate_decryption_time(115.1)
 
 + Password without uppercase letters:
 
-  This is the necessary decryption time \(in years) to crack the password without uppercase letters:
+This is the necessary decryption time \(in years) to crack the password without uppercase letters:
 
 ```python
 # This is the decryption time of the password: /3_4!#&u991_43-m4t
@@ -769,7 +769,7 @@ decryption_password_time = Generator.calculate_decryption_time(109.6)
 
 + Password with only lowercase letters: 
 
-  This is the necessary decryption time \(in years) to crack the password only with uppercase letters:
+This is the necessary decryption time \(in years) to crack the password only with uppercase letters:
 
 ```python
 # This is the decryption time of the password: ytvyyzlfnamurebtoh
@@ -780,8 +780,8 @@ decryption_password_time = Generator.calculate_decryption_time(109.6)
   
 + Combined situations:
 
-  Finally, this is the necessary decryption time \(in years) to crack the password with lowercase letters and 
-  digits allowed:
+Finally, this is the necessary decryption time \(in years) to crack the password with lowercase letters and 
+digits allowed:
 
 ```python
 # This is the decryption time of the password: ou0h92pj1cwqe8ny02

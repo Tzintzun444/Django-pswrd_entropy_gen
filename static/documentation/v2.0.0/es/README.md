@@ -1,143 +1,143 @@
-# PSWRD_ENTROPY_GEN PROJECT
-This project is a simple but powerful tool to create secure passwords based on **entropy** \(information theory).
+# PROYECTO PSWRD_ENTROPY_GEN 
+Este proyecto es una simple pero poderosa herramienta para crear contraseñas seguras basadas en la **entropía** \(Teoría de la información).
 
-## Description
-This is a password generator based on entropy in bits, this means that the passwords created can be measured on
-how much is possible to crack the password based on its randomness, and can calculate how much time it would need to be decrypted.
-The generator is a class called 'Generator' \(of course) and has 4 methods involved, which we will see later.
+## Descripción
+Esto es un generador de contraseñas basado en la entropía en bits, esto quiere decir que las contraseñas creadas pueden 
+ser medidas con base en qué tan posible es comprometer la contraseña basada en su aleatoriedad, y puede calcular cuánto 
+tiempo se necesitaría para ser descifrada. 
+El generador es una clase llamada 'Generator' \(por supuesto) y tiene 4 métodos involucrados, los cuales veremos después.
 
-## Installation
+## Instalación
+Para instalar el paquete, solo necesitas usar el siguiente comando:
 
-To install the package, you only need to use the following command:
 ```bash
 pip install pswrd_entropy_gen
 ```
 
-Once the package has been installed, import its class "Generator":
+Una vez el paquete ha sido instalado, importa su clase "Generator":
 
 ```python
 from pswrd_entropy_gen.generator import Generator
 ```
 
-## Characteristics
+## Características
 
-### Class Generator:
+### Clase Generator:
 
-The class 'Generator' 3 static methods and 1 instance method:
+La clase 'Generator' tiene 3 métodos estáticos y 1 método de instancia
 
-+ generate_password\() static method.
++ método estático generate_password\().
 
-+ calculate_entropy\() static method.
++ método estático calculate_entropy\().
 
-+ calculate_decryption_time\() static method.
++ método estático calculate_decryption_time\().
 
-+ create_password\() instance method.
++ método de instancia create_password\().
 
-Class 'Generator' creates a password based on the length provided, it receives as a parameter the required length 
-\(integer) of the password, then it creates the password and will return 3 variables: First, the 'password', 
-which is the password that was created. Second, the 'entropy' as its name says, it is the entropy 
-related to the password. And finally, the 'decryption_time' that is the time required to crack the 
-password by brute force attack \(theoretically):
+La clase 'Generator' crea una contraseña basada en la longitud dada, recibe como un parametro a la longitud requerida 
+\(número entero) de la contraseña, después crea la contraseña y retornará 3 variables: Primero, el atributo 'generated_password', 
+el cual es la contraseña que fue creada. Después, el atributo 'entropy_of_password' y como dice su nombre \(en inglés), es 
+la entropía relacionada a la contraseña. Y finalmente, el atributo 'decryption_password_time' que es el tiempo requerido 
+para comprometer la contraseña durante un ataque de fuerza bruta \(teóricamente hablando).
 
 ```python
 class Generator:
-    
-    # The class is initialized with the length of the password as an attribute.
-    # The other attributes are given by the create_password method.
+  
+    # La clase recibe la longitud de la contraseña como un atributo.
+    # Los otros atributos son dados por el método create_password.
     def __init__(self, length):
-
-        # This is the length of the password.
+        
+        # Esta es la longitud de la contraseña.
         self._length = length
-
-        # These are the password, its entropy and the time to decrypt it.
+        
+        # Estos son la contraseña, su entropía y el tiempo para descifrarla.
         (self._password, self._entropy,
          self._decryption_time) = self.create_password()
 ```
 
-### create_password() instance method:
+### Método de instancia create_password():
 
-This is the general method of the class, it uses the other 3 methods to create a password, calculate its entropy in 
-bits and finally calculate how much time is necessary to crack the password.
+Este es el método principal de la clase, usa los otros 3 métodos para crear la contraseña, calcula su entropía en bits y 
+finalmente calcula cuánto tiempo es necesario para comprometer la contraseña.
 
 ```python
-    # Call the 3 methods of the class to create their respective attributes.
+    # Llama a los 3 métodos estáticos de la clase para crear sus respectivos atributos.
     def create_password(self):
 
         try:
 
-            # Generates the password.
+            # Genera la contraseña.
             generated_password = self.generate_password(self.length)
 
-            # Calculates its entropy.
+            # Calcula su entropía.
             entropy_of_password = self.calculate_entropy(generated_password)
 
-            # Calculates the time to decrypt it.
+            # Calcula el tiempo para descifrarla.
             decryption_password_time = self.calculate_decryption_time(entropy_of_password)
 
-            # Returns each variable created above.
+            # Retorna cada variable creada arriba.
             return generated_password, entropy_of_password, decryption_password_time
 
-        # If an error happens, this will handle it.
+        # Si ocurre un error, esto lo manejará.
         except Exception as exception:
 
             print(f'There was an error: {exception}')
-
-            # Returns None for each variable respectively
+            
+            # Retorna None para cada variable respectivamente.
             return None, None, None
 ```
 
-### generate_password() static method:
+### Método estático generate_password():
 
-The method generates a secure password based on entropy, it ensures that is cryptographically secure and hard to crack,
-while more characters in the password, security grows.
+El método genera una contraseña segura basada en entropía, asegura que es criptográficametne segura y difícil de comprometer, 
+mientras más characteres en la contraseña, la seguridad aumenta.
 
-The method has 6 parameters:
+El método tiene 4 parámetros
 
 + length:
-It is the length of the password, it must be a positive integer \(do not exist decimal or negative passwords), 
-it is recommended to be 8 or greater numbers. It is not defined by default.
+Es la longitud de la contraseña, debe ser un número entero positivo \(no existen contraseñas decimales o negativas), es 
+recomendado que sea de 8 o más números. No está definida por defecto.
 
 + use_uppercase:
-It is a boolean value, it is true by default. This means that is allowed to have at least 1 uppercase letter in
-the password, it may be more than 1.
+Es un valor booleano, es true por defecto. Esto significa que está permitido tener al menos 1 letra mayúscula en la 
+contraseña, puede ser más de 1.
 
 + use_numbers:
-Also is a boolean value, true by default. Also means that is allowed to have at least 1 number \(0-9) in the 
-password, it may be more than 1.
+También es un valor booleano, true por defecto. También significa que está permitido tener al menos 1 número \(0-9) en 
+la contraseña, puede ser más de 1.
 
 + use_punctuations:
-This is a boolean value, true by default. Includes at least 1 punctuation character \(#$%/! for example)
-in the password, also it may be more than 1.
+Este es un valor booleano, true por defecto. Incluye al menos 1 caractter de puntuación \(#$%/! por ejemplo) en la 
+contraseña, también puede ser más de uno.
 
 + customized:
-It is a string, al character in the string will be in the password mandatory, it would be a string with unique 
-characters, but if a character is duplicated, will be fixed in the class.
+Es una cadena, todos los caracteres en la cadena estarán en la contraseña obligatoriamente, debería ser una cadena con 
+caracteres únicos, pero si un caracter es duplicado, será arreglado en la clase.
 
 + not_allowed:
-Finally, this is a string that contains all characters that will not be in the password, also if there is a duplicated 
-character, will be fixed. If you have a character in the customized and not allowed characters simultaneously, an error
-will be raised, avoid it.
+Finalmente, este es una cadena que contiene todos los caracteres que no estarán en la contraseña, also si hay un 
+caracter duplicado, será arreglado. Si tienes un caracter en 'customized' y 'not_allowed' al mismo tiempo, habrá un 
+error, evítalo.
 
-The method uses the 'string' and 'secrets' modules for its functionality. The use of at least 1 lowercase letter is 
-mandatory, and all parameters by default are in the 'situations' dictionary with their respective characters as a
-value.
+El método usa los módulos de 'string' y 'secrets' para su funcionamiento. El uso de letras minúsculas es obligatorio, y 
+todos los parámetros por defecto están en el diccionario llamado 'situations' con sus respectivos caracteres como valor.
 
-Firstly, the 'password' list is initialized, it will store the characters of the password that will be used later. 
-Also, a dictionary stores each situation and its respectively characters by default. 
-Additionally, the 'characters' variable will store all the characters available for using in the password, and it is 
-initialized with all the lowercase letters by default.
+Inicialmente, la lista 'password' se inicializa, guardará los caracteres de la contraseña que serán usados después. 
+También un diccionario guarda cada situación y sus respectivos caracteres por defecto. Adicionalmente, la variable 
+'characters' almacenará todos los caracteres disponibles para usar en la contraseña, y es inicializada con todas las 
+letras minúsculas por defecto.
  
 ```python
-    # This class method generates a password based on the characters allowed and the provided length.
+    # Este método de clase genera una contraseña basada en los caracteres permitidos y en la longitud dada.
     @staticmethod
     def generate_password(length: int, use_uppercase=True,
                           use_numbers=True, use_punctuations=True,
                           not_allowed='', customized='') -> str:
-
-        # This is the list that stores the characters of the password.
+        
+        # Esta es la lista que almacena los caracteres de la contraseña.
         password = []
         
-        # These are all the default optional characters for the password.
+        # estos son todos los caracteres por defecto opcionales para la contraseña.
         punctuation_characters = '!#$%&*+_-/'
         type_of_characters = {
             # ABCDEFGHIJKLMNOPQRSTUVWXYZ
@@ -152,21 +152,21 @@ initialized with all the lowercase letters by default.
         characters = string.ascii_lowercase
 ```
 
-After that, there are some validations for parameters, such as 'length' is a positive integer, or 'use_uppercase', 
-'use_numbers' and 'use_punctuations' are boolean values.
+Después de eso, hay algunas validaciones para los parámetros, tales como que 'length' sea un entero positivo, o que 
+'use_uppercase', 'use_numbers' y 'use_punctuations' sean valores booleanos.
 
 ```python
-        # This validates length is an integer.
+        # Esto valida que la longitue es un entero.
         if not isinstance(length, int):
 
             raise TypeError('The number must be a positive integer')
-
-        # This ensures length is a positive integer.
+        
+        # Esto asegura que la longitud es un entero positivo.
         if length <= 0:
 
             raise ValueError('The number must be a positive integer')
-
-        # This ensures all arguments for allowing uppercase, numbers and/or punctuations are boolean values.
+        
+        # Esto asegura que todos los argumentos para permitir mayúsculas, números y/o puntuaciones son valores booleanos.
         if not (
                 isinstance(use_uppercase, bool) and isinstance(use_numbers, bool) and isinstance(use_punctuations, bool)
         ):
@@ -174,199 +174,197 @@ After that, there are some validations for parameters, such as 'length' is a pos
             raise TypeError('use_uppercase, use_numbers and use_punctuations must be boolean')
 ```
 
-Next, if the 'customized' parameter is provided, this validates that is a string. After that, duplicated characters
-are deleted and the remaining characters are added in the 'password' list.
+Después, si el parámetro 'customized' es dado, esto valida que es una contraseña. Posterior a eso, los caracteres 
+duplicados son eliminados y los caracteres restantes son añadidos en la lista 'password'.
 
 ```python
-        # If custom characters are provided:
+        # Si caracteres personalizados son dados:
         if customized:
-
-            # This ensures the custom characters are a string.
+            
+            # Esto asegura que los caracteres personalizados son una cadena.
             if not isinstance(customized, str):
 
                 raise TypeError('Customized characters must be a string')
-
-            # This deletes duplicated characters in the custom characters.
+            
+            # Esto elimina caracteres duplicados en los caracteres personalizados.
             customized = set(customized)
-
-            # This adds the custom characters in the password list.
+            
+            # Esto añade los caracteres personalizaos en la lista 'password'.
             password.extend(list(customized))
 ```
 
-These validations are done with 'not_allowed' characters too, this ensures that 'not_allowed' is a string, and if 
-'customized' characters are provided, this ensures that there are no characters crashing with each other. Finally, 
-if all characters in 'not_allowed' are the same of any situation \(for example, '1234567890' has the same characters of 
-'0123456789'), an error will be raised.
-
+Estas validaciones son hechas con los caracteres de 'not_allowed' también, esto asegura que 'not_allowed' es una cadena, 
+y si 'customized' es dado también, esto asegura que no hay caracteres colisionando entre ellos. Finalmente, si todos los 
+caracteres en 'not_allowed' son los mismos de cualquier situación \(por ejemplo, '1234567890' tiene los mismos caracteres 
+que '0123456789'), habrá un error.
 
 ```python
-        # If not allowed characters are provided:
+        # Si son dados caracteres no permitidos:
         if not_allowed:
-
-            # This ensures not allowed characters provided are a string.
+            
+            # Esto asegura que los caracteres no permitidos son una cadena.
             if not isinstance(not_allowed, str):
 
                 raise TypeError('Not allowed characters must be a string')
-
-            # This deletes duplicated characters in not allowed characters.
+            
+            # Esto borra los caracteres duplicados en los caracteres no permitidos.
             not_allowed = set(not_allowed)
-
-            # This ensures that there are no identical characters in the custom and not allowed characters.
+            
+            # Esto asegura que no hay caracteres idénticos entre los caracteres personalizados y los no permitidos.
             if customized and any(letter in customized for letter in not_allowed):
 
                 raise ValueError('A character is crashing in customized and not allowed characters')
-
-            # for each characters string stored as values in the initial dict:
+            
+            # Por cada cadena de caracteres almacenada como valores en el diccionario inicial:
             for characters_string in cls.type_of_characters.values():
-
-                # This ensures not allowed characters doesn't invalid any characters string.
-                # If all not allowed characters are the same in a characters string (uppercase, numbers, punctuations)
-                # For example, 0123456789 has the same characters of 1234567890, order doesn't matter.
+                
+                # Esto asegura que los caracteres no permitidos no invalidan ninguna cadena de caracteres.
+                # Si todos los caracteres no permitidos son los mismos de una cadena de caracteres (mayúsculas, números, puntuaciones)
+                # Por ejemplo, 0123456789 tiene los mismos caracteres de 1234567890, el orden no importa.
                 if all(c in not_allowed for c in characters_string) or all(c in not_allowed for c in string.ascii_lowercase):
 
                     raise ValueError('Not allowed characters are the same characters of lower, upper, digits or punctuation characters, instead set its parameter as False')
 ```
 
-If all validations are passed, then each character of 'not_allowed' will be used for check if the character is in any 
-situation and will remove it. If the character is not in a situation, does not do anything.
+Si se pasan todas las validaciones, entonces cada caracter de 'not_allowed' será usado para checar si el caracter está 
+en cualquier situación y lo removerá. Si el caracter no está en la situación, no hace nada.
 
 ```python
-            # For each situation (key) and characters string (value) in the original dict:
+            # Por cada situación (clave) y cadena de caracteres (valor) en el diccionario original:
             for situation, characters_string in cls.type_of_characters.items():
-
-                # For each character of the not allowed characters:
+                
+                # Por cada caracter de los caracteres no permitidos:
                 for character in not_allowed:
-
-                    # If the character is in a character string:
+                    
+                    # Si el caracter está en una cadena de caracteres:
                     if character in characters_string:
-
-                        # This deletes the character from the characters string and replace the string in the dict.
+                        
+                        # Esto elimina el caracter de la cadena de caracteres y reemplaza la cadena en el diccionario.
                         cls.type_of_characters[situation] = cls.type_of_characters[situation].replace(character, '')
-
-                    # If the above condition is not met, and if the character is in the default characters (lowercase)
+                    
+                    # Si la condición de arriba no se cumple, y si el caracter está en los caracteres por defecto (minúsculas):
                     elif character in characters:
 
-                        # This deletes the character from the default characters string and replace it.
+                        # Esto elimina el caracter de los caracteres por defecto y lo reemplaza.
                         characters = characters.replace(character, '')
 ```
 
-After that, the parameter of each optional situation and their respectively characters \(without not allowed characters) 
-are stored in a dictionary as values, and appends a lowercase letter in the password.
- 
+Posterior a eso, el parámetro de cada situación opcional y sus respectivos caracteres \(sin los caracteres no permitidos) 
+son almacenados en un diccionario como valores, y añade una letra minúscula en la contraseña.
 
 ```python
-        # This stores the situations in a dictionary as the key, amd their boolean values and the characters related
-        # as the values.
+        # Esto almacena las situaciones en un diccionario como las claves, y sus valores booleanos y los caracteres 
+        # relacionados como valores.
         situations = {'uppercase': (use_uppercase, type_of_characters['uppercase']),
                       'numbers': (use_numbers, type_of_characters['numbers']),
                       'punctuations': (use_punctuations, type_of_characters['punctuations']),
                       }
-
-        # This appends a random character from the default (or the characters available if any character was deleted).
+    
+        # Esto añade un caracter cualquiera de los por defecto (o los caracteres disponibles si cualquier caracter fuera eliminado)
         password.append(secrets.choice(characters))
 ```
 
-Next a for loop adds 1 character of each of the character types if those are 'True' in the parameters above, 
-this ensures that at least 1 of each type was added.
+Después un ciclo for añade 1 caracter de cada uno de los tipos de caracteres si esos son 'True' en los parámetros arriba, 
+esto asegura que al menos 1 de cada tipo es añadido.
+
 ```python
-        # The for loop checks if the situations are True or false.
+        # El ciclo for checa si las situaciones son True o False.
         for character_type in situations.values():
     
             if character_type[0]:
                 
-                # If the situation is allowed (or its parameter is True) adds the specified characters as possibles for the
-                # password.
+                # Si la situación está permitida (o su parámetro es True) añade los caracteres especificados como posibles
+                # para la contraseña
                 characters += character_type[1]
                 
-                # Also adds 1 character of each type allowed to ensure that there is at least 1.
+                # También añade 1 caracter de cada tipo permitido para asegurar que hay al menos 1.
                 password.append(secrets.choice(character_type[1]))
 ```
 
-After that, the length remaining is calculated, if 'remaining' is negative, means that probably 'customized' string had 
-more characters than the possibles \(for example, length of the password should be equal to 5, but 
-customized='asf23842jw'), and then an error will be raised. If remaining is positive means that the password still 
-needs characters, given that, the 'random_password' list will store the remaining characters needed to complete the 
-password, and finally, with a list comprehension, the necessary characters are chosen and added in a list, 
-which is joined with our 'password' list.
+Posterior a eso, la longitud sobrante se calcula, si 'remaining' es negativo, significa que probablemente la cadena 'customized' 
+tuvo más caracteres de los posibles \(por ejemplo, la longitud de la contraseña debería ser igual a 5, pero customized='asf23842jw'), 
+y entonces habrá un error. Si 'remaining' es positivo significa que la contraseña sigue necesitando caracteres, dado eso, la lista 
+'random_password' almacenará los caracteres sobrantes necesarios para completar la contraseña, y finalmente, con un list 
+comprehension, los caracteres necesarios son escogidos y añadidos en la lista.
 
 ```python
-        # This is the necessary length to complete the password.
+        # Esta es la longitud necesaria para completar la contraseña.
         remaining = length - len(password)
-
-        # If remaining is negative means that length of the password generated is greater than the provided
-        # as an argument.
+        
+        # Si el sobrante es negativo significa que la longitud de la contraseña generada es más grande que la dada como 
+        # argumento.
         if remaining < 0:
 
             raise ValueError('Length of custom characters is greater than characters available in password, reduce it')
-
-        # If remaining is positive means that lacks characters in the password.
+        
+        # Si el sobrante es positivo significa que faltan caracteres en la contraseña.
         elif remaining > 0:
-
-            # Selects all necessary characters to complete the password.
+            
+            # Selecciona todos los caracteres necesarios para completar la contraseña.
             random_password = [secrets.choice(characters) for _ in range(remaining)]
-
-            # Extends the original 'password' list with the list above.
+            
+            # Extiende la lista original 'password' con la lista de arriba.
             password.extend(random_password)
 ```
 
-Finally, when the process above is finished \(or 'remaining' is equal to 0, that means password is completed), 
-the characters in the list are randomly shuffled and joined as a string.
+Finalmente, cuando el proceso arriba termina \(o 'remaining' es igual a 0, que significa que la contraseña está completa), 
+los caracteres en la lista son revueltos aleatoriamente y unidos como una cadena.
 
 ```python
-        # If remaining equals to 0 means that password has been completed.
-        # The 'password' list is shuffled for avoid patterns.
+        # Si el sobrante es igual a 0 significa que la contraseña está completa.
+        # La lista 'password' es revuelta para evitar patrones.
         secrets.SystemRandom().shuffle(password)
-
-        # Finally, the shuffled characters are joined in a string.
+        
+        # Finalmente, los caracteres revueltos son unidos en una cadena.
         final_password = ''.join(password)
-
-        # Returns the secure password.
+        
+        # Retorna la contraseña segura.
         return final_password
 ```
 
-And the password is returned. Woohoo!
+Y se retorna la contraseña. Woohoo!
 
-### calculate_entropy() static method:
+### Método estático calculate_entropy():
 
-The method calculates the entropy in bits of the password, this is useful for calculate the decryption time of the
-password and also shows how much secure is the password. The method uses the 'math' module to use the logarithm base 2. 
+El método calcula la entropia en bits de la contraseña, esto es útil para calcular el tiempo para descifrar la 
+contraseña y también muestra cuán segura es la contraseña. El métood usa el módulo 'math' para usar el logaritmo base 2. 
 
-The method has 2 parameters:
+El método tiene 2 parámetros:
 
 + password:
-This is the password created \(or it can be any password), it must be a string.  
+Esta es la contraseña creada \(o puede ser cualquier contraseña), debe ser una cadena.
 
 + decimals:
-This parameter defines how many decimals there will be in the entropy \(and if it is necessary, round the entropy to 
-that number of decimals). By default, there is 1 decimal.
+Este parámetro define cuántos decimales habrá en la entropía \(Y si es necesario, redondea la entropía a ese número de 
+decimales). Por defecto, hay 1 decimal.
 
 ```python
-    # This method calculates the entropy of the provided password.
+    # Este método calcula la entropía de la contraseña dada.
     @staticmethod
     def calculate_entropy(password: str, decimals: int = 1) -> Union[int, float]:
 ```
 
-Before the method starts, we validate the parameters, and if an error was not raised, then we continue.
+Antes de que el método comience, validamos los parámetros, y si no hay algún error, continuamos.
 
 ```python
-        # This ensures the password provided is a string.
+        # Esto asegura que la contraseña dada es una cadena
         if not isinstance(password, str):
 
             raise TypeError('password must be a string')
-
-        # This ensures the number of decimals required is an integer.
+        
+        # Esto asegura que el número de decimales requerido es un entero.
         if not isinstance(decimals, int):
 
             raise TypeError('The number of decimals must be an integer')
-
-        # This ensures the number of decimals required is greater than or equal to 0.
+        
+        # Esto asegura que el número de decimales requerido es mayor o igual a 0.
         if decimals < 0:
 
             raise ValueError('The number of decimals must be a positive integer')
 ```
 
-First, all characters are stored in a set for avoid repetitive characters, also we need to calculate the length of
-the password. And finally we initialize the variable 'argument_log' as 0.
+Primero, todos los caracteres son almacenados en un conjunto para evitar caracteres repetititvos, también necesitaremos 
+calcular la longitud de la contraseña. Y finalmente, inicializamos la variable 'argument_log' como 0.
 
 ```python
         # The set ensures that we don't take repetitive characters.
@@ -379,11 +377,11 @@ the password. And finally we initialize the variable 'argument_log' as 0.
         argument_log = 0
 ```
 
-Next, the character types are stored again in a dictionary called 'situations', the key is the situation and
-the values are the characters and the number of possibilities for each type.
+Después, los tipos de caracteres son almacenados de nuevo en un diccionario llamado 'situations', la clave es la 
+situación y los valores son los caracteres y el número de posibilidades para cada tipo.
 
 ```python
-        # The dictionary stores the possible characters and the number of them.
+        # El diccionario almacena los posibles caracteres y el número de ellos.
         situations = {'uppercase': (string.ascii_uppercase, len(string.ascii_uppercase)),
                       # ABCDEFGHIJKLMNOPQRSTUVWXYZ
                       'lowercase': (string.ascii_lowercase, len(string.ascii_lowercase)),
@@ -395,419 +393,421 @@ the values are the characters and the number of possibilities for each type.
                       }
 ```
 
-We use a for loop to verify if 1 \(or more, but only need 1 for this verification) character of each type is in the 
-password, and if it is, we add to the argument the number of possible characters of the type.
+Usamos un ciclo for para verificar si 1 \(o más, pero solo necesitamos 1 para esta verificación) caracrer de cada tipo 
+está en la contraseña, y si lo está, lo añadimos al argumento el número de posibles caracteres del tipo.
 
 ```python
-        # Separates the characters from the number of possible characters.
+        # Separa los caracteres del número de posibles caracteres.
         for character_type, possibilities in situations.values():
             
-            # Checks that a character of the specified type appears at least once,
-            # this means that the character type is allowed in the password.
+            # Checa que un caracter del tipo especificado aparezca al menos una vez,
+            # esto significa que el tipo de caracter está permitido en la contraseña.
             if any(character in character_type for character in unique_characters):
                 
-                # If it is true, sums the number of possible characters to the argument of the log.
+                # Si es true, suma el número de posibles caracteres al argumento del logaritmo.
                 argument_log += possibilities
 ```
 
-Finally, we calculate entropy using the next formula, where:
+Finalmente, calculamos la entropía usando la siguiente fórmula, donde:
 
 ![Entropy formula](entropy_formula.png)
 
-+ H: Represents the password entropy.
++ H: Representa la entropía de la contraseña.
 
-+ L: Represents the password length.
++ L: Representa la longitud de la contraseña.
 
-+ n: Represents the total possibilities for each character in the password.
++ n: Representa las posibilidades totales para cada caracter en la contraseña.
 
 ```python
-        # Using the previous formula, we calculate its entropy and we verify the formula is not empty.
+        # Usando la fórmula previa, calculamos su entropía y verificamos que la contraseña no esté vacía.
         entropy = length_password * math.log2(argument_log) if length_password > 0 else 0
 ```
 
-Now, if entropy is already an integer, return it, if it is not, but the 'decimals' parameter is equal to 0, entropy is 
-rounded to an integer. Finally, if the conditions before are False, entropy is rounded to the provided decimals.
+Ahora, si la entropía ya es un entero, la retornamos, si no, pero el parámetro 'decimals' es igual a 0, la entropía es 
+redondeada a un entero. Finalmente, si las condiciones de antes son falsas, la entropía se redondea a los decimales 
+establecidos.
 
 ````python
-        # If entropy is already an integer:
+        # Si la entropía ya es un entero:
         if isinstance(entropy, int):
 
             return entropy
-
-        # If the entropy must not have decimals, round to an integer:
+        
+        # Si la entropía no debe tener decimales, se redondea a un entero:
         if decimals == 0:
 
             return round(entropy)
-
-        # Finally, we return the entropy rounded to the indicated decimals.
+        
+        # Finalmente, retornamos la entropía redondeada a los decimales indicados.
         return round(entropy, decimals)
 ````
 
-And that's all!
+¡Y eso es todo!
 
-### calculate_decryption_time static method:
+### Método estático calculate_decryption_time():
 
-The function calculates how much time a hacker would need \(theoretically) to crack the password, this shows the 
-security involved in the password and indicates if it's a good idea to use the password. 
+La función calcula cuánto tiempo un hacker necesitaría \(teóricamente) para comprometer la contraseña, esto muestra la 
+seguridad involucrada en la contraseña e indica si es una buena idea usar la contraseña.
 
-The function has 3 parameters:
+La función tiene 3 parámetros:
 
 + entropy:
-This is the password entropy, it is needed to calculate how many attempts are necessary to crack the password in a 
-brute force attack, if the entropy is bigger, the necessary attempts will be too. It must be a positive number.
+Esta es la entropía de la contraseña, se necesita para calcular cuántos intentos son necesarios para comprometer la
+contraseña en un ataque de fuerza bruta, si la entropía es más grande, los intentos necesarios lo serán también. Debe 
+ser un número positivo.
 
 + decimals:
-This defines how many decimals there will be in the time to decrypt the password \(in years). By default, there will be
-2 decimals in the time. It must be a positive integer.
+Esto define cuántos decimales habrá en el tiempo para descifrar la contraseña \(en años). Por defecto, habrá 2 
+decimales en el tiempo. Debe ser un entero positivo.
 
 + attempts_per_second:
-This is the number of attempts that a hacker can make per second in a brute force attack \(obviously, this is relative),
-but we define it as 1*10^12 attempts per second by default. It must be a positive integer.
+Este es el número de intentos que un hacker puede hacer por segundo en un ataque de fuerza bruta \(obviamente, esto es 
+relativo), pero lo definimos como 1*10^12 intentos por segundo por defecto. Debe ser un entero positivo.
 
 ```python
-    # This method calculates the necessary decryption time to crack a password (in years) in a brute-force attack.
+    # Este método calcula el tiempo para descifrar necesario para compromenter la contraseña \(en años) en un ataque de 
+    # fuerza bruta.
     @staticmethod
     def calculate_decryption_time(entropy: Union[int, float],
                                   decimals: int = 2, 
                                   attempts_per_second: Union[int, float] = 1e12) -> Union[int, float]:
 ```
 
-Before starting, we validate the parameters, if every thing is correct, we continue.
+Antes de iniciar, validamos los parámetros, si todo es correcto, continuamos.
 
 ```python
-        # This ensures entropy provided is a number.
+        # Esto asegura que la entropí dada es un número.
         if not isinstance(entropy, Union[int, float]):
 
             raise TypeError('entropy must be a number')
-
-        # This ensures the number of decimals required is an integer.
+        
+        # Esto asegura que el número de decimales requerido es un entero.
         if not isinstance(decimals, int):
 
             raise TypeError('Number of decimals must be an integer')
-
-        # This ensures the number of decimals required is greater than or equal to 0.
+        
+        # Esto asegura que el número de decimales requeridos es más grande o igual a 0.
         if decimals < 0:
 
             raise ValueError('Number of decimals cannot be a negative integer')
-
-        # This ensures attempts per second is a number.
+        
+        # Esto asegura que los intentos por segundo es un número.
         if not isinstance(attempts_per_second, Union[int, float]):
 
             raise TypeError('attempts per second must be an integer')
-
-        # This ensures attempts per second is a positive number.
+        
+        # Esto asegura que los intentos por segundo es un entero positivo
         if attempts_per_second <= 0:
 
             raise ValueError('attempts per second must be a positive integer')
 ```
 
-First, we calculate how many seconds are in a year.
+Primero, calculamos cuántos segundos son en un año.
 
 ```python
-        # Seconds per year = 60 seconds * 60 minutes * 24 hours * 365 days.
+        # Segundos por año = 60 segundos * 60 minutos * 24 horas * 365 días.
         seconds_per_year = 60 * 60 * 24 * 365
 ```
 
-After that, we calculate how many combinations are possible with the entropy received.
+Después de eso, calculamos cuántas combinaciones son posibles con la entropía recibida.
 
 ```python
-        # These are all the possible combinations of the password, 
-        # therefore, all the possible attempts to crack it.
+        # Estos son todas las posibles combinaciones de la contraseña, por lo tanto,
+        # todos los posibles intentos para comprometerla.
         combinations = 2 ** entropy
 ```
 
-Next, we calculate the decryption time based on the following formula, where:
+Después, calculamos el tiempo para descifrar basado en la siguiente fórmula, donde:
 
 ![Decryption_time_formula](decryption_time_formula.png)
 
-+ T: Represents the decryption time in years.
++ T: Representa el tiempo para descifrar en años.
 
-+ H: Represents the password entropy.
++ H: Representa la entropía de la contraseña.
 
-+ V: Represents the attempts per second that a hacker can make.
++ V: Representa los intentos por segundo que un hacker puede hacer.
 
-+ S: Represents the seconds in 1 year.
++ S: Representa los segundos en un año.
 
 ```python
         # T = 2^H / V * S
         decryption_time_in_years = combinations / (attempts_per_second * seconds_per_year)
 ```
 
-Now, if decryption_time is already an integer, return it, if it is not, but the 'decimals' parameter is equal to 0, it is 
-rounded to an integer. Finally, if the conditions before are False, it is rounded to the provided decimals.
+Ahora, si el tiempo para descifrar ya es un entero, lo retorna, y si no lo es, pero el parámetro 'decimals' es igual a 
+0, es redondeado a un entero. Finalmente, si las condiciones antes son False, es redondeadoa los decimales establecidos.
 
 ```python
-        # If decryption time in years is an integer:
+        # Si el tiempo para descifrar en años es un entero:
         if isinstance(decryption_time_in_years, int):
 
             return decryption_time_in_years
-
-        # If the condition above is not met, and if the number of decimals provided is 0, round to an integer:
+        
+        # Si la condición de arriba no se cumple, y el número de decimales dado es 0, se redondea a un entero:
         if decimals == 0:
 
             return round(decryption_time_in_years)
-
-        # Finally, we return the time rounded to the provided decimals.
+        
+        # Finalmente, retornamos el tiempo redondeado a los decimales dados.
         return float(f'{decryption_time_in_years:.{decimals}e}')
 ```
 
-We've finished!
+¡Hemos terminado!
 
-## Examples
+## Ejemplos
 
-### create_password() instance method:
+### Método de instancia create_password():
 
-+ Default use:
++ Uso por defecto:
 
-  In this case, we will use the default performance of the method \(this means all types of characters are allowed), 
-  we need a password with 12 characters:
+En este caso, usaremos el comportamiento por defecto del método \(esto significa que todos los tipos de caracteres 
+son permitidos), necesitamos una contraseña con 12 caracteres:
   
 ```python
-# The password length is 12 characters
+#  La longitud de la contraseña es de 12 caracteres
 pswrd_generator = Generator.create_password(12)
 # output: UbMlRi/N5+4, 78.7, 15568.76
 ```
 
-### generate_password() static method:
+### Método estático generate_password():
 
-All the following passwords will have 18 characters.
+Todas las siguientes contraseñas tendrán 18 caracteres.
++ Uso por defecto:
 
-+ Default use:
-
-  As we saw before, we will generate the password with the default performance of the method.
+Como vimos antes, generaremos la contraseña con el comportamiento por defecto del método:
   
 ```python
-# This is the needed password.
+# Esta es la contraseña requerida.
 generated_password = Generator.generate_password(18)
 # output: +1ND%q#h2tOC-4_F$8 
 ```
 
-+ Password without punctuation:
++ Contraseña sin puntuaciones:
 
-  Now, the password does not allow punctuation characters \(or, as the same way, lower and uppercase letters and 
-  digits are allowed):
+Ahora, la contraseña no permite caracteres de puntuación \(o, de la misma forma, solo letras minúsculas, mayúsculas y 
+dígitos son permitidos):
   
 ```python
-# This is the needed password.
+# Esta es la contraseña requerida.
 generated_password = Generator.generate_password(18, use_punctuations=False)
 # output: 6dVf1UKHUHOq0RSEUL 
 ```
 
-+ Password without digits:
++ Contraseña sin dígitos:
 
-  Now, the password does not allow digits \(or, as the same way, lower and uppercase letters and 
-  punctuation characters are allowed):
+Ahora, la contraseña no permite dígitos \(o, the la misma forma, solo letras minúsculas, mayúsculas y caracteres de 
+puntuación son permitidos):
   
 ```python
-# This is the needed password.
+# Esta es la contraseña requerida.
 generated_password = Generator.generate_password(18, use_numbers=False)
-# output: vf/CE_uu!W&#Sw%jhD 
+# output: vf/CE_uu!W&#Sw%jhD
 ```
 
-+ Password without uppercase letters:
++ Contraseña sin letras mayúsculas:
 
-  Now, the password does not allow uppercase letters \(or, as the same way, lowercase letters, digits and 
-  punctuation characters are allowed):
+Ahora, la contraseña no permite letras mayúsculas \(o, de la misma forma, solo letras minúsculas, números y caracteres 
+de puntuación son permitidos):
   
 ```python
-# This is the needed password.
+# Esta es la contraseña requerida.
 generated_password = Generator.generate_password(18, use_uppercase=False)
 # output: /3_4!#&u991_43-m4t
 ```
 
-+ Password with only lowercase letters: 
++ Contraseña con solo letras minúsculas: 
 
-  Finally, the password only allows lowercase letters:
+Finalmente, la contraseña solo permite letras minúsculas:
   
 ```python
-# This is the needed password.
+# Esta es la contraseña requerida.
 generated_password = Generator.generate_password(18, use_uppercase=False, 
                                                  use_punctuations=False, use_numbers=False)
 # output: ytvyyzlfnamurebtoh
 ```
 
-+ Combined situations: 
++ Situaciones combinadas: 
 
-  In this case, the password allows lowercase letters and digits, but does not allow uppercase letters
-  and punctuation characters:
+En este caso, la contraseña permite letras minúsculas y dígitos, pero no permite letras mayúsculas y caracteres de 
+puntuación:
   
 ```python
-# This is the needed password.
+# Esta es la contraseña requerida.
 generated_password = Generator.generate_password(18, use_uppercase=False, 
                                                  use_punctuations=False)
 # output: ou0h92pj1cwqe8ny02
 ```
 
-+ Password with uppercase and lowercase letters, digits and punctuations, customized and not_allowed characters:
++ Contraseña con letras mayúsculas, minúsculas, dígitos y puntuaciones, además de caracteres personalizados y no permitidos: 
 
-  In this final case, the password allow all type of characters, but sets some specific characters and disallow others:
+En este caso final, la contraseña permite todo tipo de caracteres, pero establece algunos específicos y deshabilita otros:
   
 ```python
-# This is the needed password.
+# Esta es la contraseña requerida.
 generated_password = Generator.generate_password(12, use_uppercase=True, use_numbers=True, use_punctuations=True,
                                                  customized='t4zA7', not_allowed='129685dfg/-'
                                                  )
 # output: Qy4A&PZ3t0z7
-# As you can see, each character of customized is in the password at least once, and all characters in not allowed 
-# are not in the password.
+# Como puedes ver, cada caracter de los personalizados está en la contraseña al menos una vez, y todos los caracteres en 
+# los no permitidos no están en la contraseña.
 ```
 
-### calculate_entropy() static method:
+### Método estático calculate_entropy():
 
-We will use the passwords generated above for these examples.
+Usaremos las contraseñas generadas arriba para estos ejemplos.
 
-+ Default use:
++ Uso por defecto:
   
-  This is the entropy of the password with all types of characters:
+Esta es la entropía de la contraseña con todos los tipos de caracteres:
 
 ```python
-# This is the entropy of the password: +1ND%q#h2tOC-4_F$8
+# Esta es la entropía de la contraseña: +1ND%q#h2tOC-4_F$8
 entropy = Generator.calculate_entropy("+1ND%q#h2tOC-4_F$8")
 # output: 118.0
 ```
 
-+ Password without punctuation:
++ Contraseña sin puntuaciones:
 
-  This is the entropy of the password without punctuation characters:
+Esta es la entropía de la contraseña sin caracteres de puntuacion:
 
 ```python
-# This is the entropy of the password: 6dVf1UKHUHOq0RSEUL
+# Esta es la entropía de la contraseña: 6dVf1UKHUHOq0RSEUL
 entropy = Generator.calculate_entropy("6dVf1UKHUHOq0RSEUL")
 # output: 107.2
 ```
 
-+ Password without digits:
++ Contraseña sin dígitos:
 
-  This is the entropy of the password without digits:
+Esta es la entropía de la contraseña sin dígitos:
 
 ```python
-# This is the entropy of the password: vf/CE_uu!W&#Sw%jhD
+# Esta es la entropía de la contraseña: vf/CE_uu!W&#Sw%jhD
 entropy = Generator.calculate_entropy("vf/CE_uu!W&#Sw%jhD")
 # output: 115.1
 ```
 
-+ Password without uppercase letters:
++ Contraseña sin letras mayúsculas:
 
-  This is the entropy of the password without uppercase letters:
+Esta es la entropía de la contraseña sin letras mayúsculas:
 
 ```python
-# This is the entropy of the password: /3_4!#&u991_43-m4t
+# Esta es la entropía de la contraseña: /3_4!#&u991_43-m4t
 entropy = Generator.calculate_entropy("/3_4!#&u991_43-m4t")
 # output: 109.6
 ```
 
-+ Password with only lowercase letters: 
++ Contraseña solo con letras minúsculas: 
 
-  This is the entropy of the password with only lowercase letters:
+Esta es la entropía de la contraseña solo con letras minúsculas:
 
 ```python
-# This is the entropy of the password: ytvyyzlfnamurebtoh
+# Esta es la entropía de la contraseña: ytvyyzlfnamurebtoh
 entropy = Generator.calculate_entropy("ytvyyzlfnamurebtoh")
 # output: 84.6
 ```
   
-+ Combined situations:
++ Situaciones combinadas:
 
-  Finally, this is the entropy of the password with lowercase letters and digits allowed:
+Finalmente, esta es la entropía de la contraseña con letras minúsculas y dígitos permitidos:
 
 ```python
-# This is the entropy of the password: ou0h92pj1cwqe8ny0
+# Esta es la entropía de la contraseña: ou0h92pj1cwqe8ny0
 generated_password = Generator.calculate_entropy('ou0h92pj1cwqe8ny02')
 # output: 93.1
 ```
 
-The entropy of each password is used to calculate its security in a brute force attack.
+La entropía de cada contraseña es usada para calcular su seguridad en un ataque de fuerza bruta.
 
-### calculate_decryption_time() static method:
+### Método estático calculate_decryption_time():
 
-Again, we will use the passwords and their entropies generated above for these examples. The time calculated is only
-theoretical and is a metric of password security in a brute-force attack:
+Nuevamente, usaremos las contraseñas y sus entropías generadas previamente para estos ejemplos. El tiempo calculado es 
+solo teórico, y es una métrica de la seguridad de la contraseña en un ataque de fuerza bruta:
 
-+ Default use:
-  
-  This is the necessary decryption time \(in years) to crack the password with all types of characters:
++ Uso por defecto:
+
+Este es el tiempo de descifrado necesario \(en años) para comprometer la contraseña con todos los tipos de caracteres.
 
 ```python
-# This is the decryption time of the password: +1ND%q#h2tOC-4_F$8
-# Its entropy is 118.0
+# Este es el tiempo para descifrar la contraseña: +1ND%q#h2tOC-4_F$8
+# Su entropía es 118.0
 decryption_password_time = Generator.calculate_decryption_time(118.0)
 # output: 1.05e+16
 ```
 
-+ Password without punctuation:
++ Contraseña sin puntuaciones:
 
-  This is the necessary decryption time \(in years) to crack the password without punctuation characters:
+Este es el tiempo de descifrado necesario \(en años) para comprometer la contraseña sin caracteres de puntuación:
 
 ```python
-# This is the decryption time of the password: 6dVf1UKHUHOq0RSEUL
-# Its entropy is 107.2
+# Este es el tiempo para descifrar la contraseña: 6dVf1UKHUHOq0RSEUL
+# Su entropía es 107.2
 decryption_password_time = Generator.calculate_decryption_time(107.2)
 # output: 5910000000000.0
 ```
 
-+ Password without digits:
++ Contraseña sin dígitos:
 
-  This is the necessary decryption time \(in years) to crack the password without digits:
+Este es el tiempo de descifrado necesario \(en años) para comprometer la contraseña sin dígitos:
 
 ```python
-# This is the decryption time of the password: vf/CE_uu!W&#Sw%jhD
-# Its entropy is 115.1
+# Este es el tiempo para descifrar la contraseña: vf/CE_uu!W&#Sw%jhD
+# Su entropía es 115.1
 decryption_password_time = Generator.calculate_decryption_time(115.1)
 # output: 1410000000000000.0
 ```
 
-+ Password without uppercase letters:
++ Contraseña sin letras mayúsculas:
 
-  This is the necessary decryption time \(in years) to crack the password without uppercase letters:
+Este es el tiempo de descifrado necesario \(en años) para comprometer la contraseña sin letras mayúsculas:
 
 ```python
-# This is the decryption time of the password: /3_4!#&u991_43-m4t
-# Its entropy is 109.6
+# Este es el tiempo para descifrar la contraseña: /3_4!#&u991_43-m4t
+# Su entropía es 109.6
 decryption_password_time = Generator.calculate_decryption_time(109.6)
 # output: 1410000000000000.0
 ```
 
-+ Password with only lowercase letters: 
++ Contraseña con solo letras minúsculas: 
 
-  This is the necessary decryption time \(in years) to crack the password only with uppercase letters:
-
+Este es el tiempo de descifrado necesario \(en años) para comprometer la contraseña con solo letras minúsculas:
+  
 ```python
-# This is the entropy of the password: ytvyyzlfnamurebtoh
-# Its entropy is 84.6
+# Este es el tiempo para descifrar la contraseña: ytvyyzlfnamurebtoh
+# Su entropía es 84.6
 decryption_password_time = Generator.calculate_decryption_time(109.6)
 # output: 31200000000000.0
 ```
   
-+ Combined situations:
++ Situaciones combinadas:
 
-  Finally, this is the necessary decryption time \(in years) to crack the password with lowercase letters and 
-  digits allowed:
+Finalmente, Este es el tiempo de descifrado necesario \(en años) para comprometer la contraseña con letras mayúsculas y 
+digitos permitidos:
 
 ```python
-# This is the entropy of the password: ou0h92pj1cwqe8ny02
-# Its entropy is 93.1
+# Este es el tiempo para descifrar la contraseña: ou0h92pj1cwqe8ny02
+# Su entropía es 93.1
 decryption_password_time = Generator.calculate_decryption_time(93.1)
 # output: 337000000.0
 ```
 
-## Contributions
+## Contribuciones
 
-I'm open and happy to receive any input or contribution to the project. You can submit a pull request, 
-report a bug, and add new features without any problems!
+Estoy abierto y feliz de recibir cualquier contribución al proyecto. ¡Puedes hacer un pull request, reportar un bug y 
+añadir nuevas funcionalidades sin ningún problema!
 
-## License
+## Licencia
 
-This project was made under the MIT license:
+Este proyecto fue hecho bajo la licencia del MIT:
 [MIT License](https://github.com/Tzintzun444/pswrd_entropy_gen/blob/main/pswrd_entropy_gen/LICENSE.txt)
 
-## Credits
+## Créditos
 
-+ Author: Alfredo Tzintzun.
++ Autor: Alfredo Tzintzun.
 
-+  Libraries used:
++ Librerías usadas:
     - secrets.
     - string.
     - math.
     - typing.
 
-I hope you enjoy this project!
+¡Espero que disfrutes este proyecto!
