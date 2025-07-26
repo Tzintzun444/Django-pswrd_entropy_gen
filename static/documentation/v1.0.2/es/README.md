@@ -379,7 +379,7 @@ generated_password = Generator.generate_password(18, use_punctuations=False)
 
 + Contraseña sin dígitos:
 
-Ahora, la contraseña no permite dígitos \(o, the la misma forma, solo letras minúsculas, mayúsculas y caracteres de 
+Ahora, la contraseña no permite dígitos \(o, de la misma forma, solo letras minúsculas, mayúsculas y caracteres de 
 puntuación son permitidos):
   
 ```python

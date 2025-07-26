@@ -572,6 +572,7 @@ pswrd_generator = Generator.create_password(12)
 ### Método estático generate_password():
 
 Todas las siguientes contraseñas tendrán 18 caracteres.
+
 + Uso por defecto:
 
 Como vimos antes, generaremos la contraseña con el comportamiento por defecto del método:
@@ -595,7 +596,7 @@ generated_password = Generator.generate_password(18, use_punctuations=False)
 
 + Contraseña sin dígitos:
 
-Ahora, la contraseña no permite dígitos \(o, the la misma forma, solo letras minúsculas, mayúsculas y caracteres de 
+Ahora, la contraseña no permite dígitos \(o, de la misma forma, solo letras minúsculas, mayúsculas y caracteres de 
 puntuación son permitidos):
   
 ```python
